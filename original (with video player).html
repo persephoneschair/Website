@@ -130,33 +130,6 @@
 #clearFiltersBtn:hover {
   background-color: #b22222;
 }
-.thumb-wrapper {
-  position: relative;
-  display: block;
-  border-radius: 1rem;
-  overflow: hidden;
-}
-
-.thumbnail-img {
-  width: 100%;
-  display: block;
-  border-radius: 1rem;
-  transition: transform 0.2s ease;
-}
-
-.thumb-wrapper:hover .thumbnail-img {
-  transform: scale(1.02);
-}
-
-.play-button {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-55%, -45%);
-  pointer-events: none;
-  opacity: 0.9;
-  filter: drop-shadow(0 0 6px black);
-}
   </style>
 </head>
 <body>
@@ -309,23 +282,15 @@
       card.setAttribute('data-features', row.Features ? '1' : '0');
 
       card.innerHTML = `
-      
-  <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" rel="noopener" class="thumb-wrapper">
-    <img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" alt="YouTube Thumbnail" class="thumbnail-img" />
-    <div class="play-button">
-      <svg viewBox="0 0 100 100" width="128" height="128" fill="white">
-        <polygon points="40,30 70,50 40,70" />
-      </svg>
-    </div>
-  </a>
-  <div class="meta">
-    <ep><strong>${row.Episode || 'Untitled'} ${row.Ordinal || 'Untitled'}</strong></ep>
-    <p><strong>${row.Date || ''}</strong></p>
-    <h2>${formatMultiline(row.Formats || 'N/A')}</h2>
-    ${row.Guests ? `<p><i>Guests:</i> ${row.Guests}</p>` : ''}
-    ${row.Features ? `<p><i>Feature:</i> ${row.Features}</p>` : ''}
-  </div>
-`;
+        <iframe src="https://www.youtube.com/embed/${videoId}" loading="lazy" allowfullscreen></iframe>
+        <div class="meta">
+          <ep><strong>${row.Episode || 'Untitled'} ${row.Ordinal || 'Untitled'}</strong></ep>
+          <p><strong>${row.Date || ''}</strong></dt>
+          <h2>${formatMultiline(row.Formats || 'N/A')}</h2>
+          ${row.Guests ? `<p><i>Guests:</i> ${row.Guests}</p>` : ''}
+          ${row.Features ? `<p><i>Feature:</i> ${row.Features}</p>` : ''}
+        </div>
+      `;
       cards.push(card);
       container.appendChild(card);
     });
