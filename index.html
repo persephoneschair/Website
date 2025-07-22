@@ -58,7 +58,7 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 2rem;
       max-width: 3840px;
       margin: 0 auto;
@@ -158,6 +158,19 @@
   filter: drop-shadow(0 0 6px black);
 }
 
+#loadingScreen {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: #0a1e3f;
+  color: #f3ec40;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 4rem;
+  z-index: 1000;
+}
+
 @media (max-width: 600px) {
   h1 {
     font-size: 2.5rem;
@@ -167,7 +180,6 @@
 
   .card {
     min-width: unset;
-    max-width: 250;
     width: 100%;
     margin-bottom: 1.5rem;
   }
@@ -184,6 +196,15 @@
     font-size: 0.95rem;
   }
 }
+
+@media (max-width: 600px) {
+    #loadingScreen {
+      font-size: 2rem;
+      padding: 1rem;
+      text-align: center;
+    }
+  }
+  
   </style>
 </head>
 <body>
