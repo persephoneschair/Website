@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Penny Bank</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+
+    body {
+      background-color: #0a1e3f;
+      color: #e0e7ff;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 2rem;
+    }
+
+    h1 {
+      text-align: center;
+      color: #f3ec40;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3rem;
+      margin-bottom: 2rem;
+    }
+
+    .controls {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    select {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: none;
+      background-color: #1e3a8a;
+      color: #e0e7ff;
+      cursor: pointer;
+    }
+
+    .leaderboard {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr); /* mobile default */
+  gap: 1rem;
+  padding: 0;
+  max-width: 3840px;
+  margin: 0 auto;
+}
+
+@media (min-width: 600px) {
+  .leaderboard {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .leaderboard {
+    grid-template-columns: repeat(2, 1fr); /* ✅ max 2 */
+  }
+}
+
+@media (min-width: 1200px) {
+  .leaderboard {
+    grid-template-columns: repeat(3, 1fr); /* ✅ max 3 */
+  }
+}
+
+@media (min-width: 1800px) {
+  .leaderboard {
+    grid-template-columns: repeat(4, 1fr); /* ✅ max 4 */
+  }
+}
+
+@media (min-width: 2200px) {
+  .leaderboard {
+    grid-template-columns: repeat(5, 1fr); /* ✅ max 4 */
+  }
+}
+
+    .entry {
+  background: #152a5a;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 1.2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  white-space: nowrap; /* ✅ everything on one line */
+  gap: 0.5rem;
+  overflow: hidden;     /* ✅ clips content if too long */
+}
+
+.name {
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: bold;
+      font-size: 1.5rem;
+}
+
+.value {
+  font-weight: bold;
+      font-size: 2rem;
+}
+
+
+    .entry:hover {
+      box-shadow: 0 4px 12px rgba(243, 236, 64, 0.8);
+      transform: translateY(-2px);
+    }
+
+    .ordinal {
+      color: #f3ec40;
+      font-weight: bold;
+      margin-right: 1rem;
+      font-size: 2rem;
+  text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.7); /* ✅ soft drop shadow */
+    }
+    
+    
+    
+    .gold {
+  background-color: #FFFFC5;
+  color: #000;
+}
+
+.silver {
+  background-color: #FFFFFF;
+  color: #000;
+}
+
+.bronze {
+  background-color: #FFC78F;
+  color: #000;
+}
+
+.gold .ordinal {
+  color: #ffd700; /* or #000 or even white, depending on your gold background */
+  font-size: 3rem;
+}
+
+.silver .ordinal {
+  color: #DDDDDD;
+  font-size: 3rem;
+}
+
+.bronze .ordinal {
+  color: #CD7F32;
+  font-size: 3rem;
+}
+  </style>
+</head>
+<body>
+  <h1>The Penny Bank</h1>
+  <div class="controls">
+    <label for="modeSelect">Sort by: </label>
+    <select id="modeSelect">
+  <option value="credits">Author Credits</option>
+  <option value="current" selected>Current Season</option> <!-- ✅ Default -->
+  <option value="total">All-Time</option>
+</select>
+  <br><br>
+  <input type="text" id="searchInput" placeholder="Filter Players..." style="padding: 0.5rem; font-size: 1rem; width: 200px;">
+</div>
+  <div id="leaderboard" class="leaderboard"></div>
+
+  <script>
+    const DATA_URL = 'https://raw.githubusercontent.com/persephoneschair/PennyStorage/main/NewPennys.txt';
+
+
+    let players = [];
+
+    async function fetchData() {
+  try {
+    const response = await fetch(DATA_URL);
+    const data = await response.json();
+    players = data.playerList.map(p => ({
+      name: p.PlayerName,
+      credits: p.AuthorCredits,
+      current: p.CurrentSeasonPennys,
+      total: p.AllTimePennys
+    }));
+    renderLeaderboard();
+  } catch (error) {
+    console.error('Error loading data:', error);
+  }
+}
+
+    function renderLeaderboard() {
+       const mode = document.getElementById('modeSelect').value;
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  const board = document.getElementById('leaderboard');
+  board.innerHTML = '';
+
+  const filtered = players
+    .filter(p => p[mode] && parseFloat(p[mode]) > 0)
+    .sort((a, b) => parseFloat(b[mode]) - parseFloat(a[mode]));
+
+  filtered.forEach((player, index) => {
+    const matchesSearch = player.name.toLowerCase().includes(search);
+    if (!matchesSearch) return;
+
+    const div = document.createElement('div');
+    div.className = 'entry';
+
+    if (index === 0) div.classList.add('gold');
+    else if (index === 1) div.classList.add('silver');
+    else if (index === 2) div.classList.add('bronze');
+        div.innerHTML = `
+  <span class="ordinal">${index + 1}</span>
+  <span class="name" title="${player.name}">${player.name}</span>
+  <span class="value">${Number(player[mode]).toLocaleString()}</span>
+`;
+        board.appendChild(div);
+      });
+    }
+
+    document.getElementById('modeSelect').addEventListener('change', renderLeaderboard);
+    document.getElementById('searchInput').addEventListener('input', renderLeaderboard);
+
+    fetchData();
+  </script>
+</body>
+</html>
