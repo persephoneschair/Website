@@ -282,14 +282,6 @@
   padding: 0.4em 0.6em;
 }
 
-
-
-
-/*.penny-controls {
-  transition: opacity 0.4s ease;
-  min-height: 2.5rem; /* or whatever height your controls take up */
-}*/
-
   </style>
 </head>
 <body>
@@ -311,6 +303,7 @@
   
 </div>
   <div id="leaderboard" class="leaderboard fade"></div>
+  
   <div id="medalBoard" class="medal-board fade" style="display: none;"></div>
 
   <script>
@@ -484,7 +477,7 @@
     // Add click handler to load player's medal cabinet
     row.style.cursor = 'pointer';
     row.onclick = () => {
-      renderPlayerMedalCabinet(player.name);
+      renderPlayerCabinet(player.name);
     };
 
     board.appendChild(row);
@@ -522,7 +515,7 @@ let backBtn = document.getElementById('returnButton');
 if (!backBtn) {
   backBtn = document.createElement('button');
   backBtn.id = 'returnButton';
-  backBtn.textContent = '🔙 Return to Penny Bank';
+  backBtn.textContent = '🔙 Back';
 
   // Use the regular entry class (like a standard strap)
   backBtn.className = 'entry';
@@ -533,14 +526,12 @@ if (!backBtn) {
   backBtn.style.padding = '0.75rem 1.25rem';
   backBtn.style.marginBottom = '1rem';
   backBtn.style.color = '#e0e7ff'; // match strap text color
-  
-backBtn.style.color = 'white'; // ← Make the text white
 
   backBtn.onclick = () => {
     backBtn.remove(); // remove the button
     formatSelect.style.display = 'inline-block';
     pennyControls.style.display = 'inline-block';
-    renderLeaderboard(); // restore main view
+    formatSelect.dispatchEvent(new Event('change'));
   };
 
   // Insert it where the format selector was
