@@ -83,26 +83,27 @@
     }
 
     .entry {
-      background: #152a5a;
-      border-radius: 8px;
-      padding: 0.75rem 1rem;
-      font-size: 1.2rem;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      white-space: nowrap;
-      gap: 0.5rem;
-      overflow: hidden;
-    }
+  background: #152a5a;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 1.2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  overflow: hidden;
+  white-space: nowrap;
+}
 
-    .name {
-      flex: 1 1 auto;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      font-weight: bold;
-      font-size: 1.5rem;
-    }
+    .entry .name {
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: bold;
+  font-size: 1.5rem;
+  min-width: 0;
+}
 
     .value {
       font-weight: bold;
@@ -208,6 +209,8 @@
   margin-bottom: 1rem;
 }
 
+
+
 /* Unified grid layout for medallists */
 .medal-grid {
 
@@ -230,6 +233,8 @@
   gap: 0.5rem;
   overflow: hidden;
 }
+
+
 .medallist:hover {
   box-shadow: 0 4px 12px rgba(243, 236, 64, 0.8);
   transform: translateY(-2px);
@@ -280,6 +285,16 @@
 #returnButton {
   appearance: none;
   padding: 0.4em 0.6em;
+}
+
+#mainTitle {
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  text-align: center;
+  max-width: 100%;
+  padding: 0 1rem;
 }
 
   </style>
@@ -403,9 +418,12 @@
 
     sorted.forEach((entry, index) => {
       const row = document.createElement('div');
-      row.className = 'medallist';
+      row.className = 'entry';
+      if (index === 0) row.classList.add('gold');
+else if (index === 1) row.classList.add('silver');
+else if (index === 2) row.classList.add('bronze');
       row.innerHTML = `
-        <span class="ordinal-medal">${index + 1}</span>
+        <span class="ordinal">${index + 1}</span>
         <span class="name" title="${entry.playerName}">${entry.playerName}</span>
         <span class="value">${entry.playerScore.toLocaleString()}</span>
       `;
@@ -693,9 +711,13 @@ document.getElementById('pennyControls').style.display = 'inline-block';
   const val = this.value;
 
   if (val === 'leaderboard') {
-    renderLeaderboard();
-    return;
-  }
+  const pennyControls = document.getElementById('pennyControls');
+  pennyControls.style.display = 'inline-block';   // ✅ make it visible again
+  pennyControls.style.visibility = 'visible';
+  pennyControls.style.opacity = '1';
+  renderLeaderboard();
+  return;
+}
 
   const pennyControls = document.getElementById('pennyControls');
   pennyControls.style.visibility = 'hidden';
