@@ -308,26 +308,30 @@
 
   <script>
     const DATA_URL = 'https://raw.githubusercontent.com/persephoneschair/PennyStorage/main/NewPennys.txt';
-    const FORMATS = ['Abyss.txt', 'Battlefront.txt', 'BiddingWar.txt', 'Crossfire.txt', 'Cryptex.txt', 'DangerZone.txt', 'DataLeak.txt', 'Distinction.txt', 'EscapeArtist.txt', 'GoogleThat.txt', 'Hive.txt', 'Mole.txt', 'Moneybox.txt', 'Purge.txt', 'Pyramid.txt', 'RedHerrings.txt', 'RiskyBusiness.txt', 'Spotlight.txt']; // Update with real format file names
+    const FORMATS = ['Abyss.txt', 'Battlefront.txt', 'BiddingWar.txt', 'Crossfire.txt', 'Cryptex.txt', 'DangerZone.txt', 'DataLeak.txt', 'Distinction.txt', 'EscapeArtist.txt', 'GoogleThat.txt', 'Hive.txt', 'HiveLeaderboard.txt', 'Mole.txt', 'MoleLeaderboard.txt', 'Moneybox.txt', 'MoneyboxLeaderboard.txt', 'Purge.txt', 'Pyramid.txt', 'RedHerrings.txt', 'RiskyBusiness.txt', 'Spotlight.txt', 'SpotlightLeaderboard.txt']; // Update with real format file names
     const FORMAT_LABELS = {
-      'Abyss.txt': 'The Abyss',
-      'Battlefront.txt': 'Battlefront',
-      'BiddingWar.txt': 'Bidding War',
-      'Crossfire.txt': 'Crossfire',
-      'Cryptex.txt': 'Cryptex',
-      'DangerZone.txt': 'DangerZone',
-      'DataLeak.txt': 'Data Leak',
-      'Distinction.txt': 'Distinction!',
-      'EscapeArtist.txt': 'The Escape Artist',
-      'GoogleThat.txt': 'Google That!',
-      'Hive.txt': 'The Hive',
-      'Mole.txt': 'The Mole',
-      'Moneybox.txt': 'Moneybox',
-      'Purge.txt': 'The Purge',
-      'Pyramid.txt': 'The Pyramid',
-      'RedHerrings.txt': 'Red Herrings!',
-      'RiskyBusiness.txt': 'Risky Business',
-      'Spotlight.txt': 'Spotlight',
+      "Abyss.txt": "The Abyss",
+      "Battlefront.txt": "Battlefront",
+      "BiddingWar.txt": "Bidding War",
+      "Crossfire.txt": "Crossfire",
+      "Cryptex.txt": "Cryptex",
+      "DangerZone.txt": "DangerZone",
+      "DataLeak.txt": "Data Leak",
+      "Distinction.txt": "Distinction!",
+      "EscapeArtist.txt": "The Escape Artist",
+      "GoogleThat.txt": "Google That!",
+      "Hive.txt": "The Hive",
+      "HiveLeaderboard.txt": "The Hive Leaderboard",
+      "Mole.txt": "The Mole",
+      "MoleLeaderboard.txt": "The Mole Leaderboard",
+      "Moneybox.txt": "Moneybox",
+      "MoneyboxLeaderboard.txt": "Moneybox Leaderboard",
+      "Purge.txt": "The Purge",
+      "Pyramid.txt": "The Pyramid",
+      "RedHerrings.txt": "Red Herrings!",
+      "RiskyBusiness.txt": "Risky Business",
+      "Spotlight.txt": "Spotlight",
+      "SpotlightLeaderboard.txt": "Spotlight Leaderboard"
     };
 
     let players = [];    
@@ -379,8 +383,39 @@
           <span class="value">${Number(player[mode]).toLocaleString()}</span>
         `;
         board.appendChild(div);
+        
       });
     }
+    
+    function renderFormatLeaderboard(data, label) {
+  const board = document.getElementById('medalBoard');
+  const leaderboard = document.getElementById('leaderboard');
+  const pennyControls = document.getElementById('pennyControls');
+
+  fadeSwitch(leaderboard, board, () => {
+    board.innerHTML = '';
+    board.style.display = 'grid';
+    document.getElementById('mainTitle').textContent = `${label}`;
+    document.title = label;
+    pennyControls.style.display = 'none';
+
+    const sorted = [...data].sort((a, b) => b.playerScore - a.playerScore);
+
+    sorted.forEach((entry, index) => {
+      const row = document.createElement('div');
+      row.className = 'medallist';
+      row.innerHTML = `
+        <span class="ordinal-medal">${index + 1}</span>
+        <span class="name" title="${entry.playerName}">${entry.playerName}</span>
+        <span class="value">${entry.playerScore.toLocaleString()}</span>
+      `;
+      board.appendChild(row);
+    });
+
+    // ✅ Attach handlers *after* rows exist
+    attachPlayerClickHandlers();
+  });
+}
 
   function renderMedalBoard(data, label) {
   document.getElementById('leaderboard').style.display = 'none';
@@ -642,30 +677,41 @@ renderMedalBoard = function(data, label) {
   attachPlayerClickHandlers();
 };
 
+const originalFormatLeaderboard = renderFormatLeaderboard;
+renderFormatLeaderboard = function(data, label) {
+  originalFormatLeaderboard(data, label);
+  attachPlayerClickHandlers();
+};
+
 // Initialize
 document.getElementById('pennyControls').style.display = 'inline-block';
 
 
     document.getElementById('modeSelect').addEventListener('change', renderLeaderboard);
     document.getElementById('searchInput').addEventListener('input', renderLeaderboard);
-    document.getElementById('formatSelect').addEventListener('change', async function () {
+   document.getElementById('formatSelect').addEventListener('change', async function () {
   const val = this.value;
 
-  const pennyControls = document.getElementById('pennyControls');
   if (val === 'leaderboard') {
-    pennyControls.style.visibility = 'visible';
-    pennyControls.style.opacity = '1';
     renderLeaderboard();
-  } else 
-  {pennyControls.style.visibility = 'hidden';
+    return;
+  }
+
+  const pennyControls = document.getElementById('pennyControls');
+  pennyControls.style.visibility = 'hidden';
   pennyControls.style.opacity = '0';
-    try {
-      const response = await fetch(`https://raw.githubusercontent.com/persephoneschair/PennyStorage/main/${val}`);
-      const data = await response.json();
+
+  try {
+    const response = await fetch(`https://raw.githubusercontent.com/persephoneschair/PennyStorage/main/${val}`);
+    const data = await response.json();
+
+    if (val.endsWith('Leaderboard.txt')) {
+      renderFormatLeaderboard(data, FORMAT_LABELS[val] || val.replace('.txt', ''));
+    } else {
       renderMedalBoard(data, FORMAT_LABELS[val] || val.replace('.txt', ''));
-    } catch (err) {
-      console.error('Error loading medal format', err);
     }
+  } catch (err) {
+    console.error('Error loading view:', err);
   }
 });
 
