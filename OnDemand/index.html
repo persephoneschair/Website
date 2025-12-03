@@ -780,8 +780,8 @@ async function renderSeason(seasonName) {
   try {
     let allRows = [];
     
-    // Use mock data if available, otherwise fetch
-    const useMockData = false; // Toggle this to switch between mock and real data
+    // Use mock data when running locally (file:// protocol), real data on server
+    const useMockData = window.location.protocol === "file:";
     
     if (useMockData && seasonName in mockSeasonData) {
       allRows = mockSeasonData[seasonName];
