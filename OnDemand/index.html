@@ -21,12 +21,12 @@
       background-color: #000000;
       padding: 2rem;
       color: #e0e7ff;
-      opacity: 0;
-      animation: fadeIn 1.5s ease-in forwards;
     }
 
-    @keyframes fadeIn {
-      to { opacity: 1; }
+    #mainContent {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 1.5s ease-in, visibility 0s;
     }
 
     h1 {
@@ -242,18 +242,24 @@
   font-family: 'Game Over', sans-serif;
   letter-spacing: 0.05em;
   text-shadow: 0 0 20px rgba(243, 236, 64, 0.8), 0 0 40px rgba(243, 236, 64, 0.5);
-  animation: pulse 1.5s ease-in-out infinite;
-  opacity: 1;
+  animation: pulse 1s ease-in-out infinite;
   visibility: visible;
   transition: opacity 0.6s ease-out, visibility 0s 0.6s;
   padding: 2rem;
   text-align: center;
-  pointer-events: none;
+  pointer-events: all;
 }
 
 #loadingScreen.fade-out {
   opacity: 0;
   visibility: hidden;
+  animation: pulseFadeOut 0.6s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes pulseFadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }
 
 @keyframes pulse {
@@ -339,6 +345,7 @@
 <div id="loadingScreen"><strong>
   LOADING EPISODES...</strong>
 </div>
+<div id="mainContent">
   <h1 id="mainHeader">GAME NIGHT: ALL SEASONS</h1>
   <div class="controls">
     <select id="seasonSelect"></select>
@@ -359,7 +366,7 @@
   <p id="noResultsMessage" class="hidden" style="text-align:center; color: firebrick; font-size: 2.5rem; margin-top: 2rem;">
   <strong>NO EPISODES FOUND</strong>
 </p>
-
+</div>
 
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <script>
@@ -753,7 +760,19 @@
 };
 
 async function renderSeason(seasonName) {
-  document.getElementById("loadingScreen").style.display = "flex";
+  const loadingScreen = document.getElementById("loadingScreen");
+  const mainContent = document.getElementById("mainContent");
+  
+  // Hide content immediately
+  mainContent.style.opacity = "0";
+  mainContent.style.visibility = "hidden";
+  
+  loadingScreen.classList.remove("fade-out");
+  loadingScreen.style.visibility = "visible";
+  loadingScreen.style.opacity = "1";
+  
+  const startTime = Date.now();
+  
   formatSet.clear();
   cards = [];
   document.getElementById("episodeGrid").innerHTML = "";
@@ -762,7 +781,7 @@ async function renderSeason(seasonName) {
     let allRows = [];
     
     // Use mock data if available, otherwise fetch
-    const useMockData = false; // Toggle this to switch between mock and real data
+    const useMockData = true; // Toggle this to switch between mock and real data
     
     if (useMockData && seasonName in mockSeasonData) {
       allRows = mockSeasonData[seasonName];
@@ -789,8 +808,21 @@ async function renderSeason(seasonName) {
     console.error("Error loading season data:", error);
   }
 
-  const loadingScreen = document.getElementById("loadingScreen");
-  loadingScreen.classList.add("fade-out");
+  // Ensure loading screen shows for at least 800ms
+  const elapsedTime = Date.now() - startTime;
+  const minDisplayTime = 800;
+  const remainingTime = Math.max(0, minDisplayTime - elapsedTime);
+  
+  // Small delay before starting fade to ensure content is hidden
+  setTimeout(() => {
+    setTimeout(() => {
+      console.log("About to fade out loading screen");
+      loadingScreen.classList.add("fade-out");
+      mainContent.style.visibility = "visible";
+      mainContent.style.opacity = "1";
+      console.log("Fade-out class added");
+    }, 50);
+  }, remainingTime);
 }
 
   function displayCards(rows) {
