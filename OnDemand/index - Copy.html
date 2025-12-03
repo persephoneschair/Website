@@ -8,17 +8,9 @@
  <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
 
-    @font-face {
-      font-family: 'Game Over';
-      src: url('./fonts/Game Over.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
-      font-size: 40rem
-    }
-
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #000000;
+      background-color: #0a1e3f;
       padding: 2rem;
       color: #e0e7ff;
     }
@@ -28,18 +20,8 @@
       margin-bottom: 2rem;
       color: #f3ec40;
       text-transform: uppercase;
-      font-size: 12rem;
-      font-family: 'Game Over', sans-serif;
-      letter-spacing: 0.1em;
-      text-shadow: 
-        -2px -2px 0 #1e3a8a,
-        2px -2px 0 #1e3a8a,
-        -2px 2px 0 #1e3a8a,
-        2px 2px 0 #1e3a8a,
-        -2px 0 0 #1e3a8a,
-        2px 0 0 #1e3a8a,
-        0 -2px 0 #1e3a8a,
-        0 2px 0 #1e3a8a;
+      font-size: 4rem;
+      font-family: 'Orbitron', sans-serif;
     }
 
     .controls {
@@ -91,14 +73,11 @@
       padding: 1rem;
       text-align: center;
       color: #d1d9ff;
-      cursor: pointer;
-      border: 2px solid #2563eb;
-      transition: all 0.3s ease;
     }
     
     .card:hover {
-      box-shadow: 0 0 25px rgba(243, 236, 64, 1);
-      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(243, 236, 64, 0.8);
+      transform: translateY(-4px);
     }
 
     .card iframe {
@@ -136,43 +115,7 @@
     .meta ep {
       margin: 0.2rem;
       color: #a8b2d1;
-      font-size: 1.25rem;
-    }
-
-    .meta ep-title {
-      margin: 0.3rem 0;
-      color: #d1d9ff;
       font-size: 1.5rem;
-      display: block;
-    }
-
-    .meta ep-author {
-      margin: 0.2rem 0 0.5rem 0;
-      color: #f3ec40;
-      font-size: 1rem;
-      display: block;
-    }
-
-    .section-episode {
-      margin-bottom: 0.5rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid rgba(243, 236, 64, 0.2);
-    }
-
-    .section-title {
-      margin-bottom: 0.75rem;
-      padding-bottom: 0.75rem;
-      border-bottom: 1px solid rgba(243, 236, 64, 0.2);
-    }
-
-    .section-formats {
-      margin-bottom: 0.5rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid rgba(243, 236, 64, 0.2);
-    }
-
-    .section-details {
-      margin-top: 0.5rem;
     }
 
     .hidden {
@@ -408,314 +351,24 @@
     });
   }
 
-  const mockSeasonData = {
-  "Season 20": [
-    {
-      "Ordinal": "[#500]",
-      "Episode": "S20E01",
-      "Date": "20th September 2025",
-      "Formats": "DangerZone, Cryptex, Distinction!, Bamboozle!, The Abyss, The Pyramid, Battlefront, Face/Off & Buzz Off!",
-      "Guests": "",
-      "Features": "Episode #500",
-      "YouTube Link": "https://www.youtube.com/watch?v=COycobAPwHs&list=PLh2VwY6Qu-PKvxYNw23pWQizKJqE84J_v&index=1",
-      "Episode Title": "Unspecified Jungle",
-      "Title Author": "thelupineone"
-    },
-    {
-      "Ordinal": "[#501]",
-      "Episode": "S20E02 (Pt 1)",
-      "Date": "25th September 2025",
-      "Formats": "Plinko: The Quiz, Risky Business & The Escape Artist",
-      "Guests": "",
-      "Features": "",
-      "YouTube Link": "https://www.youtube.com/watch?v=gP3qRlEE1i4&list=PLh2VwY6Qu-PKvxYNw23pWQizKJqE84J_v&index=2",
-      "Episode Title": "Penne And Teller",
-      "Title Author": "conradillac"
-    },
-    {
-      "Ordinal": "[#501]",
-      "Episode": "S20E02 (Pt 2)",
-      "Date": "25th September 2025",
-      "Formats": "Plinko: The Quiz, Risky Business & The Escape Artist",
-      "Guests": "",
-      "Features": "",
-      "YouTube Link": "https://www.youtube.com/watch?v=YmwOlqYvSg4&list=PLh2VwY6Qu-PKvxYNw23pWQizKJqE84J_v&index=3",
-      "Episode Title": "Penne And Teller",
-      "Title Author": "conradillac"
-    },
-    {
-      "Ordinal": "[#502]",
-      "Episode": "S20E03",
-      "Date": "27th September 2025",
-      "Formats": "Crossfire, Red Herrings! & Spotlight",
-      "Guests": "",
-      "Features": "",
-      "YouTube Link": "https://www.youtube.com/watch?v=tr8iW9l7UqY&list=PLh2VwY6Qu-PKvxYNw23pWQizKJqE84J_v&index=4",
-      "Episode Title": "I Am The Weird Old Guy Who Hosts The Quiz",
-      "Title Author": "stimpsonsangle"
-    },
-    {
-      "Ordinal": "[#503]",
-      "Episode": "S20E04",
-      "Date": "2nd October 2025",
-      "Formats": "Battlefront, The Purge & Data Leak",
-      "Guests": "",
-      "Features": "",
-      "YouTube Link": "https://www.youtube.com/watch?v=24NHyv3850E&list=PLh2VwY6Qu-PKvxYNw23pWQizKJqE84J_v&index=5",
-      "Episode Title": "It Is Not Worth Getting Stabbed For Cathedral City",
-      "Title Author": "lewist1"
-    },
-    {
-      "Ordinal": "[#504]",
-      "Episode": "S20E05",
-      "Date": "9th October 2025",
-      "Formats": "Bamboozle!, Moneybox & The Pyramid",
-      "Guests": "",
-      "Features": "",
-      "YouTube Link": "https://www.youtube.com/watch?v=eti0h4ml75M&list=PLh2VwY6Qu-PKvxYNw23pWQizKJqE84J_v&index=6",
-      "Episode Title": "A Throbber And A Spanker",
-      "Title Author": "sj1307"
-    },
-    {
-      "Ordinal": "[#505]",
-      "Episode": "S20E06",
-      "Date": "11th October 2025",
-      "Formats": "Crossfire, Cryptex & Bidding War",
-      "Guests": "",
-      "Features": "",
-      "YouTube Link": "https://www.youtube.com/watch?v=Z06-E6W1tQc&list=PLh2VwY6Qu-PKvxYNw23pWQizKJqE84J_v&index=7",
-      "Episode Title": "Lock Up Your Children",
-      "Title Author": "abme208"
-    },
-    {
-      "Ordinal": "[#506]",
-      "Episode": "S20E07",
-      "Date": "16th October 2025",
-      "Formats": "Plinko: The Quiz, Distinction! & Risky Business",
-      "Guests": "",
-      "Features": "",
-      "YouTube Link": "https://www.youtube.com/watch?v=wM1jeXBxLbQ&list=PLh2VwY6Qu-PKvxYNw23pWQizKJqE84J_v&index=8",
-      "Episode Title": "You Technically Can, And Also Don't",
-      "Title Author": "ardenfetz"
-    },
-    {
-      "Ordinal": "[#507]",
-      "Episode": "S20E08",
-      "Date": "18th October 2025",
-      "Formats": "Battlefront, The Escape Artist & The Purge",
-      "Guests": "",
-      "Features": "",
-      "YouTube Link": "https://www.youtube.com/watch?v=XUT-Kj-URO4&list=PLh2VwY6Qu-PKvxYNw23pWQizKJqE84J_v&index=9",
-      "Episode Title": "He's Dead And Probably Not Watching",
-      "Title Author": "danger_dimples"
-    },
-    {
-      "Ordinal": "[#508]",
-      "Episode": "S20E09",
-      "Date": "23rd October 2025",
-      "Formats": "Crossfire, DangerZone & The Abyss",
-      "Guests": "",
-      "Features": "",
-      "YouTube Link": "https://www.youtube.com/watch?v=lJl5IfEi9Fs&list=PLh2VwY6Qu-PKvxYNw23pWQizKJqE84J_v&index=10",
-      "Episode Title": "Graham Perineum To His Friends",
-      "Title Author": "oni91_573"
-    },
-    {
-      "Ordinal": "[#509]",
-      "Episode": "S20E10",
-      "Date": "25th October 2025",
-      "Formats": "Bamboozle!, Data Leak & Google That!",
-      "Guests": "",
-      "Features": "",
-      "YouTube Link": "https://www.youtube.com/watch?v=85PwAYNyNps&list=PLh2VwY6Qu-PKvxYNw23pWQizKJqE84J_v&index=11",
-      "Episode Title": "I Would Like To Thank Type 1 Diabetes",
-      "Title Author": "abme208"
-    },
-    {
-      "Ordinal": "[#510]",
-      "Episode": "S20E11",
-      "Date": "30th October 2025",
-      "Formats": "Battlefront, Red Herrings! & Bidding War",
-      "Guests": "",
-      "Features": "Halloween Special",
-      "YouTube Link": "https://www.youtube.com/watch?v=27ZyIqwtE60&list=PLh2VwY6Qu-PKvxYNw23pWQizKJqE84J_v&index=12",
-      "Episode Title": "Dracula And Fish And Chips",
-      "Title Author": "abme208"
-    },
-    {
-      "Ordinal": "[#511]",
-      "Episode": "S20E12",
-      "Date": "1st November 2025",
-      "Formats": "Plinko: The Quiz, Moneybox & Distinction!",
-      "Guests": "",
-      "Features": "",
-      "YouTube Link": "https://www.youtube.com/watch?v=WNnLqzzojHU&list=PLh2VwY6Qu-PKvxYNw23pWQizKJqE84J_v&index=13",
-      "Episode Title": "Sport Is A Bit Like Quiz, But More Physical",
-      "Title Author": "lewist1"
-    },
-    {
-      "Ordinal": "[#512]",
-      "Episode": "S20E13",
-      "Date": "8th November 2025",
-      "Formats": "Crossfire, The Abyss & The Pyramid",
-      "Guests": "",
-      "Features": "",
-      "YouTube Link": "https://www.youtube.com/watch?v=30hs0QVhSRU&list=PLh2VwY6Qu-PKvxYNw23pWQizKJqE84J_v&index=14",
-      "Episode Title": "His Mother And His Wife Were Different People",
-      "Title Author": "stimpsonsangle"
-    },
-    {
-      "Ordinal": "[#513]",
-      "Episode": "S20E14",
-      "Date": "20th November 2025",
-      "Formats": "Plinko: The Quiz, Cryptex, DangerZone & DEFCON",
-      "Guests": "",
-      "Features": "",
-      "YouTube Link": "https://www.youtube.com/watch?v=eZXdpVMivYU&list=PLh2VwY6Qu-PKvxYNw23pWQizKJqE84J_v&index=15",
-      "Episode Title": "Oh Cool! Nuclear War!",
-      "Title Author": "oni91_573"
-    },
-    {
-      "Ordinal": "[#514]",
-      "Episode": "S20E15",
-      "Date": "22nd November 2025",
-      "Formats": "Bamboozle!, Red Herrings!, The Purge & DEFCON",
-      "Guests": "",
-      "Features": "",
-      "YouTube Link": "https://www.youtube.com/watch?v=1levX8I_dx0&list=PLh2VwY6Qu-PKvxYNw23pWQizKJqE84J_v&index=16",
-      "Episode Title": "Sir Francis BLT",
-      "Title Author": "jr_plays_games"
-    },
-    {
-      "Ordinal": "[#515]",
-      "Episode": "S20E16",
-      "Date": "27th November 2025",
-      "Formats": "Data Leak, The Escape Artist & DEFCON",
-      "Guests": "",
-      "Features": "",
-      "YouTube Link": "https://www.youtube.com/watch?v=DpT_DQRa7rM&list=PLh2VwY6Qu-PKvxYNw23pWQizKJqE84J_v&index=17",
-      "Episode Title": "It Is Similar In The Sense That It Is An Empire",
-      "Title Author": "lewist1"
-    },
-    {
-      "Ordinal": "[#516]",
-      "Episode": "S20E17",
-      "Date": "29th November 2025",
-      "Formats": "Plinko: The Quiz, Distinction! & Moneybox",
-      "Guests": "",
-      "Features": "",
-      "YouTube Link": "https://www.youtube.com/watch?v=GysFUiQr9bs&list=PLh2VwY6Qu-PKvxYNw23pWQizKJqE84J_v&index=18",
-      "Episode Title": "Fantastic To Have You Here; Now Leave",
-      "Title Author": "keglercoach"
-    },
-    {
-      "Ordinal": "[#517]",
-      "Episode": "S20E18",
-      "Date": "4th December 2025",
-      "Formats": "Bamboozle!, TBC & Google That!",
-      "Guests": "",
-      "Features": "Quizmas Special",
-      "YouTube Link": "https://www.youtube.com/watch?v=f1srUafNMAk",
-      "Episode Title": ""
-    },
-    {
-      "Ordinal": "[#518]",
-      "Episode": "S20E19",
-      "Date": "6th December 2025",
-      "Formats": "Crossfire, TBC & Cryptex",
-      "Guests": "",
-      "Features": "Quizmas Special",
-      "YouTube Link": "https://www.youtube.com/watch?v=f1srUafNMAk",
-      "Episode Title": ""
-    },
-    {
-      "Ordinal": "[#519]",
-      "Episode": "S20E20",
-      "Date": "11th December 2025",
-      "Formats": "Plinko: The Quiz, TBC & Data Leak",
-      "Guests": "",
-      "Features": "Quizmas Special",
-      "YouTube Link": "https://www.youtube.com/watch?v=f1srUafNMAk",
-      "Episode Title": ""
-    },
-    {
-      "Ordinal": "[#520]",
-      "Episode": "S20E21",
-      "Date": "13th December 2025",
-      "Formats": "Battlefront, TBC & The Escape Artist",
-      "Guests": "",
-      "Features": "Quizmas Special",
-      "YouTube Link": "https://www.youtube.com/watch?v=f1srUafNMAk",
-      "Episode Title": ""
-    },
-    {
-      "Ordinal": "[#521]",
-      "Episode": "S20E22",
-      "Date": "18th December 2025",
-      "Formats": "Crossfire & TBC",
-      "Guests": "",
-      "Features": "Quizmas Special",
-      "YouTube Link": "https://www.youtube.com/watch?v=f1srUafNMAk",
-      "Episode Title": ""
-    },
-    {
-      "Ordinal": "[#522]",
-      "Episode": "S20E23",
-      "Date": "20th December 2025",
-      "Formats": "Plinko: The Quiz, TBC & Google That!",
-      "Guests": "",
-      "Features": "Quizmas Special",
-      "YouTube Link": "https://www.youtube.com/watch?v=f1srUafNMAk",
-      "Episode Title": ""
-    },
-    {
-      "Ordinal": "[#523]",
-      "Episode": "S20E24",
-      "Date": "25th December 2025",
-      "Formats": "TBC",
-      "Guests": "",
-      "Features": "Christmas Day Special",
-      "YouTube Link": "https://www.youtube.com/watch?v=f1srUafNMAk",
-      "Episode Title": ""
-    }
-  ]
-};
-
-async function renderSeason(seasonName) {
+  async function renderSeason(seasonName) {
   document.getElementById("loadingScreen").style.display = "flex";
+
   formatSet.clear();
   cards = [];
   document.getElementById("episodeGrid").innerHTML = "";
 
-  try {
-    let allRows = [];
-    
-    // Use mock data if available, otherwise fetch
-    const useMockData = false; // Toggle this to switch between mock and real data
-    
-    if (useMockData && seasonName in mockSeasonData) {
-      allRows = mockSeasonData[seasonName];
-    } else if (seasonName === "All Seasons") {
-      const csvPromises = Object.values(seasonSources).map(url =>
-        fetch(url).then(res => res.text()).catch(err => {
-          console.warn(`Fetch failed: ${err}`);
-          return "";
-        })
-      );
-      const csvContents = await Promise.all(csvPromises);
-      const allRowsPromises = csvContents.map(parseCSV);
-      allRows = (await Promise.all(allRowsPromises)).flat();
-    } else if (useMockData && seasonName in mockSeasonData) {
-      allRows = mockSeasonData[seasonName];
-    } else {
-      const response = await fetch(seasonSources[seasonName]);
-      const csvText = await response.text();
-      allRows = await parseCSV(csvText);
-    }
-    
+  if (seasonName === "All Seasons") {
+    const csvPromises = Object.values(seasonSources).map(url => fetch(url).then(res => res.text()));
+    const csvContents = await Promise.all(csvPromises);
+    const allRowsPromises = csvContents.map(parseCSV);
+    const allRows = (await Promise.all(allRowsPromises)).flat();
     displayCards(allRows);
-  } catch (error) {
-    console.error("Error loading season data:", error);
+  } else {
+    const response = await fetch(seasonSources[seasonName]);
+    const csvText = await response.text();
+    const rows = await parseCSV(csvText);
+    displayCards(rows);
   }
 
   document.getElementById("loadingScreen").style.display = "none";
@@ -741,29 +394,22 @@ async function renderSeason(seasonName) {
 
       card.innerHTML = `
       
-  <div class="thumb-wrapper">
+  <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" rel="noopener" class="thumb-wrapper">
     <img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" alt="YouTube Thumbnail" class="thumbnail-img" />
-  </div>
+    <div class="play-button">
+      <svg viewBox="0 0 100 100" width="128" height="128" fill="white">
+        <polygon points="40,30 70,50 40,70" />
+      </svg>
+    </div>
+  </a>
   <div class="meta">
-    <div class="section-episode">
-      <ep><strong>${row.Episode || 'Untitled'} ${row.Ordinal || 'Untitled'}</strong></ep>
-      <p><strong>${row.Date || ''}</strong></p>
-    </div>
-    <div class="section-title">
-      ${row['Episode Title'] ? `<ep-title><strong><i>"${row['Episode Title']}"</i></strong></ep-title>${row['Title Author'] ? `<ep-author><i>by ${row['Title Author']}</i></ep-author>` : ''}` : ''}
-    </div>
-    <div class="section-formats">
-      <h2>${formatMultiline(row.Formats || 'N/A')}</h2>
-    </div>
-    <div class="section-details">
-      ${row.Guests ? `<p><i>Guests:</i> ${row.Guests}</p>` : ''}
-      ${row.Features ? `<p><i>Feature:</i> ${row.Features}</p>` : ''}
-    </div>
+    <ep><strong>${row.Episode || 'Untitled'} ${row.Ordinal || 'Untitled'}</strong></ep>
+    <p><strong>${row.Date || ''}</strong></p>
+    <h2>${formatMultiline(row.Formats || 'N/A')}</h2>
+    ${row.Guests ? `<p><i>Guests:</i> ${row.Guests}</p>` : ''}
+    ${row.Features ? `<p><i>Feature:</i> ${row.Features}</p>` : ''}
   </div>
 `;
-      card.addEventListener('click', () => {
-        window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
-      });
       cards.push(card);
       container.appendChild(card);
     });
