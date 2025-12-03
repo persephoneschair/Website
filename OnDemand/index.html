@@ -21,6 +21,12 @@
       background-color: #000000;
       padding: 2rem;
       color: #e0e7ff;
+      opacity: 0;
+      animation: fadeIn 1.5s ease-in forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
     }
 
     h1 {
@@ -231,12 +237,23 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 12rem;
+  font-size: 8vw;
   z-index: 1000;
   font-family: 'Game Over', sans-serif;
   letter-spacing: 0.05em;
   text-shadow: 0 0 20px rgba(243, 236, 64, 0.8), 0 0 40px rgba(243, 236, 64, 0.5);
   animation: pulse 1.5s ease-in-out infinite;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.6s ease-out, visibility 0s 0.6s;
+  padding: 2rem;
+  text-align: center;
+  pointer-events: none;
+}
+
+#loadingScreen.fade-out {
+  opacity: 0;
+  visibility: hidden;
 }
 
 @keyframes pulse {
@@ -319,18 +336,7 @@
   </style>
 </head>
 <body>
-<div id="loadingScreen" style="
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: #0a1e3f;
-  color: #f3ec40;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 3rem;
-  z-index: 1000;
-"><strong>
+<div id="loadingScreen"><strong>
   LOADING EPISODES...</strong>
 </div>
   <h1 id="mainHeader">GAME NIGHT: ALL SEASONS</h1>
@@ -428,6 +434,52 @@
   }
 
   const mockSeasonData = {
+    "Season 19": [
+    {
+      "Ordinal": "[#500]",
+      "Episode": "S19E01",
+      "Date": "20th September 2025",
+      "Formats": "DangerZone, Cryptex, Distinction!, Bamboozle!, The Abyss, The Pyramid, Battlefront, Face/Off & Buzz Off!",
+      "Guests": "",
+      "Features": "Episode #500",
+      "YouTube Link": "https://www.youtube.com/watch?v=COycobAPwHs&list=PLh2VwY6Qu-PKvxYNw23pWQizKJqE84J_v&index=1",
+      "Episode Title": "Unspecified Jungle",
+      "Title Author": "thelupineone"
+    },
+    {
+      "Ordinal": "[#501]",
+      "Episode": "S19E02 (Pt 1)",
+      "Date": "25th September 2025",
+      "Formats": "Plinko: The Quiz, Risky Business & The Escape Artist",
+      "Guests": "",
+      "Features": "",
+      "YouTube Link": "https://www.youtube.com/watch?v=gP3qRlEE1i4&list=PLh2VwY6Qu-PKvxYNw23pWQizKJqE84J_v&index=2",
+      "Episode Title": "Penne And Teller",
+      "Title Author": "conradillac"
+    },
+    {
+      "Ordinal": "[#501]",
+      "Episode": "S19E02 (Pt 2)",
+      "Date": "25th September 2025",
+      "Formats": "Plinko: The Quiz, Risky Business & The Escape Artist",
+      "Guests": "",
+      "Features": "",
+      "YouTube Link": "https://www.youtube.com/watch?v=YmwOlqYvSg4&list=PLh2VwY6Qu-PKvxYNw23pWQizKJqE84J_v&index=3",
+      "Episode Title": "Penne And Teller",
+      "Title Author": "conradillac"
+    },
+    {
+      "Ordinal": "[#502]",
+      "Episode": "S19E03",
+      "Date": "27th September 2025",
+      "Formats": "Crossfire, Red Herrings! & Spotlight",
+      "Guests": "",
+      "Features": "",
+      "YouTube Link": "https://www.youtube.com/watch?v=tr8iW9l7UqY&list=PLh2VwY6Qu-PKvxYNw23pWQizKJqE84J_v&index=4",
+      "Episode Title": "I Am The Weird Old Guy Who Hosts The Quiz",
+      "Title Author": "stimpsonsangle"
+    }
+  ],
   "Season 20": [
     {
       "Ordinal": "[#500]",
@@ -710,7 +762,7 @@ async function renderSeason(seasonName) {
     let allRows = [];
     
     // Use mock data if available, otherwise fetch
-    const useMockData = true; // Toggle this to switch between mock and real data
+    const useMockData = false; // Toggle this to switch between mock and real data
     
     if (useMockData && seasonName in mockSeasonData) {
       allRows = mockSeasonData[seasonName];
@@ -737,7 +789,8 @@ async function renderSeason(seasonName) {
     console.error("Error loading season data:", error);
   }
 
-  document.getElementById("loadingScreen").style.display = "none";
+  const loadingScreen = document.getElementById("loadingScreen");
+  loadingScreen.classList.add("fade-out");
 }
 
   function displayCards(rows) {
