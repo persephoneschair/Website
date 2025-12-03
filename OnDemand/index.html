@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="icon" href="Website/Icon.png" type="image/png">
+<link rel="icon" href="Images/Icon.png" type="image/png">
   <meta charset="UTF-8" />
   <title>GAME NIGHT</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -156,22 +156,27 @@
     .section-episode {
       margin-bottom: 0.5rem;
       padding-bottom: 0.5rem;
-      border-bottom: 1px solid rgba(243, 236, 64, 0.2);
+      border-bottom: none;
     }
 
     .section-title {
-      margin-bottom: 0.75rem;
-      padding-bottom: 0.75rem;
-      border-bottom: 1px solid rgba(243, 236, 64, 0.2);
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
     }
 
     .section-formats {
-      margin-bottom: 0.5rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid rgba(243, 236, 64, 0.2);
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
     }
 
     .section-details {
+      margin-top: 0;
+      border-top: none;
+    }
+
+    .section-details:not(:empty) {
       margin-top: 0.5rem;
     }
 
@@ -744,15 +749,15 @@ async function renderSeason(seasonName) {
   <div class="thumb-wrapper">
     <img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" alt="YouTube Thumbnail" class="thumbnail-img" />
   </div>
-  <div class="meta">
-    <div class="section-episode">
+    <div class="meta">
+    <div class="section-episode" style="margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(243, 236, 64, 0.2);">
       <ep><strong>${row.Episode || 'Untitled'} ${row.Ordinal || 'Untitled'}</strong></ep>
       <p><strong>${row.Date || ''}</strong></p>
     </div>
-    <div class="section-title">
+    <div class="section-title" ${row['Episode Title'] ? 'style="margin-bottom: 0.75rem; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(243, 236, 64, 0.2);"' : ''}>
       ${row['Episode Title'] ? `<ep-title><strong><i>"${row['Episode Title']}"</i></strong></ep-title>${row['Title Author'] ? `<ep-author><i>by ${row['Title Author']}</i></ep-author>` : ''}` : ''}
     </div>
-    <div class="section-formats">
+    <div class="section-formats" ${(row.Guests || row.Features) ? 'style="margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(243, 236, 64, 0.2);"' : ''}>
       <h2>${formatMultiline(row.Formats || 'N/A')}</h2>
     </div>
     <div class="section-details">
