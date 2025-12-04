@@ -58,13 +58,19 @@
     }
 
     select, label.checkbox {
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-      border-radius: 6px;
-      border: none;
+      padding: 0.75rem 1.25rem;
+      font-size: 1.1rem;
+      font-family: 'Segoe UI', sans-serif;
+      border-radius: 12px;
+      border: 2px solid #2563eb;
       background-color: #1e3a8a;
-      color: #e0e7ff;
+      color: #d1d9ff;
       cursor: pointer;
+      transition: border-color 0.15s ease;
+    }
+
+    select:hover, label.checkbox:hover {
+      border-color: #f3ec40;
     }
 
     label.checkbox {
@@ -72,8 +78,9 @@
       align-items: center;
       gap: 0.5rem;
       background-color: #1e3a8a;
-      border-radius: 6px;
-      padding: 0.4rem 0.8rem;
+      border-radius: 12px;
+      border: 2px solid #2563eb;
+      padding: 0.65rem 1.1rem;
     }
 
     input[type="checkbox"] {
@@ -99,12 +106,16 @@
       color: #d1d9ff;
       cursor: pointer;
       border: 2px solid #2563eb;
-      transition: all 0.3s ease;
+      transition: all 0.15s ease;
     }
     
     .card:hover {
       box-shadow: 0 0 25px rgba(243, 236, 64, 1);
       transform: scale(1.05);
+      border-color: #f3ec40;
+      border-radius: 25px;
+      background: #0b3797;
+      border-width: 4px;
     }
 
     .card iframe {
