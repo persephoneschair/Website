@@ -1,43 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="icon" href="Website/Icon.png" type="image/png">
+<link rel="icon" href="../Images/Icon.png" type="image/png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title id="pageTitle">The Penny Bank</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
 
+    @font-face {
+      font-family: 'Game Over';
+      src: url('../Fonts/Game Over.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+      font-size: 40rem
+    }
+
     body {
-      background-color: #0a1e3f;
+      background-color: #000000;
       color: #e0e7ff;
       font-family: 'Segoe UI', sans-serif;
       margin: 0;
       padding: 2rem;
     }
+    
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 12px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: #000000;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #2563eb, #0b3797);
+      border-radius: 6px;
+      border: 2px solid #000000;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, #0b3797, #2563eb);
+    }
+    
+    /* Firefox scrollbar */
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: #2563eb #000000;
+    }
 
     h1 {
       text-align: center;
       color: #f3ec40;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 3rem;
+      font-family: 'Game Over', sans-serif;
+      font-size: 12rem;
       margin-bottom: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: opacity 0.15s ease;
+      text-shadow: 
+        -2px -2px 0 #1e3a8a,
+        2px -2px 0 #1e3a8a,
+        -2px 2px 0 #1e3a8a,
+        2px 2px 0 #1e3a8a,
+        -2px 0 0 #1e3a8a,
+        2px 0 0 #1e3a8a,
+        0 -2px 0 #1e3a8a,
+        0 2px 0 #1e3a8a;
+    }
+    
+    @media (max-width: 1200px) {
+      h1 {
+        font-size: 9rem;
+      }
+    }
+    
+    @media (max-width: 900px) {
+      h1 {
+        font-size: 6rem;
+      }
+    }
+    
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 4rem;
+        letter-spacing: 0.05em;
+      }
+    }
+    
+    h1.fade-out {
+      opacity: 0;
     }
 
     .controls {
       text-align: center;
       margin-bottom: 2rem;
     }
+    
+    .penny-controls {
+      display: inline-block;
+    }
 
     select, input[type="text"] {
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-      border-radius: 6px;
-      border: none;
+      padding: 0.75rem 1.25rem;
+      font-size: 1.1rem;
+      font-family: 'Segoe UI', sans-serif;
+      border-radius: 12px;
+      border: 2px solid #2563eb;
       background-color: #1e3a8a;
-      color: #e0e7ff;
+      color: #d1d9ff;
       cursor: pointer;
       margin: 0.5rem;
+      transition: border-color 0.15s ease;
+      width: 200px;
+      box-sizing: border-box;
+    }
+    
+    select:hover, input[type="text"]:hover {
+      border-color: #f3ec40;
     }
     
     
@@ -84,16 +164,19 @@
 
     .entry {
   background: #152a5a;
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 0.75rem 1rem;
   font-size: 1.2rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 0.5rem;
   overflow: hidden;
   white-space: nowrap;
+  cursor: pointer;
+  border: 2px solid #2563eb;
+  transition: all 0.15s ease;
 }
 
     .entry .name {
@@ -111,8 +194,11 @@
     }
 
     .entry:hover {
-      box-shadow: 0 4px 12px rgba(243, 236, 64, 0.8);
-      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(243, 236, 64, 1);
+      transform: scale(1.05);
+      border-color: #f3ec40;
+      border-radius: 16px;
+      background: #0b3797;
     }
 
     .ordinal {
@@ -126,16 +212,46 @@
     .gold {
       background-color: #FFFFC5;
       color: #000;
+      border: 2px solid #ffd700;
+      box-shadow: 0 4px 10px rgba(255, 215, 0, 0.3);
+    }
+    
+    .gold:hover {
+      box-shadow: 0 0 25px rgba(255, 215, 0, 1);
+      transform: scale(1.05);
+      border-color: #ffd700;
+      border-radius: 16px;
+      background: #FFFFDD;
     }
 
     .silver {
       background-color: #FFFFFF;
       color: #000;
+      border: 2px solid #C0C0C0;
+      box-shadow: 0 4px 10px rgba(192, 192, 192, 0.3);
+    }
+    
+    .silver:hover {
+      box-shadow: 0 0 30px rgba(192, 192, 192, 1);
+      transform: scale(1.05);
+      border-color: #DDDDDD;
+      border-radius: 16px;
+      background: #F5F5F5;
     }
 
     .bronze {
       background-color: #FFC78F;
       color: #000;
+      border: 2px solid #CD7F32;
+      box-shadow: 0 4px 10px rgba(205, 127, 50, 0.3);
+    }
+    
+    .bronze:hover {
+      box-shadow: 0 0 30px rgba(205, 127, 50, 1);
+      transform: scale(1.05);
+      border-color: #CD7F32;
+      border-radius: 16px;
+      background: #FFD7A7;
     }
 
     .gold .ordinal {
@@ -222,22 +338,28 @@
 /* Reuse entry card styling from Penny Bank */
 .medallist {
   background: #152a5a;
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 0.75rem 1rem;
   font-size: 1.2rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: space-between;
   align-items: center;
   white-space: nowrap;
   gap: 0.5rem;
   overflow: hidden;
+  cursor: pointer;
+  border: 2px solid #2563eb;
+  transition: all 0.15s ease;
 }
 
 
 .medallist:hover {
-  box-shadow: 0 4px 12px rgba(243, 236, 64, 0.8);
-  transform: translateY(-2px);
+  box-shadow: 0 0 25px rgba(243, 236, 64, 1);
+  transform: scale(1.05);
+  border-color: #f3ec40;
+  border-radius: 16px;
+  background: #0b3797;
 }
 
 .medallist > span:nth-child(1) {
@@ -265,21 +387,40 @@
   justify-content: center;
   align-items: flex-end;
   text-align: right;
-  white-space: nowrap;
   min-width: 6em;
-  max-width: 8em;
+  max-width: 12em;
 }
 
 .medallist > span:nth-child(3) .total-count {
   font-weight: 700;
   font-size: 1.2em;
   color: #fff;
+  white-space: nowrap;
 }
 
 .medallist > span:nth-child(3) small {
-  font-size: 0.75em;
-  color: #aaa;
+  font-size: 0.9em;
+  color: #ddd;
+  display: block;
+  margin-top: 0.25rem;
+  line-height: 1.8;
+  text-align: right;
 }
+
+.medal-badge {
+  display: inline-block;
+  padding: 0.1rem 0.35rem;
+  margin: 0.1rem 0.15rem;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+
+.medal-gold { background: linear-gradient(135deg, #FFD700, #FFA500); color: #000; }
+.medal-silver { background: linear-gradient(135deg, #C0C0C0, #808080); color: #000; }
+.medal-bronze { background: linear-gradient(135deg, #CD7F32, #8B4513); color: #fff; }
+.medal-lobby { background: linear-gradient(135deg, #6b8e23, #556b2f); color: #fff; }
 
 
 #returnButton {
@@ -287,43 +428,92 @@
   padding: 0.4em 0.6em;
 }
 
-#mainTitle {
-  font-size: clamp(1.5rem, 5vw, 2rem);
-  white-space: normal;
-  word-break: break-word;
-  overflow-wrap: break-word;
+.hidden {
+  display: none !important;
+}
+
+#loadingScreen {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: #000000;
+  color: #f3ec40;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 8vw;
+  z-index: 1000;
+  font-family: 'Game Over', sans-serif;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 20px rgba(243, 236, 64, 0.8), 0 0 40px rgba(243, 236, 64, 0.5);
+  animation: pulse 1s ease-in-out infinite;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.6s ease-out, visibility 0s linear 0.6s;
+  padding: 1rem;
   text-align: center;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+#loadingScreen strong {
   max-width: 100%;
-  padding: 0 1rem;
+  word-wrap: break-word;
+}
+
+#loadingScreen.show {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: all;
+  transition: opacity 0.3s ease-in, visibility 0s linear;
+}
+
+@keyframes pulse {
+  0%, 100% { 
+    text-shadow: 0 0 20px rgba(243, 236, 64, 0.6), 0 0 40px rgba(243, 236, 64, 0.3);
+  }
+  50% { 
+    text-shadow: 0 0 20px rgba(243, 236, 64, 1), 0 0 40px rgba(243, 236, 64, 0.7);
+  }
 }
 
   </style>
 </head>
 <body>
+<div id="loadingScreen"><strong id="loadingText">
+  LOADING MEDAL CABINET...</strong>
+</div>
   <h1 id="mainTitle">The Penny Bank</h1>
   <div class="controls">
     
-  <div class="penny-controls" id="pennyControls">
+  <div class="penny-controls" id="pennyControls" style="display: inline-block;">
     <select id="modeSelect">
       <option value="credits">Author Credits</option>
       <option value="current" selected>Current Season</option>
       <option value="total">All-Time</option>
     </select>
-    <input type="text" id="searchInput" placeholder="Filter Players..." style="width: 200px;">
   </div>
-  <br>
-  <select id="formatSelect">
+  
+  <select id="formatSelect" style="width: 300px;">
     <option value="leaderboard">The Penny Bank</option>
   </select>
   
+  <div class="penny-controls" id="searchControls" style="display: inline-block;">
+    <input type="text" id="searchInput" placeholder="Filter Players...">
+  </div>
+  
 </div>
   <div id="leaderboard" class="leaderboard fade"></div>
+  
+  <p id="noPlayersMessage" class="hidden" style="text-align:center; color: firebrick; font-size: 2.5rem; margin-top: 2rem;">
+  <strong>NO PLAYERS FOUND</strong>
+</p>
   
   <div id="medalBoard" class="medal-board fade" style="display: none;"></div>
 
   <script>
     const DATA_URL = 'https://raw.githubusercontent.com/persephoneschair/PennyStorage/main/NewPennys.txt';
-    const FORMATS = ['Abyss.txt', 'Battlefront.txt', 'BiddingWar.txt', 'Crossfire.txt', 'Cryptex.txt', 'DangerZone.txt', 'DataLeak.txt', 'Distinction.txt', 'EscapeArtist.txt', 'GoogleThat.txt', 'Hive.txt', 'HiveLeaderboard.txt', 'Mole.txt', 'MoleLeaderboard.txt', 'Moneybox.txt', 'MoneyboxLeaderboard.txt', 'Purge.txt', 'Pyramid.txt', 'RedHerrings.txt', 'RiskyBusiness.txt', 'Spotlight.txt', 'SpotlightLeaderboard.txt']; // Update with real format file names
+    const FORMATS = ['Abyss.txt', 'Battlefront.txt', 'BiddingWar.txt', 'Crossfire.txt', 'Cryptex.txt', 'DangerZone.txt', 'DataLeak.txt', 'DEFCON.txt', 'Distinction.txt', 'EscapeArtist.txt', 'GoogleThat.txt', 'Hive.txt', 'HiveLeaderboard.txt', 'Mole.txt', 'MoleLeaderboard.txt', 'Moneybox.txt', 'MoneyboxLeaderboard.txt', 'Purge.txt', 'Pyramid.txt', 'RedHerrings.txt', 'RiskyBusiness.txt', 'Spotlight.txt', 'SpotlightLeaderboard.txt']; // Update with real format file names
     const FORMAT_LABELS = {
       "Abyss.txt": "The Abyss",
       "Battlefront.txt": "Battlefront",
@@ -332,6 +522,7 @@
       "Cryptex.txt": "Cryptex",
       "DangerZone.txt": "DangerZone",
       "DataLeak.txt": "Data Leak",
+      "DEFCON.txt": "DEFCON",
       "Distinction.txt": "Distinction!",
       "EscapeArtist.txt": "The Escape Artist",
       "GoogleThat.txt": "Google That!",
@@ -351,6 +542,13 @@
 
     let players = [];    
 
+    function setLoadingMessage(message) {
+      const loadingText = document.getElementById('loadingText');
+      if (loadingText) {
+        loadingText.textContent = message;
+      }
+    }
+
     async function fetchData() {
       try {
         const response = await fetch(DATA_URL);
@@ -369,79 +567,132 @@
 
     function renderLeaderboard() {
     
-      document.getElementById('medalBoard').style.display = 'none';
-      document.getElementById('leaderboard').style.display = 'grid';
-      document.getElementById('mainTitle').textContent = 'The Penny Bank';
+      const medalBoard = document.getElementById('medalBoard');
+      const leaderboard = document.getElementById('leaderboard');
+      const mainTitle = document.getElementById('mainTitle');
+      
+      medalBoard.style.display = 'none';
+      medalBoard.classList.add('hidden');
+      leaderboard.style.display = 'grid';
+      leaderboard.classList.remove('hidden');
+      mainTitle.textContent = 'The Penny Bank';
+      mainTitle.style.visibility = 'visible';
+      mainTitle.style.opacity = '1';
       document.title = 'The Penny Bank';
 
       const mode = document.getElementById('modeSelect').value;
       const search = document.getElementById('searchInput').value.toLowerCase();
       const board = document.getElementById('leaderboard');
+      const noPlayersMsg = document.getElementById('noPlayersMessage');
+      noPlayersMsg.style.visibility = 'visible';
       board.innerHTML = '';
 
       const filtered = players
         .filter(p => p[mode] && parseFloat(p[mode]) > 0)
         .sort((a, b) => parseFloat(b[mode]) - parseFloat(a[mode]));
 
+      let matchCount = 0;
+      let displayIndex = 0;
       filtered.forEach((player, index) => {
         if (!player.name.toLowerCase().includes(search)) return;
+        matchCount++;
 
         const div = document.createElement('div');
         div.className = 'entry';
-        if (index === 0) div.classList.add('gold');
-        else if (index === 1) div.classList.add('silver');
-        else if (index === 2) div.classList.add('bronze');
+        if (displayIndex === 0) div.classList.add('gold');
+        else if (displayIndex === 1) div.classList.add('silver');
+        else if (displayIndex === 2) div.classList.add('bronze');
 
         div.innerHTML = `
-          <span class="ordinal">${index + 1}</span>
+          <span class="ordinal">${displayIndex + 1}</span>
           <span class="name" title="${player.name}">${player.name}</span>
           <span class="value">${Number(player[mode]).toLocaleString()}</span>
         `;
         board.appendChild(div);
+        displayIndex++;
         
       });
+      
+      // Show/hide no results message
+      if (matchCount === 0) {
+        noPlayersMsg.classList.remove('hidden');
+        board.style.display = 'none';
+      } else {
+        noPlayersMsg.classList.add('hidden');
+        board.style.display = 'grid';
+      }
     }
     
     function renderFormatLeaderboard(data, label) {
   const board = document.getElementById('medalBoard');
   const leaderboard = document.getElementById('leaderboard');
   const pennyControls = document.getElementById('pennyControls');
+  const noPlayersMsg = document.getElementById('noPlayersMessage');
+  const mainTitle = document.getElementById('mainTitle');
 
-  fadeSwitch(leaderboard, board, () => {
-    board.innerHTML = '';
-    board.style.display = 'grid';
-    document.getElementById('mainTitle').textContent = `${label}`;
-    document.title = label;
-    pennyControls.style.display = 'none';
+  // Hide leaderboard immediately
+  leaderboard.style.display = 'none';
+  leaderboard.classList.add('hidden');
+  
+  // Build content off-screen first
+  const fragment = document.createDocumentFragment();
+  const sorted = [...data].sort((a, b) => b.playerScore - a.playerScore);
 
-    const sorted = [...data].sort((a, b) => b.playerScore - a.playerScore);
-
-    sorted.forEach((entry, index) => {
-      const row = document.createElement('div');
-      row.className = 'entry';
-      if (index === 0) row.classList.add('gold');
-else if (index === 1) row.classList.add('silver');
-else if (index === 2) row.classList.add('bronze');
-      row.innerHTML = `
-        <span class="ordinal">${index + 1}</span>
-        <span class="name" title="${entry.playerName}">${entry.playerName}</span>
-        <span class="value">${entry.playerScore.toLocaleString()}</span>
-      `;
-      board.appendChild(row);
-    });
-
-    // ✅ Attach handlers *after* rows exist
-    attachPlayerClickHandlers();
+  sorted.forEach((entry, index) => {
+    const row = document.createElement('div');
+    row.className = 'entry';
+    if (index === 0) row.classList.add('gold');
+    else if (index === 1) row.classList.add('silver');
+    else if (index === 2) row.classList.add('bronze');
+    row.innerHTML = `
+      <span class="ordinal">${index + 1}</span>
+      <span class="name" title="${entry.playerName}">${entry.playerName}</span>
+      <span class="value">${entry.playerScore.toLocaleString()}</span>
+    `;
+    fragment.appendChild(row);
   });
+  
+  // Update board with all content at once
+  board.innerHTML = '';
+  board.appendChild(fragment);
+  board.style.display = 'grid';
+  board.style.visibility = 'visible';
+  board.style.opacity = '1';
+  board.classList.remove('hidden');
+  mainTitle.textContent = `${label}`;
+  mainTitle.style.visibility = 'visible';
+  mainTitle.style.opacity = '1';
+  document.title = label;
+  pennyControls.style.display = 'none';
+  document.getElementById('searchControls').style.display = 'none';
+  noPlayersMsg.style.visibility = 'visible';
+  noPlayersMsg.classList.add('hidden');
+
+  // Attach handlers after rows exist
+  attachPlayerClickHandlers();
 }
 
   function renderMedalBoard(data, label) {
-  document.getElementById('leaderboard').style.display = 'none';
+  const leaderboard = document.getElementById('leaderboard');
   const board = document.getElementById('medalBoard');
+  const noPlayersMsg = document.getElementById('noPlayersMessage');
+  const mainTitle = document.getElementById('mainTitle');
+  
+  leaderboard.style.display = 'none';
+  leaderboard.classList.add('hidden');
   board.innerHTML = '';
   board.style.display = 'grid';
-  document.getElementById('mainTitle').textContent = `${label} Medal Cabinet`;
+  board.style.visibility = 'visible';
+  board.style.opacity = '1';
+  board.classList.remove('hidden');
+  mainTitle.textContent = `${label} Medal Cabinet`;
+  mainTitle.style.visibility = 'visible';
+  mainTitle.style.opacity = '1';
   document.title = `${label} Medal Cabinet`;
+  pennyControls.style.display = 'none';
+  document.getElementById('searchControls').style.display = 'none';
+  noPlayersMsg.style.visibility = 'visible';
+  noPlayersMsg.classList.add('hidden');
 
   const types = ['gold', 'silver', 'bronze', 'lobby'];
   const medalCounts = {};
@@ -510,10 +761,10 @@ else if (index === 2) row.classList.add('bronze');
 
   players.forEach((player, index) => {
     const breakdown = `
-      ${player.gold ? `🥇${player.gold} ` : ''}
-      ${player.silver ? `🥈${player.silver} ` : ''}
-      ${player.bronze ? `🥉${player.bronze} ` : ''}
-      ${player.lobby ? `✨${player.lobby}` : ''}
+      ${player.gold ? `<span class="medal-badge medal-gold">🥇 ${player.gold}</span>` : ''}
+      ${player.silver ? `<span class="medal-badge medal-silver">🥈 ${player.silver}</span>` : ''}
+      ${player.bronze ? `<span class="medal-badge medal-bronze">🥉 ${player.bronze}</span>` : ''}
+      ${player.lobby ? `<span class="medal-badge medal-lobby">🎖️ ${player.lobby}</span>` : ''}
     `.trim();
 
     const row = document.createElement('div');
@@ -530,6 +781,7 @@ else if (index === 2) row.classList.add('bronze');
     // Add click handler to load player's medal cabinet
     row.style.cursor = 'pointer';
     row.onclick = () => {
+      setLoadingMessage(`LOADING ${player.name.toUpperCase()}'S MEDAL CABINET`);
       renderPlayerCabinet(player.name);
     };
 
@@ -549,112 +801,215 @@ function getChunkSize() {
 // ------------------
 // 1. Render Player Cabinet
 async function renderPlayerCabinet(playerName) {
+  // Quick check if player exists first (before showing loading screen)
+  try {
+    const resp = await fetch(DATA_URL);
+    const allData = await resp.json();
+    const playerObj = allData.playerList.find(p => p.PlayerName === playerName);
+    
+    // If player not found, silently do nothing
+    if (!playerObj) {
+      return;
+    }
+  } catch (error) {
+    // Silently fail - do nothing
+    console.error('Error checking player:', error);
+    return;
+  }
+  
+  const loadingScreen = document.getElementById('loadingScreen');
   const board = document.getElementById('medalBoard');
   const leaderboard = document.getElementById('leaderboard');
   const pennyControls = document.getElementById('pennyControls');
   const formatSelect = document.getElementById('formatSelect');
 
-  fadeSwitch(leaderboard, board, async () => {
-    board.innerHTML = '';
-    document.getElementById('mainTitle').textContent = `${playerName}'s Medal Cabinet`;
-    document.title = `${playerName}'s Medal Cabinet`;
+  // Hide the title immediately (before any scrolling)
+  const mainTitle = document.getElementById('mainTitle');
+  mainTitle.style.visibility = 'hidden';
+  
+  // Show loading screen immediately
+  loadingScreen.classList.add('show');
+  
+  // Scroll to top immediately
+  window.scrollTo(0, 0);
+  
+  // Hide old content immediately
+  leaderboard.classList.add('hidden');
+  leaderboard.style.display = 'none';
+  
+  // Keep board hidden while we build it
+  board.style.display = 'none';
+  board.classList.add('hidden');
+  board.innerHTML = '';
+  
+  // Hide format dropdown and controls
+  formatSelect.style.display = 'none';
+  pennyControls.style.display = 'none';
+  document.getElementById('searchControls').style.display = 'none';
+  
+  // Start timer and fetch data in parallel
+  const startTime = Date.now();
+  
+  // Small delay to ensure loading screen is visible
+  await new Promise(resolve => setTimeout(resolve, 100));
 
-// Hide format dropdown and controls
-formatSelect.style.display = 'none';
-pennyControls.style.display = 'none';
-
-// Only add the button if it doesn't already exist
-let backBtn = document.getElementById('returnButton');
-if (!backBtn) {
-  backBtn = document.createElement('button');
-  backBtn.id = 'returnButton';
-  backBtn.textContent = '🔙 Back';
-
-  // Use the regular entry class (like a standard strap)
-  backBtn.className = 'entry';
-  backBtn.style.width = '100%';
-  backBtn.style.justifyContent = 'center';
-  backBtn.style.fontSize = '1.5rem';
-  backBtn.style.fontWeight = 'bold';
-  backBtn.style.padding = '0.75rem 1.25rem';
-  backBtn.style.marginBottom = '1rem';
-  backBtn.style.color = '#e0e7ff'; // match strap text color
-
-  backBtn.onclick = () => {
-    backBtn.remove(); // remove the button
-    formatSelect.style.display = 'inline-block';
-    pennyControls.style.display = 'inline-block';
-    formatSelect.dispatchEvent(new Event('change'));
-  };
-
-  // Insert it where the format selector was
-  formatSelect.parentNode.insertBefore(backBtn, formatSelect);
-}
-
-    // Load Penny data
+  try {
+    // Load data again (we know player exists now)
     const resp = await fetch(DATA_URL);
     const allData = await resp.json();
     const playerObj = allData.playerList.find(p => p.PlayerName === playerName);
+  
+  // Build all content in a document fragment (not visible yet)
+  const fragment = document.createDocumentFragment();
+  
+  // Render Penny counts as leaderboard-style rows
+  const statMap = [
+    { label: 'Current Season Pennys', key: 'CurrentSeasonPennys' },
+    { label: 'All-Time Pennys', key: 'AllTimePennys' },
+    { label: 'Author Credits', key: 'AuthorCredits' }
+  ];
 
-    // Render Penny counts as leaderboard-style rows
-    const statMap = [
-      { label: 'Current Season Pennys', key: 'CurrentSeasonPennys' },
-      { label: 'All-Time Pennys', key: 'AllTimePennys' },
-      { label: 'Author Credits', key: 'AuthorCredits' }
-    ];
-
-    statMap.forEach(({ label, key }) => {
-  const val = playerObj[key];
-  if (val > 0) {
-    const row = document.createElement('div');
-    row.className = 'entry gold stat-row';  // gold style for emphasis
-    row.innerHTML = `
-      <span class="name">${label}</span>
-      <span class="value">${Number(val).toLocaleString()}</span>
-    `;
-    board.appendChild(row);
-  }
-});
-
-    // Loop through each format and tally medals
-    for (const fmt of FORMATS) {
-      const res = await fetch(`https://raw.githubusercontent.com/persephoneschair/PennyStorage/main/${fmt}`);
-      const data = await res.json();
-      const types = ['gold', 'silver', 'bronze', 'lobby'];
-      const counts = { gold: 0, silver: 0, bronze: 0, lobby: 0 };
-
-      types.forEach(type => {
-        (data[type + 'Medallists'] || []).forEach(name => {
-          if (name === playerName) counts[type]++;
-        });
-      });
-
-      const total = Object.values(counts).reduce((a, b) => a + b, 0);
-      if (total === 0) continue;
-
-      const breakdown = `
-        ${counts.gold ? `🥇${counts.gold} ` : ''}
-        ${counts.silver ? `🥈${counts.silver} ` : ''}
-        ${counts.bronze ? `🥉${counts.bronze} ` : ''}
-        ${counts.lobby ? `✨${counts.lobby}` : ''}
-      `.trim();
-
+  statMap.forEach(({ label, key }) => {
+    const val = playerObj[key];
+    if (val > 0) {
       const row = document.createElement('div');
-      row.className = 'medallist';
+      row.className = 'entry gold stat-row';
       row.innerHTML = `
-        <span></span>
-        <span class="name">${FORMAT_LABELS[fmt] || fmt.replace('.txt', '')}</span>
-        <span>
-          <span class="total-count">🏆 ${total}</span>
-          <small>${breakdown}</small>
-        </span>
+        <span class="name">${label}</span>
+        <span class="value">${Number(val).toLocaleString()}</span>
       `;
-      board.appendChild(row);
+      fragment.appendChild(row);
     }
   });
 
-  // Hide sort/filter UI
-  pennyControls.style.display = 'none';
+  // Loop through each format and tally medals
+  for (const fmt of FORMATS) {
+    const res = await fetch(`https://raw.githubusercontent.com/persephoneschair/PennyStorage/main/${fmt}`);
+    const data = await res.json();
+    const types = ['gold', 'silver', 'bronze', 'lobby'];
+    const counts = { gold: 0, silver: 0, bronze: 0, lobby: 0 };
+
+    types.forEach(type => {
+      (data[type + 'Medallists'] || []).forEach(name => {
+        if (name === playerName) counts[type]++;
+      });
+    });
+
+    const total = Object.values(counts).reduce((a, b) => a + b, 0);
+    if (total === 0) continue;
+
+    const breakdown = `
+      ${counts.gold ? `<span class="medal-badge medal-gold">🥇 ${counts.gold}</span>` : ''}
+      ${counts.silver ? `<span class="medal-badge medal-silver">🥈 ${counts.silver}</span>` : ''}
+      ${counts.bronze ? `<span class="medal-badge medal-bronze">🥉 ${counts.bronze}</span>` : ''}
+      ${counts.lobby ? `<span class="medal-badge medal-lobby">🎖️ ${counts.lobby}</span>` : ''}
+    `.trim();
+
+    const row = document.createElement('div');
+    row.className = 'medallist';
+    row.innerHTML = `
+      <span></span>
+      <span class="name">${FORMAT_LABELS[fmt] || fmt.replace('.txt', '')}</span>
+      <span>
+        <span class="total-count">🏆 ${total}</span>
+        <small>${breakdown}</small>
+      </span>
+    `;
+    fragment.appendChild(row);
+  }
+  
+  // Ensure minimum 800ms display time
+  const elapsed = Date.now() - startTime;
+  if (elapsed < 800) {
+    await new Promise(resolve => setTimeout(resolve, 800 - elapsed));
+  }
+
+  // Add all the pre-built content at once (while still hidden)
+  board.appendChild(fragment);
+  
+  // Small delay to ensure content is fully rendered
+  await new Promise(resolve => setTimeout(resolve, 100));
+  
+  // Start fading out the loading screen first
+  loadingScreen.classList.remove('show');
+  
+  // Small delay before showing board (so loading screen opacity starts fading)
+  await new Promise(resolve => setTimeout(resolve, 100));
+  
+  // Only add the back button if it doesn't already exist (do this now while fading)
+  let backBtn = document.getElementById('returnButton');
+  if (!backBtn) {
+    backBtn = document.createElement('button');
+    backBtn.id = 'returnButton';
+    backBtn.textContent = 'Back';
+
+    // Use the regular entry class (like a standard strap)
+    backBtn.className = 'entry';
+    backBtn.style.width = '100%';
+    backBtn.style.justifyContent = 'center';
+    backBtn.style.fontSize = '1.5rem';
+    backBtn.style.fontWeight = 'bold';
+    backBtn.style.padding = '0.75rem 1.25rem';
+    backBtn.style.marginBottom = '1rem';
+    backBtn.style.color = '#e0e7ff';
+    backBtn.style.pointerEvents = 'auto';
+    
+    // Override hover to prevent transform/scale
+    backBtn.style.setProperty('transform', 'none', 'important');
+
+    backBtn.onclick = () => {
+      // Hide everything with opacity IMMEDIATELY (instant, no layout recalc)
+      const loadingScreen = document.getElementById('loadingScreen');
+      const mainTitle = document.getElementById('mainTitle');
+      const medalBoard = document.getElementById('medalBoard');
+      
+      // Hide title with visibility IMMEDIATELY to prevent flash during scroll
+      mainTitle.style.visibility = 'hidden';
+      
+      // Hide everything with opacity FIRST, before any scrolling
+      medalBoard.style.opacity = '0';
+      mainTitle.style.opacity = '0';
+      backBtn.style.opacity = '0';
+      
+      // Show loading screen immediately
+      loadingScreen.classList.add('show');
+      
+      // Scroll to top immediately
+      window.scrollTo(0, 0);
+      
+      // Small delay to ensure loading screen is visible, then trigger change
+      setTimeout(() => {
+        backBtn.remove();
+        formatSelect.style.display = 'inline-block';
+        pennyControls.style.display = 'inline-block';
+        document.getElementById('searchControls').style.display = 'inline-block';
+        formatSelect.value = 'leaderboard';
+        formatSelect.dispatchEvent(new Event('change'));
+      }, 50);
+    };
+
+    formatSelect.parentNode.insertBefore(backBtn, formatSelect);
+  }
+  
+  // Update title and show the board as loading screen fades
+  mainTitle.textContent = `${playerName}'s Medal Cabinet`;
+  document.title = `${playerName}'s Medal Cabinet`;
+  mainTitle.style.visibility = 'visible';
+  mainTitle.style.opacity = '1';
+  board.style.visibility = 'visible';
+  board.style.opacity = '1';
+  board.style.display = 'grid';
+  board.classList.remove('hidden');
+  
+  } catch (error) {
+    // If anything goes wrong during rendering, clean up and hide loading screen
+    console.error('Error loading player cabinet:', error);
+    loadingScreen.classList.remove('show');
+    formatSelect.style.display = 'inline-block';
+    pennyControls.style.display = 'inline-block';
+    mainTitle.style.visibility = 'visible';
+    renderLeaderboard();
+  }
 }
 
 // ------------------
@@ -664,7 +1019,10 @@ function attachPlayerClickHandlers() {
     const name = el.querySelector('.name')?.textContent;
     if (name) {
       el.style.cursor = 'pointer';
-      el.onclick = () => renderPlayerCabinet(name);
+      el.onclick = () => {
+        setLoadingMessage(`LOADING ${name.toUpperCase()}'S MEDAL CABINET`);
+        renderPlayerCabinet(name);
+      };
     }
   });
 }
@@ -709,31 +1067,93 @@ document.getElementById('pennyControls').style.display = 'inline-block';
     document.getElementById('searchInput').addEventListener('input', renderLeaderboard);
    document.getElementById('formatSelect').addEventListener('change', async function () {
   const val = this.value;
+  const loadingScreen = document.getElementById('loadingScreen');
+  const mainTitle = document.getElementById('mainTitle');
+  const pennyControls = document.getElementById('pennyControls');
+  const formatSelect = document.getElementById('formatSelect');
+  const medalBoard = document.getElementById('medalBoard');
+  
+  // Determine what we're loading and set message accordingly
+  if (val === 'leaderboard') {
+    setLoadingMessage('LOADING THE PENNY BANK');
+  } else {
+    const formatLabel = FORMAT_LABELS[val] || val;
+    // Check if it's a leaderboard format
+    if (val.includes('Leaderboard')) {
+      setLoadingMessage(`LOADING ${formatLabel.toUpperCase()}`);
+    } else {
+      setLoadingMessage(`LOADING ${formatLabel.toUpperCase()} MEDAL CABINET`);
+    }
+  }
+  const startTime = Date.now();
+
+  // Hide everything immediately with opacity to prevent jump
+  medalBoard.style.opacity = '0';
+  mainTitle.style.opacity = '0';
+  pennyControls.style.visibility = 'hidden';
+  document.getElementById('searchControls').style.visibility = 'hidden';
+  document.getElementById('noPlayersMessage').style.visibility = 'hidden';
+  formatSelect.style.visibility = 'hidden';
+  loadingScreen.classList.add('show');
+  window.scrollTo(0, 0);
+  
+  // Small delay to ensure loading screen is visible
+  await new Promise(resolve => setTimeout(resolve, 100));
 
   if (val === 'leaderboard') {
-  const pennyControls = document.getElementById('pennyControls');
-  pennyControls.style.display = 'inline-block';   // ✅ make it visible again
-  pennyControls.style.visibility = 'visible';
-  pennyControls.style.opacity = '1';
-  renderLeaderboard();
-  return;
-}
+    pennyControls.style.display = 'inline-block';
+    document.getElementById('searchControls').style.display = 'inline-block';
+    
+    // Ensure minimum 800ms display time
+    const elapsed = Date.now() - startTime;
+    if (elapsed < 800) {
+      await new Promise(resolve => setTimeout(resolve, 800 - elapsed));
+    }
+    
+    renderLeaderboard();
+    
+    // Small delay before hiding loading screen
+    await new Promise(resolve => setTimeout(resolve, 100));
+    loadingScreen.classList.remove('show');
+    await new Promise(resolve => setTimeout(resolve, 100));
+    mainTitle.style.visibility = 'visible';
+    pennyControls.style.visibility = 'visible';
+    pennyControls.style.opacity = '1';
+    document.getElementById('searchControls').style.visibility = 'visible';
+    document.getElementById('searchControls').style.opacity = '1';
+    formatSelect.style.visibility = 'visible';
+    return;
+  }
 
-  const pennyControls = document.getElementById('pennyControls');
-  pennyControls.style.visibility = 'hidden';
   pennyControls.style.opacity = '0';
 
   try {
     const response = await fetch(`https://raw.githubusercontent.com/persephoneschair/PennyStorage/main/${val}`);
     const data = await response.json();
+    
+    // Ensure minimum 800ms display time
+    const elapsed = Date.now() - startTime;
+    if (elapsed < 800) {
+      await new Promise(resolve => setTimeout(resolve, 800 - elapsed));
+    }
 
     if (val.endsWith('Leaderboard.txt')) {
       renderFormatLeaderboard(data, FORMAT_LABELS[val] || val.replace('.txt', ''));
     } else {
       renderMedalBoard(data, FORMAT_LABELS[val] || val.replace('.txt', ''));
     }
+    
+    // Small delay before hiding loading screen
+    await new Promise(resolve => setTimeout(resolve, 100));
+    loadingScreen.classList.remove('show');
+    await new Promise(resolve => setTimeout(resolve, 100));
+    mainTitle.style.visibility = 'visible';
+    formatSelect.style.visibility = 'visible';
   } catch (err) {
     console.error('Error loading view:', err);
+    loadingScreen.classList.remove('show');
+    mainTitle.style.visibility = 'visible';
+    formatSelect.style.visibility = 'visible';
   }
 });
 
