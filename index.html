@@ -243,17 +243,55 @@ a.nav-link.disabled:hover, a.nav-link.disabled:focus {
 </body>
 </html>
 <script>
-  // Set to true to simulate channel being live for debugging
-  const debugChannelLive = false; // <-- Toggle this for testing
+  // Returns true if current UTC time is Thursday or Saturday between 19:45 and 23:00
+  function isLiveTime() {
+    const now = new Date();
+    const day = now.getUTCDay(); // 0=Sunday, 4=Thursday, 6=Saturday
+    const hour = now.getUTCHours();
+    const minute = now.getUTCMinutes();
+    // Thursday (4) or Saturday (6)
+    if (day !== 4 && day !== 6) return false;
+    // 19:45 to 23:00 UTC
+    const mins = hour * 60 + minute;
+    return mins >= (19 * 60 + 45) && mins < (23 * 60);
+  }
 
-  async function checkTwitchLive() {
-    let btn = document.getElementById('twitch-live-btn');
-    // Remove Twitch highlight and always reset to disabled by default
-    if (btn) {
-      btn.classList.remove('twitch-live');
-      btn.classList.remove('disabled');
+  async function getScheduleConfig() {
+    try {
+      const resp = await fetch('scheduling.json', {cache: 'no-store'});
+      if (!resp.ok) return null;
+      return await resp.json();
+    } catch (e) {
+      return null;
     }
-    // Helper to replace <a> with <span> for disabled state
+  }
+
+  async function getLiveStatus() {
+    const config = await getScheduleConfig();
+    const now = new Date();
+    let live = false;
+    // 1. Master override: forceLive
+    if (config && config.forceLive) return true;
+    // 2. Exclude dates
+    if (config && Array.isArray(config.excludeDates)) {
+      const todayStr = now.toISOString().slice(0,10);
+      if (config.excludeDates.some(date => date.replace(/\s*\/\/.*$/, '') === todayStr)) return false;
+    }
+    // 3. Include date ranges
+    if (config && Array.isArray(config.includeDates)) {
+      for (const range of config.includeDates) {
+        if (!range.startLive || !range.endLive) continue;
+        const start = new Date(range.startLive);
+        const end = new Date(range.endLive);
+        if (now >= start && now < end) return true;
+      }
+    }
+    // 4. Default schedule
+    return isLiveTime();
+  }
+
+  function updateTwitchButtonState(debugChannelLive) {
+    let btn = document.getElementById('twitch-live-btn');
     function replaceWithSpan(label) {
       const spanBtn = document.createElement('span');
       spanBtn.id = 'twitch-live-btn';
@@ -276,7 +314,6 @@ a.nav-link.disabled:hover, a.nav-link.disabled:focus {
       btn = aBtn;
     }
     if (debugChannelLive) {
-      // Simulate live
       if (btn.tagName.toLowerCase() !== 'a') {
         replaceWithA('Watch Live');
       } else {
@@ -289,47 +326,19 @@ a.nav-link.disabled:hover, a.nav-link.disabled:focus {
         btn.setAttribute('tabindex', '0');
         btn.querySelector('span').textContent = 'Watch Live';
       }
-      return;
-    }
-    const clientId = 'kimne78kx3ncx6brgo4mv6wki5h1ko'; // Public client ID for Twitch
-    const channel = 'royal_flush';
-    const url = `https://api.twitch.tv/helix/streams?user_login=${channel}`;
-    try {
-      const response = await fetch(url, {
-        headers: {
-          'Client-ID': clientId,
-          'Accept': 'application/json',
-        }
-      });
-      const data = await response.json();
-      if (!data.data || data.data.length === 0) {
-        // Not live: replace <a> with <span>, change label
-        if (btn.tagName.toLowerCase() !== 'span') {
-          replaceWithSpan('Not Currently Live');
-        } else {
-          btn.classList.remove('twitch-live');
-          btn.classList.add('disabled');
-          btn.querySelector('span').textContent = 'Not Currently Live';
-        }
+    } else {
+      if (btn.tagName.toLowerCase() !== 'span') {
+        replaceWithSpan('Not Currently Live');
       } else {
-        // Live: ensure button is active and highlighted
-        if (btn.tagName.toLowerCase() !== 'a') {
-          replaceWithA('Watch Live');
-        } else {
-          btn.classList.remove('disabled');
-          btn.classList.add('twitch-live');
-          btn.setAttribute('href', 'https://twitch.tv/royal_flush');
-          btn.setAttribute('target', '_blank');
-          btn.setAttribute('rel', 'noopener');
-          btn.setAttribute('aria-disabled', 'false');
-          btn.setAttribute('tabindex', '0');
-          btn.querySelector('span').textContent = 'Watch Live';
-        }
+        btn.classList.remove('twitch-live');
+        btn.classList.add('disabled');
+        btn.querySelector('span').textContent = 'Not Currently Live';
       }
-    } catch (e) {
-      // On error, default to enabled
-      console.error('Twitch API error:', e);
     }
   }
-  window.addEventListener('DOMContentLoaded', checkTwitchLive);
+
+  window.addEventListener('DOMContentLoaded', async () => {
+    const live = await getLiveStatus();
+    updateTwitchButtonState(live);
+  });
 </script>

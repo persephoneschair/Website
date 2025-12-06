@@ -1,0 +1,16 @@
+{
+  "forceLive": false,
+  "excludeDates": [
+    "2025-12-20"
+  ],
+  "includeDates": [
+    {
+      "startLive": "2025-12-06T19:45:00Z",
+      "endLive": "2025-12-07T23:52:00Z"
+    },
+    {
+      "startLive": "2025-12-24T19:45:00Z",
+      "endLive": "2025-12-24T23:00:00Z"
+    }
+  ]
+}
