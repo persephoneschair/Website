@@ -6,6 +6,52 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title id="pageTitle">The Penny Bank</title>
   <style>
+                .home-btn-wrapper {
+                  display: flex;
+                  align-items: flex-start;
+                }
+                @media (max-width: 600px) {
+                  .home-btn-wrapper {
+                    justify-content: center;
+                  }
+                  .home-btn {
+                    margin-left: 0;
+                    margin-right: 0;
+                  }
+                }
+            @media (max-width: 600px) {
+              .home-btn {
+                display: block;
+                margin: 2rem auto 0 auto;
+                text-align: center;
+              }
+            }
+        .home-btn {
+          display: inline-block;
+          margin: 0.5rem 0 0 0;
+          background: #152a5a;
+          color: #fff;
+          border: 2px solid #2563eb;
+          border-radius: 12px;
+          padding: 1.2rem 2.5rem;
+          font-size: 1.5rem;
+          font-family: 'Segoe UI', sans-serif;
+          font-weight: 700;
+          text-align: center;
+          text-decoration: none;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+          transition: all 0.15s ease;
+          position: relative;
+          overflow: hidden;
+          cursor: pointer;
+        }
+        .home-btn:hover, .home-btn:focus {
+          box-shadow: 0 0 25px rgba(243, 236, 64, 1);
+          transform: scale(1.05);
+          border-color: #f3ec40;
+          background: #0b3797;
+          color: #fff;
+        }
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
 
     @font-face {
@@ -480,6 +526,9 @@
   </style>
 </head>
 <body>
+  <div class="home-btn-wrapper">
+    <a href="../index.html" class="home-btn">Home</a>
+  </div>
 <div id="loadingScreen"><strong id="loadingText">
   LOADING MEDAL CABINET...</strong>
 </div>

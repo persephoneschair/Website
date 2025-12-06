@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Downloads</title>
+  <link rel="icon" href="../Images/Icon.png" type="image/png">
+  <style>
+    .home-btn-wrapper {
+      display: flex;
+      align-items: flex-start;
+    }
+    @media (max-width: 600px) {
+      .home-btn-wrapper {
+        justify-content: center;
+      }
+      .home-btn {
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+        .home-btn {
+          display: inline-block;
+          margin: 2rem 0 0 2rem;
+          background: #152a5a;
+          color: #fff;
+          border: 2px solid #2563eb;
+          border-radius: 12px;
+          padding: 1.2rem 2.5rem;
+          font-size: 1.5rem;
+          font-family: 'Segoe UI', sans-serif;
+          font-weight: 700;
+          text-align: center;
+          text-decoration: none;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+          transition: all 0.15s ease;
+          position: relative;
+          overflow: hidden;
+          cursor: pointer;
+        }
+        .home-btn:hover, .home-btn:focus {
+          box-shadow: 0 0 25px rgba(243, 236, 64, 1);
+          transform: scale(1.05);
+          border-color: #f3ec40;
+          background: #0b3797;
+          color: #fff;
+        }
+    @font-face {
+      font-family: 'Game Over';
+      src: url('../Fonts/Game Over.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    html, body {
+      background: #0a0a0a !important;
+      color: #fff;
+      font-family: 'Montserrat', Arial, sans-serif;
+      min-height: 100vh;
+      height: 100%;
+      margin: 0;
+      box-sizing: border-box;
+    }
+    .center-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      width: 100vw;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #f3ec40;
+      text-transform: uppercase;
+      font-size: 12rem;
+      font-family: 'Game Over', sans-serif;
+      letter-spacing: 0.1em;
+      text-shadow: 
+        -2px -2px 0 #1e3a8a,
+        2px -2px 0 #1e3a8a,
+        -2px 2px 0 #1e3a8a,
+        2px 2px 0 #1e3a8a,
+        -2px 0 0 #1e3a8a,
+        2px 0 0 #1e3a8a,
+        0 -2px 0 #1e3a8a,
+        0 2px 0 #1e3a8a;
+      transition: opacity 0.15s ease;
+    }
+    .download-cards {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      align-items: center;
+    }
+    .download-card {
+      background: #152a5a;
+      border: 2px solid #2563eb;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      color: #fff;
+      width: 100%;
+      max-width: 480px;
+      min-width: 220px;
+      transition: all 0.2s cubic-bezier(.4,2,.3,1);
+      overflow: hidden;
+      cursor: pointer;
+      outline: none;
+      padding: 0;
+    }
+    .download-card:hover {
+      border-color: #f3ec40;
+      box-shadow: 0 0 25px #f3ec40, 0 4px 10px rgba(0,0,0,0.5);
+      background: #0b3797;
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 1.2rem 1.2rem 1.2rem 1.2rem;
+      min-height: 80px;
+    }
+    .card-thumb {
+      width: 64px;
+      height: 64px;
+      border-radius: 12px;
+      object-fit: contain;
+      box-shadow: 0 2px 8px #000a;
+      background: #222;
+    }
+    .card-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      color: #fff;
+      flex: 1;
+      letter-spacing: 0.04em;
+    }
+    .card-toggle {
+      font-size: 1.5rem;
+      color: #f3ec40;
+      margin-left: 0.5rem;
+      transition: transform 0.2s;
+    }
+    .download-card.expanded .card-toggle {
+      transform: rotate(180deg);
+    }
+    .card-details {
+      max-height: 0;
+      opacity: 0;
+      padding: 0 1.2rem;
+      transition: max-height 0.3s cubic-bezier(.4,2,.3,1), opacity 0.2s;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .download-card.expanded .card-details {
+      max-height: 300px;
+      opacity: 1;
+      padding-bottom: 1.2rem;
+      pointer-events: auto;
+    }
+    .card-blurb {
+      font-size: 1.1rem;
+      margin-bottom: 1.2rem;
+      color: #fff;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    .card-download-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+    .card-download {
+      display: inline-block;
+      background: #2563eb;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 0.7rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      border: 2px solid #f3ec40;
+      box-shadow: 0 2px 8px #000a;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .card-download:hover {
+      background: #f3ec40;
+      color: #152a5a;
+      border-color: #2563eb;
+    }
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 3.5rem;
+      }
+      .center-wrapper {
+        padding: 0;
+      }
+      .download-card {
+        max-width: 98vw;
+      }
+      .card-header {
+        padding: 0.7rem 0.7rem 0.7rem 0.7rem;
+      }
+      .card-title {
+        font-size: 1.1rem;
+      }
+      .card-thumb {
+        width: 48px;
+        height: 48px;
+      }
+    }
+  </style>
+</head>
+<body>
+    <div class="home-btn-wrapper">
+      <a href="../index.html" class="home-btn">Home</a>
+    </div>
+  <div class="center-wrapper">
+    <h1>Downloads</h1>
+    <div class="download-cards">
+      <div class="download-card" tabindex="0">
+        <div class="card-header">
+          <img class="card-thumb" src="../Images/GameNight.png" alt="The Universal Controller">
+          <span class="card-title">The Universal Controller</span>
+          <span class="card-toggle">&#9660;</span>
+        </div>
+        <div class="card-details">
+          <div class="card-blurb">
+            If you would prefer to use a standalone version of the Universal Controller rather than the browser-based version, it is available here for both PC and Mac.
+          </div>
+          <div class="card-download-wrapper" style="gap: 1rem;">
+            <a class="card-download" href="../Applications/UniConPC.zip" download>
+              <span>Download (PC)</span>
+            </a>
+            <a class="card-download" href="../Applications/UniConMac.zip" download>
+              <span>Download (Mac)</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="download-card" tabindex="0">
+        <div class="card-header">
+          <img class="card-thumb" src="../Images/FaceOff.png" alt="Face/Off">
+          <span class="card-title">Face/Off</span>
+          <span class="card-toggle">&#9660;</span>
+        </div>
+        <div class="card-details">
+          <div class="card-blurb">
+            Face/Off is a high-speed, high-stakes game of trivia for two to six players. Each player starts with a fixed amount of time and must answer questions to stop their clock and start their opponent's. The first player to run out of time is eliminated from the game.<br><br>
+            A license is required to run this game. Please contact royal_flush in the Discord to acquire one. A valid Twitch account will be required to validate your license.
+          </div>
+          <div class="card-download-wrapper">
+            <a class="card-download" href="https://drive.google.com/uc?export=download&id=1tIwIYFn_O5AhieNC9IZyPxlJtu-ulQOH" target="_blank" rel="noopener noreferrer">
+              <span>Download (PC)</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const cards = document.querySelectorAll('.download-card');
+    function collapseAllExcept(activeCard) {
+      cards.forEach(card => {
+        if (card !== activeCard) {
+          card.classList.remove('expanded');
+        }
+      });
+    }
+    cards.forEach(card => {
+      card.addEventListener('click', function(e) {
+        if (e.target.closest('.card-download')) return;
+        const isExpanded = card.classList.contains('expanded');
+        collapseAllExcept(card);
+        if (!isExpanded) {
+          card.classList.add('expanded');
+        } else {
+          card.classList.remove('expanded');
+        }
+      });
+      card.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          const isExpanded = card.classList.contains('expanded');
+          collapseAllExcept(card);
+          if (!isExpanded) {
+            card.classList.add('expanded');
+          } else {
+            card.classList.remove('expanded');
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

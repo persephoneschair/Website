@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Universal Controller</title>
+  <link rel="icon" href="../Images/Icon.png" type="image/png">
+  <style>
+        .menu-icon {
+          position: fixed;
+          bottom: 0.5rem;
+          left: 1.2rem;
+          z-index: 1002;
+          background: rgba(21,42,90,0.85);
+          border: 2px solid #2563eb;
+          border-radius: 50%;
+          width: 3.2rem;
+          height: 3.2rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: background 0.15s, border-color 0.15s;
+          box-shadow: 0 2px 8px #000a;
+        }
+        .menu-icon:hover, .menu-icon:focus {
+          background: #0b3797;
+          border-color: #f3ec40;
+        }
+        .menu-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background: rgba(10,10,10,0.7);
+          z-index: 1001;
+          display: none;
+          align-items: flex-end;
+          justify-content: flex-start;
+          animation: fadeIn 0.2s;
+        }
+        .menu-overlay.active {
+          display: flex;
+        }
+        .menu-content {
+          background: #152a5a;
+          border-radius: 20px 20px 20px 20px;
+          box-shadow: 0 4px 24px #000a;
+          padding: 1.2rem 1.5rem;
+          margin-bottom: 2.5rem;
+          min-width: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-left: 0;
+        }
+        .menu-home-btn {
+          margin-bottom: 0;
+        }
+        .menu-home-btn {
+          background: #152a5a;
+          color: #fff;
+          border: 2px solid #2563eb;
+          border-radius: 12px;
+          padding: 1.2rem 2.5rem;
+          font-size: 1.5rem;
+          font-family: 'Segoe UI', sans-serif;
+          font-weight: 700;
+          text-align: center;
+          text-decoration: none;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+          transition: all 0.15s ease;
+          margin-bottom: 1rem;
+          cursor: pointer;
+          display: block;
+        }
+        .menu-home-btn:hover, .menu-home-btn:focus {
+          box-shadow: 0 0 25px rgba(243, 236, 64, 1);
+          border-color: #f3ec40;
+          background: #0b3797;
+          color: #fff;
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+    html, body {
+      background: #0a0a0a;
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+      min-height: 100vh;
+      min-width: 100vw;
+      overflow: hidden;
+    }
+    body {
+      width: 100vw;
+      height: 100vh;
+      min-height: 100vh;
+      min-width: 100vw;
+      overflow: hidden;
+    }
+    .fullscreen-iframe {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      border: none;
+      margin: 0;
+      padding: 0;
+      z-index: 1;
+      background: #000;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+    <div class="menu-icon" id="menuIcon" tabindex="0" title="Open menu" aria-label="Open menu">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f3ec40" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:block;">
+        <path d="M3 11.5L12 5l9 6.5"/>
+        <path d="M5 10.5V19a1 1 0 0 0 1 1h3.5a1 1 0 0 0 1-1v-3.5a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1V19a1 1 0 0 0 1 1H18a1 1 0 0 0 1-1v-8.5"/>
+      </svg>
+    </div>
+    <div class="menu-overlay" id="menuOverlay">
+      <div class="menu-content">
+        <a href="../index.html" class="menu-home-btn">Home</a>
+      </div>
+    </div>
+  <iframe
+    src="https://itch.io/embed-upload/15658305?color=000000"
+    title="Universal Controller"
+    class="fullscreen-iframe"
+    allowfullscreen
+    loading="lazy"
+  ></iframe>
+</body>
+  <script>
+    const menuIcon = document.getElementById('menuIcon');
+    const menuOverlay = document.getElementById('menuOverlay');
+    // Open overlay
+    function openMenu() {
+      menuOverlay.classList.add('active');
+    }
+    // Close overlay
+    function closeMenu(e) {
+      if (e.target === menuOverlay) {
+        menuOverlay.classList.remove('active');
+      }
+    }
+    menuIcon.addEventListener('click', openMenu);
+    menuIcon.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') openMenu();
+    });
+    menuOverlay.addEventListener('click', closeMenu);
+    // Optional: ESC to close
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') menuOverlay.classList.remove('active');
+    });
+  </script>
+</html>

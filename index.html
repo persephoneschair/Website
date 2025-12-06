@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>Game Night</title>
+  <link rel="icon" href="Images/Icon.png" type="image/png">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+    @font-face {
+      font-family: 'Game Over';
+      src: url('Fonts/Game Over.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Satisfy';
+      src: url('Fonts/Satisfy.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Twitch';
+      src: url('Fonts/Twitch.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+  
+    html, body {
+      background: #0a0a0a !important;
+      color: #fff;
+      font-family: 'Montserrat', Arial, sans-serif;
+      min-height: 100vh;
+      height: 100%;
+      margin: 0;
+      box-sizing: border-box;
+    }
+    body, html, #root, .center-wrapper {
+      background-color: #0a0a0a !important;
+    }
+    * {
+      box-sizing: inherit;
+    }
+    .center-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      width: 100vw;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 1.2rem;
+      color: #f3ec40;
+      text-transform: uppercase;
+      font-size: 12rem;
+      font-family: 'Game Over', sans-serif;
+      letter-spacing: 0.1em;
+      text-shadow: 
+        -2px -2px 0 #1e3a8a,
+        2px -2px 0 #1e3a8a,
+        -2px 2px 0 #1e3a8a,
+        2px 2px 0 #1e3a8a,
+        -2px 0 0 #1e3a8a,
+        2px 0 0 #1e3a8a,
+        0 -2px 0 #1e3a8a,
+        0 2px 0 #1e3a8a;
+    }
+    .sub-heading {
+      text-align: center;
+      font-family: 'Satisfy', cursive;
+      font-size: 2.5rem;
+      color: #fff;
+      margin-bottom: 2.5rem;
+      text-shadow:
+        0 0 8px #ff2a2a,
+        0 0 16px #ff2a2a,
+        0 0 2px #fff;
+      letter-spacing: 0.04em;
+    }
+    .nav {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      width: 100%;
+      max-width: 400px;
+      align-items: center;
+      justify-content: center;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .nav-link {
+      display: block;
+      width: 100%;
+      padding: 1.2rem 0;
+      font-size: 1.5rem;
+      font-family: 'Segoe UI', sans-serif;
+      font-weight: 700;
+      text-align: center;
+      border-radius: 12px;
+      background: #152a5a;
+      color: #fff;
+      text-decoration: none;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      border: 2px solid #2563eb;
+      transition: all 0.15s ease;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+span.nav-link.disabled,
+a.nav-link.disabled {
+  background: #333 !important;
+  border: 2px solid #555 !important;
+  color: #aaa !important;
+  box-shadow: none !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  opacity: 0.7;
+}
+span.nav-link.disabled:hover, span.nav-link.disabled:focus,
+a.nav-link.disabled:hover, a.nav-link.disabled:focus {
+  background: #444 !important;
+  color: #aaa !important;
+  border: 2px solid #666 !important;
+  box-shadow: none !important;
+  transform: none !important;
+  border-radius: 12px !important;
+}
+.nav-link.twitch-live {
+  /* Move disabled styles below all other nav-link styles for maximum specificity */
+  span.nav-link.disabled,
+  a.nav-link.disabled {
+    background: #333 !important;
+    border: 2px solid #555 !important;
+    color: #aaa !important;
+    box-shadow: none !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+    opacity: 0.7;
+  }
+  span.nav-link.disabled:hover, span.nav-link.disabled:focus,
+  a.nav-link.disabled:hover, a.nav-link.disabled:focus {
+    background: #444 !important;
+    color: #aaa !important;
+    border: 2px solid #666 !important;
+    box-shadow: none !important;
+    transform: none !important;
+    border-radius: 12px !important;
+  }
+  background: #772ce8 !important;
+  border-color: #9147ff !important;
+  color: #fff !important;
+  box-shadow: 0 0 18px #9147ff88, 0 4px 16px #772ce8;
+  transition: all 0.15s ease;
+}
+.nav-link.twitch-live:hover, .nav-link.twitch-live:focus {
+  background: #9147ff !important;
+  border-color: #f3ec40 !important;
+  color: #fff !important;
+  box-shadow: 0 0 25px #f3ec40, 0 0 18px #9147ff88, 0 4px 16px #772ce8;
+  transform: scale(1.05);
+  border-radius: 16px;
+}
+.nav-link:hover, .nav-link:focus {
+      box-shadow: 0 0 25px rgba(243, 236, 64, 1);
+      transform: scale(1.05);
+      border-color: #f3ec40;
+      border-radius: 16px;
+      background: #0b3797;
+      color: #fff;
+    }
+    .nav-link span {
+      position: relative;
+      z-index: 1;
+    }
+    .twitch-label {
+      font-family: 'Twitch', Arial, sans-serif !important;
+      color: #f3f3f3 !important;
+      font-size: 0.65em;
+      letter-spacing: 0.04em;
+      vertical-align: middle;
+      position: relative;
+      top: -0.7em;
+      text-shadow:
+        0 12px 24px #9147ff, /* longest, solid purple shadow at bottom */
+        0 8px 0 #9147ff,     /* solid bottom edge */
+        0 4px 0 #9147ff,     /* solid bottom edge */
+        0 -2px 0 #9147ff,    /* outline top */
+        -2px 0 0 #9147ff,    /* outline left */
+        2px 0 0 #9147ff,     /* outline right */
+        0 0 2px #fff;        /* subtle white glow */
+    }
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 4.5rem;
+      }
+      .sub-heading {
+        font-size: 1.2rem;
+      }
+      .nav-link {
+        font-size: 1rem;
+        padding: 0.8rem 0.2rem;
+        width: 80vw;
+        max-width: 220px;
+        min-width: 0;
+        box-sizing: border-box;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .nav {
+        max-width: 400px;
+        width: 100%;
+        padding: 0;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .center-wrapper {
+        max-width: 100vw;
+        width: 100%;
+        padding: 0;
+        box-sizing: border-box;
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="center-wrapper">
+    <h1>GAME NIGHT</h1>
+    <div class="sub-heading">by Persephone's Chair</div>
+    <nav class="nav">
+      <span id="twitch-live-btn" class="nav-link disabled" style="background:#333;border:2px solid #555;color:#aaa;box-shadow:none;cursor:not-allowed;pointer-events:none;opacity:0.7;"><span>Not Currently Live</span></span>
+      <a class="nav-link" href="OnDemand/index.html"><span>Watch on Demand</span></a>
+      <a class="nav-link" href="UniCon/index.html"><span>The Universal Controller</span></a>
+      <a class="nav-link" href="PennyBank/index.html"><span>The Penny Bank</span></a>
+      <a class="nav-link" href="https://discord.gg/persephoneschair" target="_blank" rel="noopener"><span>Join the Discord</span></a>
+      <a class="nav-link" href="Downloads/index.html"><span>Downloads</span></a>
+    </nav>
+  </div>
+</body>
+</html>
+<script>
+  // Set to true to simulate channel being live for debugging
+  const debugChannelLive = false; // <-- Toggle this for testing
+
+  async function checkTwitchLive() {
+    let btn = document.getElementById('twitch-live-btn');
+    // Remove Twitch highlight and always reset to disabled by default
+    if (btn) {
+      btn.classList.remove('twitch-live');
+      btn.classList.remove('disabled');
+    }
+    // Helper to replace <a> with <span> for disabled state
+    function replaceWithSpan(label) {
+      const spanBtn = document.createElement('span');
+      spanBtn.id = 'twitch-live-btn';
+      spanBtn.className = 'nav-link disabled';
+      spanBtn.innerHTML = `<span>${label}</span>`;
+      btn.parentNode.replaceChild(spanBtn, btn);
+      btn = spanBtn;
+    }
+    function replaceWithA(label) {
+      const aBtn = document.createElement('a');
+      aBtn.id = 'twitch-live-btn';
+      aBtn.className = 'nav-link twitch-live';
+      aBtn.href = 'https://twitch.tv/royal_flush';
+      aBtn.target = '_blank';
+      aBtn.rel = 'noopener';
+      aBtn.setAttribute('aria-disabled', 'false');
+      aBtn.setAttribute('tabindex', '0');
+      aBtn.innerHTML = `<span>${label}</span>`;
+      btn.parentNode.replaceChild(aBtn, btn);
+      btn = aBtn;
+    }
+    if (debugChannelLive) {
+      // Simulate live
+      if (btn.tagName.toLowerCase() !== 'a') {
+        replaceWithA('Watch Live');
+      } else {
+        btn.classList.remove('disabled');
+        btn.classList.add('twitch-live');
+        btn.setAttribute('href', 'https://twitch.tv/royal_flush');
+        btn.setAttribute('target', '_blank');
+        btn.setAttribute('rel', 'noopener');
+        btn.setAttribute('aria-disabled', 'false');
+        btn.setAttribute('tabindex', '0');
+        btn.querySelector('span').textContent = 'Watch Live';
+      }
+      return;
+    }
+    const clientId = 'kimne78kx3ncx6brgo4mv6wki5h1ko'; // Public client ID for Twitch
+    const channel = 'royal_flush';
+    const url = `https://api.twitch.tv/helix/streams?user_login=${channel}`;
+    try {
+      const response = await fetch(url, {
+        headers: {
+          'Client-ID': clientId,
+          'Accept': 'application/json',
+        }
+      });
+      const data = await response.json();
+      if (!data.data || data.data.length === 0) {
+        // Not live: replace <a> with <span>, change label
+        if (btn.tagName.toLowerCase() !== 'span') {
+          replaceWithSpan('Not Currently Live');
+        } else {
+          btn.classList.remove('twitch-live');
+          btn.classList.add('disabled');
+          btn.querySelector('span').textContent = 'Not Currently Live';
+        }
+      } else {
+        // Live: ensure button is active and highlighted
+        if (btn.tagName.toLowerCase() !== 'a') {
+          replaceWithA('Watch Live');
+        } else {
+          btn.classList.remove('disabled');
+          btn.classList.add('twitch-live');
+          btn.setAttribute('href', 'https://twitch.tv/royal_flush');
+          btn.setAttribute('target', '_blank');
+          btn.setAttribute('rel', 'noopener');
+          btn.setAttribute('aria-disabled', 'false');
+          btn.setAttribute('tabindex', '0');
+          btn.querySelector('span').textContent = 'Watch Live';
+        }
+      }
+    } catch (e) {
+      // On error, default to enabled
+      console.error('Twitch API error:', e);
+    }
+  }
+  window.addEventListener('DOMContentLoaded', checkTwitchLive);
+</script>
