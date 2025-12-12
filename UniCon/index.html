@@ -112,8 +112,10 @@
       /* Make the svg smaller inside the nub so stroke/padding fit comfortably. */
       .menu-icon svg { width: 60% !important; height: 60% !important; }
 
-      /* Make the iframe start below the top bar on mobile */
-      .fullscreen-iframe { top: var(--bottom-bar-height) !important; height: calc(100dvh - var(--bottom-bar-height)) !important; max-height: calc(100dvh - var(--bottom-bar-height)) !important; }
+      /* Let the iframe extend to the top of the viewport on mobile so the
+        app visually covers the reserved area; the menu button remains
+        positioned above the iframe so it stays visible. */
+      .fullscreen-iframe { top: 0 !important; height: 100dvh !important; max-height: 100dvh !important; }
      }
     html, body {
       background: #0a0a0a;
@@ -324,10 +326,12 @@
           const iframe = document.querySelector('.fullscreen-iframe');
           const targetH = Math.max(0, vvH - bottomPx);
           if (iframe) {
-            // Place the iframe below the top bar (mobile top-bar mode) and set its height
-            iframe.style.top = bottomPx + 'px';
-            iframe.style.height = targetH + 'px';
-            iframe.style.maxHeight = targetH + 'px';
+            // Allow the iframe to occupy the full visual viewport (covering
+            // the reserved top bar). Keep the menu button positioned above
+            // it so the button remains visible and clickable.
+            iframe.style.top = '0px';
+            iframe.style.height = vvH + 'px';
+            iframe.style.maxHeight = vvH + 'px';
           }
         }
       } catch (e) {
