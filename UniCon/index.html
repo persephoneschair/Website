@@ -98,19 +98,20 @@
 
      /* Mobile-only: make the bottom bar exactly the height of the home/menu
        button so the iframe never extends into that space. Give the bar a
-       visible deep sky blue background for testing. */
-    @media (max-width: 899px) {
+       visible lime green background for testing. */
+     @media (max-width: 899px) {
       /* Make the bottom bar exactly the visual size of the icon plus a
-         small buffer to account for borders/shadow. Use !important so later
-         rules in the file don't accidentally override the mobile intent. */
+        small buffer to account for borders/shadow. Use !important so later
+        rules in the file don't accidentally override the mobile intent. */
       :root { --menu-icon-size: 3.0rem; --bottom-bar-height: calc(var(--menu-icon-size) + 8px); }
-      .bottom-bar { background: deepskyblue !important; align-items: center !important; padding-left: 0 !important; height: var(--bottom-bar-height) !important; }
-      /* Ensure the menu icon sits flush, uses box-sizing so border is included
-         inside its declared size, and remove any margin/position offsets. */
-      .menu-icon { margin: 0 !important; box-sizing: border-box !important; position: relative !important; left: 0 !important; bottom: 0 !important; width: var(--menu-icon-size) !important; height: var(--menu-icon-size) !important; }
+      .bottom-bar { background: limegreen !important; align-items: center !important; padding-left: 0 !important; height: var(--bottom-bar-height) !important; }
+      /* Ensure the menu icon sits visually centered inside the bar. Use
+        fixed positioning so it's clickable above the iframe and doesn't
+        rely on parent stacking. */
+      .menu-icon { box-sizing: border-box !important; position: fixed !important; left: 0.9rem !important; bottom: calc((var(--bottom-bar-height) - var(--menu-icon-size)) / 2) !important; width: var(--menu-icon-size) !important; height: var(--menu-icon-size) !important; margin: 0 !important; }
       /* Make the svg smaller inside the nub so stroke/padding fit comfortably. */
       .menu-icon svg { width: 60% !important; height: 60% !important; }
-    }
+     }
     html, body {
       background: #0a0a0a;
       margin: 0;
@@ -125,7 +126,7 @@
       padding-bottom: var(--bottom-bar-height);
     }
 
-    /* bottom bar that sits above the iframe and holds controls (menu/home) */
+    /* bottom bar that sits below the iframe and holds controls (menu/home) */
     .bottom-bar {
       position: fixed;
       left: 0;
@@ -133,17 +134,21 @@
       bottom: 0;
       height: var(--bottom-bar-height);
       /* Force visible background during debugging - remove !important when confirmed */
-      background: deepskyblue !important;
-      z-index: 10010;
-      display: flex;
-      align-items: center;
-      padding-left: 1.2rem;
+      background: limegreen !important;
+      /* Keep the bar under the iframe so the iframe can sit above it visually. */
+      z-index: 10;
+      display: block;
       box-sizing: border-box;
       pointer-events: auto;
     }
 
+    /* Menu nub sits above the iframe so it remains clickable while the
+       iframe itself is visually higher than the bottom bar. We position it
+       fixed and compute its vertical position relative to the bottom bar. */
     .menu-icon {
-      position: relative;
+      position: fixed;
+      left: 0.9rem;
+      bottom: calc((var(--bottom-bar-height) - var(--menu-icon-size)) / 2);
       z-index: 1002;
       background: rgba(21,42,90,0.95);
       border: 2px solid #2563eb;
@@ -165,7 +170,7 @@
           width: 100vw;
           height: 100vh;
           background: rgba(10,10,10,0.7);
-          z-index: 1001;
+          z-index: 1003;
           display: none;
           align-items: flex-end;
           justify-content: flex-start;
@@ -200,7 +205,8 @@
       border: none;
       margin: 0;
       padding: 0;
-      z-index: 0;
+      /* Place iframe above the bottom bar but under the overlay/menu nub */
+      z-index: 1000;
       background: #000;
       display: block;
       box-sizing: border-box;
@@ -217,17 +223,20 @@
       .menu-icon { position: fixed; bottom: 0.5rem; left: 1.2rem; z-index:10012; }
       .menu-content { margin-bottom: 0.5rem; align-items: center; }
     }
+
+    /* Strong desktop rule to ensure the home button is visible above
+       the iframe even if other rules attempt to change positioning. */
+    @media (min-width: 900px) {
+      /* Force the home button above everything on desktop. Some browsers
+         render plugin/canvas content in their own layer; using a very high
+         z-index and a 3D transform helps ensure the button paints above.
+         Keep display/visibility set so it cannot be hidden by other rules. */
+      .menu-icon { position: fixed !important; bottom: 0.5rem !important; left: 1.2rem !important; z-index: 2147483647 !important; display: flex !important; visibility: visible !important; transform: translateZ(0) !important; }
+    }
   </style>
 </head>
 <body>
-    <div class="bottom-bar">
-      <div class="menu-icon" id="menuIcon" tabindex="0" title="Open menu" aria-label="Open menu">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f3ec40" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:block;">
-          <path d="M3 11.5L12 5l9 6.5"/>
-          <path d="M5 10.5V19a1 1 0 0 0 1 1h3.5a1 1 0 0 0 1-1v-3.5a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1V19a1 1 0 0 0 1 1H18a1 1 0 0 0 1-1v-8.5"/>
-        </svg>
-      </div>
-    </div>
+    <div class="bottom-bar"></div>
     <div class="menu-overlay" id="menuOverlay">
       <div class="menu-content">
         <a href="../index.html" class="menu-home-btn">Home</a>
@@ -240,6 +249,12 @@
     allowfullscreen
     loading="lazy"
   ></iframe>
+  <div class="menu-icon" id="menuIcon" tabindex="0" title="Open menu" aria-label="Open menu" style="pointer-events:auto;">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f3ec40" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:block;">
+      <path d="M3 11.5L12 5l9 6.5"/>
+      <path d="M5 10.5V19a1 1 0 0 0 1 1h3.5a1 1 0 0 0 1-1v-3.5a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1V19a1 1 0 0 0 1 1H18a1 1 0 0 0 1-1v-8.5"/>
+    </svg>
+  </div>
 </body>
   <script>
     const menuIcon = document.getElementById('menuIcon');
@@ -282,14 +297,27 @@
         if (!isMobile) {
           const base = 56;
           const value = Math.round(base + extra);
-          document.documentElement.style.setProperty('--bottom-bar-height', value + 'px');
-          // ensure iframe uses the CSS variable (handled by CSS dvh fallback)
+          // Do NOT set the CSS variable inline on desktop — allow the CSS
+          // media query to control --bottom-bar-height (it should be 0px).
+          // Remove any previously-set inline value so desktop CSS wins.
+          document.documentElement.style.removeProperty('--bottom-bar-height');
+          // Also remove any inline iframe sizing that mobile may have set so
+          // the iframe can return to CSS-controlled 100vh on desktop.
+          const iframe = document.querySelector('.fullscreen-iframe');
+          if (iframe) {
+            iframe.style.height = '';
+            iframe.style.maxHeight = '';
+          }
         } else {
           // For mobile, explicitly set the iframe height to the visual
           // viewport height minus the bottom bar so the iframe can't overflow
           // and visually overlap the bar on phones which compute 100vh oddly.
-          const bottomBar = getComputedStyle(document.documentElement).getPropertyValue('--bottom-bar-height') || '0px';
-          const bottomPx = parseInt(bottomBar, 10) || 0;
+          // Prefer the measured pixel height of the visible bottom bar element
+          // to avoid parsing units from the CSS variable which may be rem/calc.
+          const barElem = document.querySelector('.bottom-bar');
+          const bottomPx = barElem ? Math.round(barElem.getBoundingClientRect().height) : (parseInt(getComputedStyle(document.documentElement).getPropertyValue('--bottom-bar-height'), 10) || 0);
+          // Keep the CSS variable in sync with the measured value for layout calcs
+          document.documentElement.style.setProperty('--bottom-bar-height', bottomPx + 'px');
           const iframe = document.querySelector('.fullscreen-iframe');
           const targetH = Math.max(0, vvH - bottomPx);
           if (iframe) {
