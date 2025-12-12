@@ -85,35 +85,46 @@
           from { opacity: 0; }
           to { opacity: 1; }
         }
+    /* Use viewport sizing but avoid fixed 100vh which can be obscured by mobile browser UI.
+       Allow the page to scroll if needed and reserve a safe area at the bottom for device UI. */
     html, body {
       background: #0a0a0a;
       margin: 0;
       padding: 0;
-      width: 100vw;
-      height: 100vh;
-      min-height: 100vh;
-      min-width: 100vw;
-      overflow: hidden;
+      width: 100%;
+      min-height: 100%;
+      -webkit-text-size-adjust: 100%;
+      box-sizing: border-box;
+      /* allow scrolling so mobile browser UI doesn't permanently hide content */
+      overflow: auto;
     }
-    body {
-      width: 100vw;
-      height: 100vh;
-      min-height: 100vh;
-      min-width: 100vw;
-      overflow: hidden;
-    }
+    /* Fullscreen iframe but leave a small bottom inset so mobile browser controls
+       (and the site's menu bar) remain accessible. We use env(...) for safe-area
+       support (iOS) and provide fallbacks. The extra 56px buffer covers browser UI
+       and in-iframe controls on most devices; adjust if needed. */
     .fullscreen-iframe {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
-      height: 100vh;
+      /* Prefer an explicit height based on 100vh minus safe-area + buffer.
+         This avoids layout engines collapsing the iframe when using top/bottom.
+      */
+      height: calc(100vh - (env(safe-area-inset-bottom, 0px) + 56px));
       border: none;
       margin: 0;
       padding: 0;
       z-index: 1;
       background: #000;
       display: block;
+      box-sizing: border-box;
+    }
+
+    /* On larger screens use the full viewport height */
+    @media (min-height: 900px), (min-width: 900px) {
+      .fullscreen-iframe {
+        height: 100vh;
+      }
     }
   </style>
 </head>
