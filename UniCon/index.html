@@ -91,9 +91,15 @@
        Reserve a small bottom bar (menu area) so the embedded iframe never gets
        obscured by browser chrome; the menu icon sits inside that bar. */
     :root {
-      /* larger bottom buffer to ensure app content isn't obscured on phones */
+      /* base bottom buffer (used on desktop if JS adjusts it) */
       --bottom-bar-height: calc(env(safe-area-inset-bottom, 0px) + 70px);
       --menu-icon-size: 3.2rem;
+    }
+
+    /* Mobile-only: force a fixed larger buffer so the iframe sits above the
+       home/menu area on phones. This is applied only on small viewports. */
+    @media (max-width: 899px) {
+      :root { --bottom-bar-height: calc(env(safe-area-inset-bottom, 0px) + 85px); }
     }
     html, body {
       background: #0a0a0a;
@@ -247,6 +253,9 @@
     // on load, resize and visualViewport changes so the iframe stays above UI.
     function updateBottomBar() {
       try {
+        // If we're on a narrow/mobile viewport, prefer the fixed CSS buffer and
+        // don't override it from JS (some mobile browsers handle 100vh differently).
+        if (window.matchMedia && window.matchMedia('(max-width: 899px)').matches) return;
         const base = 56; // same base buffer used in CSS
         const innerH = window.innerHeight || 0;
         const vvH = (window.visualViewport && window.visualViewport.height) || innerH;

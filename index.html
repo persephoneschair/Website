@@ -223,6 +223,9 @@ a.nav-link.disabled:hover, a.nav-link.disabled:focus {
         padding: 0;
         box-sizing: border-box;
         margin: 0 auto;
+          /* Add bottom buffer so the bottom nav button isn't flush to the screen edge
+            on mobile devices and respects the device safe-area inset. */
+          padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 85px);
       }
     }
   </style>
