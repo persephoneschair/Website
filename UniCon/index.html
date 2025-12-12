@@ -240,5 +240,25 @@
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') menuOverlay.classList.remove('active');
     });
+    // Ensure bottom-bar buffer accounts for mobile browser chrome which can
+    // change the visual viewport (address bar, toolbars). We compute an extra
+    // offset from the difference between window.innerHeight and visualViewport.height
+    // and update the CSS variable `--bottom-bar-height` accordingly. This runs
+    // on load, resize and visualViewport changes so the iframe stays above UI.
+    function updateBottomBar() {
+      try {
+        const base = 56; // same base buffer used in CSS
+        const innerH = window.innerHeight || 0;
+        const vvH = (window.visualViewport && window.visualViewport.height) || innerH;
+        const extra = Math.max(0, innerH - vvH);
+        const value = Math.round(base + extra + (window.CSS && CSS.supports && CSS.supports('top: env(safe-area-inset-bottom)') ? 0 : 0));
+        document.documentElement.style.setProperty('--bottom-bar-height', value + 'px');
+      } catch (e) {
+        // fail silently
+      }
+    }
+    updateBottomBar();
+    window.addEventListener('resize', updateBottomBar);
+    if (window.visualViewport) window.visualViewport.addEventListener('resize', updateBottomBar);
   </script>
 </html>
