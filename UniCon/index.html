@@ -47,12 +47,13 @@
           background: #152a5a;
           border-radius: 20px 20px 20px 20px;
           box-shadow: 0 4px 24px #000a;
-          padding: 1.2rem 1.5rem;
+          /* remove left padding so the home button can sit flush with the page edge */
+          padding: 1.2rem 1.5rem 1.2rem 0;
           margin-bottom: 2.5rem;
           min-width: 0;
           display: flex;
           flex-direction: column;
-          align-items: center;
+          align-items: flex-start;
           margin-left: 0;
         }
         .menu-home-btn {
@@ -72,6 +73,7 @@
           box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
           transition: all 0.15s ease;
           margin-bottom: 1rem;
+          margin-left: 0; /* ensure flush alignment */
           cursor: pointer;
           display: block;
         }
@@ -86,7 +88,12 @@
           to { opacity: 1; }
         }
     /* Use viewport sizing but avoid fixed 100vh which can be obscured by mobile browser UI.
-       Allow the page to scroll if needed and reserve a safe area at the bottom for device UI. */
+       Reserve a small bottom bar (menu area) so the embedded iframe never gets
+       obscured by browser chrome; the menu icon sits inside that bar. */
+    :root {
+      --bottom-bar-height: calc(env(safe-area-inset-bottom, 0px) + 56px);
+      --menu-icon-size: 3.2rem;
+    }
     html, body {
       background: #0a0a0a;
       margin: 0;
@@ -97,20 +104,64 @@
       box-sizing: border-box;
       /* allow scrolling so mobile browser UI doesn't permanently hide content */
       overflow: auto;
+      /* ensure content doesn't get hidden under the bottom bar */
+      padding-bottom: var(--bottom-bar-height);
     }
-    /* Fullscreen iframe but leave a small bottom inset so mobile browser controls
-       (and the site's menu bar) remain accessible. We use env(...) for safe-area
-       support (iOS) and provide fallbacks. The extra 56px buffer covers browser UI
-       and in-iframe controls on most devices; adjust if needed. */
+
+    .menu-icon {
+          position: fixed;
+          /* center vertically inside the bottom bar */
+          bottom: calc((var(--bottom-bar-height) - var(--menu-icon-size)) / 2);
+          left: 1.2rem;
+          z-index: 1002;
+          background: rgba(21,42,90,0.85);
+          border: 2px solid #2563eb;
+          border-radius: 50%;
+          width: var(--menu-icon-size);
+          height: var(--menu-icon-size);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: background 0.15s, border-color 0.15s;
+          box-shadow: 0 2px 8px #000a;
+        }
+
+    .menu-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background: rgba(10,10,10,0.7);
+          z-index: 1001;
+          display: none;
+          align-items: flex-end;
+          justify-content: flex-start;
+          animation: fadeIn 0.2s;
+        }
+
+    .menu-content {
+          background: #152a5a;
+          border-radius: 20px 20px 20px 20px;
+          box-shadow: 0 4px 24px #000a;
+          padding: 1.2rem 1.5rem;
+          /* lift the overlay content above the bottom bar */
+          margin-bottom: calc(var(--bottom-bar-height) + 0.5rem);
+          min-width: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-left: 0;
+        }
+
+    /* Fullscreen iframe but leave the reserved bottom bar so home/menu sits below it */
     .fullscreen-iframe {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
-      /* Prefer an explicit height based on 100vh minus safe-area + buffer.
-         This avoids layout engines collapsing the iframe when using top/bottom.
-      */
-      height: calc(100vh - (env(safe-area-inset-bottom, 0px) + 56px));
+      height: calc(100vh - var(--bottom-bar-height));
       border: none;
       margin: 0;
       padding: 0;
@@ -118,13 +169,6 @@
       background: #000;
       display: block;
       box-sizing: border-box;
-    }
-
-    /* On larger screens use the full viewport height */
-    @media (min-height: 900px), (min-width: 900px) {
-      .fullscreen-iframe {
-        height: 100vh;
-      }
     }
   </style>
 </head>
