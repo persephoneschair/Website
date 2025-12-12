@@ -96,15 +96,15 @@
       --menu-icon-size: 3.2rem;
     }
 
-    /* Mobile-only: make the bottom bar exactly the height of the home/menu
+     /* Mobile-only: make the bottom bar exactly the height of the home/menu
        button so the iframe never extends into that space. Give the bar a
-       visible hotpink background for testing. */
+       visible deep sky blue background for testing. */
     @media (max-width: 899px) {
       /* Make the bottom bar exactly the visual size of the icon plus a
          small buffer to account for borders/shadow. Use !important so later
          rules in the file don't accidentally override the mobile intent. */
       :root { --menu-icon-size: 3.0rem; --bottom-bar-height: calc(var(--menu-icon-size) + 8px); }
-      .bottom-bar { background: hotpink !important; align-items: center !important; padding-left: 0 !important; height: var(--bottom-bar-height) !important; }
+      .bottom-bar { background: deepskyblue !important; align-items: center !important; padding-left: 0 !important; height: var(--bottom-bar-height) !important; }
       /* Ensure the menu icon sits flush, uses box-sizing so border is included
          inside its declared size, and remove any margin/position offsets. */
       .menu-icon { margin: 0 !important; box-sizing: border-box !important; position: relative !important; left: 0 !important; bottom: 0 !important; width: var(--menu-icon-size) !important; height: var(--menu-icon-size) !important; }
@@ -133,8 +133,8 @@
       bottom: 0;
       height: var(--bottom-bar-height);
       /* Force visible background during debugging - remove !important when confirmed */
-      background: hotpink !important;
-      z-index: 1000;
+      background: deepskyblue !important;
+      z-index: 10010;
       display: flex;
       align-items: center;
       padding-left: 1.2rem;
@@ -192,14 +192,20 @@
       top: 0;
       left: 0;
       width: 100vw;
-      height: calc(100vh - var(--bottom-bar-height));
+      /* Prefer the dynamic viewport height unit where supported (dvh) to
+         account for mobile browser chrome. Fall back to 100vh. Also enforce
+         a max-height and prevent overflow inside the iframe box. */
+      height: calc(100dvh - var(--bottom-bar-height));
+      max-height: calc(100dvh - var(--bottom-bar-height));
       border: none;
       margin: 0;
       padding: 0;
-      z-index: 1;
+      z-index: 0;
       background: #000;
       display: block;
       box-sizing: border-box;
+      overflow: hidden;
+      -webkit-overflow-scrolling: touch;
     }
 
     /* Desktop: remove the bottom bar buffer and position the menu icon fixed in the corner */
@@ -208,7 +214,7 @@
       .bottom-bar { height: 0; background: transparent; padding-left: 0; }
       html, body { padding-bottom: 0; }
       .fullscreen-iframe { height: 100vh; }
-      .menu-icon { position: fixed; bottom: 0.5rem; left: 1.2rem; }
+      .menu-icon { position: fixed; bottom: 0.5rem; left: 1.2rem; z-index:10012; }
       .menu-content { margin-bottom: 0.5rem; align-items: center; }
     }
   </style>
@@ -264,15 +270,33 @@
     // on load, resize and visualViewport changes so the iframe stays above UI.
     function updateBottomBar() {
       try {
-        // If we're on a narrow/mobile viewport, prefer the fixed CSS buffer and
-        // don't override it from JS (some mobile browsers handle 100vh differently).
-        if (window.matchMedia && window.matchMedia('(max-width: 899px)').matches) return;
-        const base = 56; // same base buffer used in CSS
         const innerH = window.innerHeight || 0;
         const vvH = (window.visualViewport && window.visualViewport.height) || innerH;
         const extra = Math.max(0, innerH - vvH);
-        const value = Math.round(base + extra + (window.CSS && CSS.supports && CSS.supports('top: env(safe-area-inset-bottom)') ? 0 : 0));
-        document.documentElement.style.setProperty('--bottom-bar-height', value + 'px');
+
+        // Compute a base buffer. On desktop we use a slightly larger base to
+        // leave space for the menu; on mobile the CSS variable already sets
+        // an appropriate --bottom-bar-height but we still account for visual
+        // viewport changes (address bar appearing/disappearing).
+        const isMobile = window.matchMedia && window.matchMedia('(max-width: 899px)').matches;
+        if (!isMobile) {
+          const base = 56;
+          const value = Math.round(base + extra);
+          document.documentElement.style.setProperty('--bottom-bar-height', value + 'px');
+          // ensure iframe uses the CSS variable (handled by CSS dvh fallback)
+        } else {
+          // For mobile, explicitly set the iframe height to the visual
+          // viewport height minus the bottom bar so the iframe can't overflow
+          // and visually overlap the bar on phones which compute 100vh oddly.
+          const bottomBar = getComputedStyle(document.documentElement).getPropertyValue('--bottom-bar-height') || '0px';
+          const bottomPx = parseInt(bottomBar, 10) || 0;
+          const iframe = document.querySelector('.fullscreen-iframe');
+          const targetH = Math.max(0, vvH - bottomPx);
+          if (iframe) {
+            iframe.style.height = targetH + 'px';
+            iframe.style.maxHeight = targetH + 'px';
+          }
+        }
       } catch (e) {
         // fail silently
       }
