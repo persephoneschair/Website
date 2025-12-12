@@ -200,6 +200,12 @@
       .center-wrapper {
         padding: 0;
       }
+      /* Ensure the Home button is centered on small screens. This must
+         come after the general .home-btn rules so it overrides left margin. */
+      .home-btn {
+        display: block;
+        margin: 2rem auto 0 auto;
+      }
       .download-card {
         max-width: 98vw;
       }

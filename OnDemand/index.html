@@ -344,9 +344,12 @@
   to { opacity: 0; }
 }
 
+/* Pulse animation should NOT change overlay opacity (that reveals
+   underlying content). Animate scale/text-shadow instead so the loading
+   indicator pulses while fully obscuring page content. */
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
+  0%, 100% { transform: scale(1); text-shadow: 0 0 20px rgba(243,236,64,0.8), 0 0 40px rgba(243,236,64,0.5); }
+  50% { transform: scale(1.02); text-shadow: 0 0 28px rgba(243,236,64,0.85), 0 0 60px rgba(243,236,64,0.6); }
 }
 
 @media (max-width: 500px) {
