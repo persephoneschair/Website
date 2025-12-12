@@ -104,7 +104,7 @@
         small buffer to account for borders/shadow. Use !important so later
         rules in the file don't accidentally override the mobile intent. */
       :root { --menu-icon-size: 3.0rem; --bottom-bar-height: calc(var(--menu-icon-size) + 8px); }
-      .bottom-bar { background: limegreen !important; align-items: center !important; padding-left: 0 !important; height: var(--bottom-bar-height) !important; }
+      .bottom-bar { background: transparent !important; align-items: center !important; padding-left: 0 !important; height: var(--bottom-bar-height) !important; }
       /* Ensure the menu icon sits visually centered inside the bar. Use
         fixed positioning so it's clickable above the iframe and doesn't
         rely on parent stacking. */
@@ -133,8 +133,8 @@
       right: 0;
       bottom: 0;
       height: var(--bottom-bar-height);
-      /* Force visible background during debugging - remove !important when confirmed */
-      background: limegreen !important;
+      /* Transparent in final state */
+      background: transparent !important;
       /* Keep the bar under the iframe so the iframe can sit above it visually. */
       z-index: 10;
       display: block;
