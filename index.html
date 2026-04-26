@@ -237,7 +237,7 @@ a.nav-link.disabled:hover, a.nav-link.disabled:focus {
     <h1>GAME NIGHT</h1>
     <div class="sub-heading">by Persephone's Chair</div>
     <nav class="nav">
-      <span id="twitch-live-btn" class="nav-link disabled" style="background:#333;border:2px solid #555;color:#aaa;box-shadow:none;cursor:not-allowed;pointer-events:none;opacity:0.7;"><span>Not Currently Live</span></span>
+      <a id="twitch-live-btn" class="nav-link twitch-live" href="https://twitch.tv/royal_flush" target="_blank" rel="noopener" aria-disabled="false" tabindex="0"><span>Watch Live</span></a>
       <a class="nav-link" href="OnDemand/index.html"><span>Watch on Demand</span></a>
       <a class="nav-link" href="UniCon/index.html"><span>The Universal Controller</span></a>
       <a class="nav-link" href="PennyBank/index.html"><span>The Penny Bank</span></a>
@@ -248,102 +248,33 @@ a.nav-link.disabled:hover, a.nav-link.disabled:focus {
 </body>
 </html>
 <script>
-  // Returns true if current UTC time is Thursday or Saturday between 19:45 and 23:00
-  function isLiveTime() {
-    const now = new Date();
-    const day = now.getUTCDay(); // 0=Sunday, 4=Thursday, 6=Saturday
-    const hour = now.getUTCHours();
-    const minute = now.getUTCMinutes();
-    // Thursday (4) or Saturday (6)
-    if (day !== 4 && day !== 6) return false;
-    // 19:45 to 23:00 UTC
-    const mins = hour * 60 + minute;
-    return mins >= (19 * 60 + 45) && mins < (23 * 60);
-  }
-
-  async function getScheduleConfig() {
-    try {
-      const resp = await fetch('scheduling.json', {cache: 'no-store'});
-      if (!resp.ok) return null;
-      return await resp.json();
-    } catch (e) {
-      return null;
+  // Scheduling logic removed: make the Twitch button always active.
+  (function() {
+    const btn = document.getElementById('twitch-live-btn');
+    if (!btn) return;
+    // If it's already an anchor with correct attrs, nothing to do.
+    if (btn.tagName.toLowerCase() === 'a') {
+      btn.classList.remove('disabled');
+      btn.classList.add('twitch-live');
+      btn.href = 'https://twitch.tv/royal_flush';
+      btn.target = '_blank';
+      btn.rel = 'noopener';
+      btn.setAttribute('aria-disabled', 'false');
+      btn.setAttribute('tabindex', '0');
+      const span = btn.querySelector('span');
+      if (span) span.textContent = 'Watch Live';
+      return;
     }
-  }
-
-  async function getLiveStatus() {
-    const config = await getScheduleConfig();
-    const now = new Date();
-    let live = false;
-    // 1. Master override: forceLive
-    if (config && config.forceLive) return true;
-    // 2. Exclude dates
-    if (config && Array.isArray(config.excludeDates)) {
-      const todayStr = now.toISOString().slice(0,10);
-      if (config.excludeDates.some(date => date.replace(/\s*\/\/.*$/, '') === todayStr)) return false;
-    }
-    // 3. Include date ranges
-    if (config && Array.isArray(config.includeDates)) {
-      for (const range of config.includeDates) {
-        if (!range.startLive || !range.endLive) continue;
-        const start = new Date(range.startLive);
-        const end = new Date(range.endLive);
-        if (now >= start && now < end) return true;
-      }
-    }
-    // 4. Default schedule
-    return isLiveTime();
-  }
-
-  function updateTwitchButtonState(debugChannelLive) {
-    let btn = document.getElementById('twitch-live-btn');
-    function replaceWithSpan(label) {
-      const spanBtn = document.createElement('span');
-      spanBtn.id = 'twitch-live-btn';
-      spanBtn.className = 'nav-link disabled';
-      spanBtn.innerHTML = `<span>${label}</span>`;
-      btn.parentNode.replaceChild(spanBtn, btn);
-      btn = spanBtn;
-    }
-    function replaceWithA(label) {
-      const aBtn = document.createElement('a');
-      aBtn.id = 'twitch-live-btn';
-      aBtn.className = 'nav-link twitch-live';
-      aBtn.href = 'https://twitch.tv/royal_flush';
-      aBtn.target = '_blank';
-      aBtn.rel = 'noopener';
-      aBtn.setAttribute('aria-disabled', 'false');
-      aBtn.setAttribute('tabindex', '0');
-      aBtn.innerHTML = `<span>${label}</span>`;
-      btn.parentNode.replaceChild(aBtn, btn);
-      btn = aBtn;
-    }
-    if (debugChannelLive) {
-      if (btn.tagName.toLowerCase() !== 'a') {
-        replaceWithA('Watch Live');
-      } else {
-        btn.classList.remove('disabled');
-        btn.classList.add('twitch-live');
-        btn.setAttribute('href', 'https://twitch.tv/royal_flush');
-        btn.setAttribute('target', '_blank');
-        btn.setAttribute('rel', 'noopener');
-        btn.setAttribute('aria-disabled', 'false');
-        btn.setAttribute('tabindex', '0');
-        btn.querySelector('span').textContent = 'Watch Live';
-      }
-    } else {
-      if (btn.tagName.toLowerCase() !== 'span') {
-        replaceWithSpan('Not Currently Live');
-      } else {
-        btn.classList.remove('twitch-live');
-        btn.classList.add('disabled');
-        btn.querySelector('span').textContent = 'Not Currently Live';
-      }
-    }
-  }
-
-  window.addEventListener('DOMContentLoaded', async () => {
-    const live = await getLiveStatus();
-    updateTwitchButtonState(live);
-  });
+    // Replace non-anchor with anchor
+    const a = document.createElement('a');
+    a.id = 'twitch-live-btn';
+    a.className = 'nav-link twitch-live';
+    a.href = 'https://twitch.tv/royal_flush';
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.setAttribute('aria-disabled', 'false');
+    a.setAttribute('tabindex', '0');
+    a.innerHTML = '<span>Watch Live</span>';
+    btn.parentNode.replaceChild(a, btn);
+  })();
 </script>
