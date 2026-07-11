@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found</title>
+  <link rel="icon" href="/Images/Icon.png" type="image/png">
+  <style>
+    html, body {
+      background: #0a0a0a;
+      color: #fff;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      box-sizing: border-box;
+    }
+    h1 {
+      color: #f3ec40;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    .home-btn {
+      display: inline-block;
+      background: #152a5a;
+      color: #fff;
+      border: 2px solid #2563eb;
+      border-radius: 12px;
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      transition: all 0.15s ease;
+    }
+    .home-btn:hover, .home-btn:focus {
+      box-shadow: 0 0 25px rgba(243, 236, 64, 1);
+      transform: scale(1.05);
+      border-color: #f3ec40;
+      background: #0b3797;
+    }
+  </style>
+</head>
+<body>
+  <h1>Page Not Found</h1>
+  <p>Sorry, we couldn't find that page.</p>
+  <a class="home-btn" href="/">Home</a>
+  <script>
+    (function () {
+      // This host is case-sensitive, so mistyped-case URLs (e.g. /ondemand)
+      // 404 instead of matching the real folder (/OnDemand). It also has a
+      // couple of short vanity paths that should forward to Q-Forge. Both
+      // are handled here rather than as real folders, since a folder that
+      // differs only by case from an existing one can't be checked out
+      // alongside it on a case-insensitive filesystem (Windows/NTFS).
+      var redirects = {
+        'ondemand': '/OnDemand/',
+        'pennybank': '/PennyBank/',
+        'unicon': '/UniCon/',
+        'downloads': '/Downloads/',
+        'q-forge': 'https://q-forge.persephoneschair.com',
+        'qforge': 'https://q-forge.persephoneschair.com'
+      };
+      var path = window.location.pathname
+        .toLowerCase()
+        .replace(/^\/+|\/+$/g, '')
+        .replace(/\/index\.html$/, '');
+      if (Object.prototype.hasOwnProperty.call(redirects, path)) {
+        window.location.replace(redirects[path]);
+      }
+    })();
+  </script>
+</body>
+</html>
