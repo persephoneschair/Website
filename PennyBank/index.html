@@ -938,8 +938,15 @@ async function renderPlayerCabinet(playerName) {
 
   // Loop through each format and tally medals
   for (const fmt of FORMATS) {
-    const res = await fetch(`https://raw.githubusercontent.com/persephoneschair/PennyStorage/main/${fmt}`);
-    const data = await res.json();
+    let data;
+    try {
+      const res = await fetch(`https://raw.githubusercontent.com/persephoneschair/PennyStorage/main/${fmt}`);
+      data = await res.json();
+    } catch (fmtError) {
+      // Skip formats with unreachable or malformed data instead of aborting the whole cabinet
+      console.error(`Error loading ${fmt}:`, fmtError);
+      continue;
+    }
     const types = ['gold', 'silver', 'bronze', 'lobby'];
     const counts = { gold: 0, silver: 0, bronze: 0, lobby: 0 };
 
