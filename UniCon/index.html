@@ -1,348 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Universal Controller</title>
-  <link rel="icon" href="../Images/Icon.png" type="image/png">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <title>The Universal Controller – Game Night</title>
+  <meta name="description" content="The Universal Controller for Game Night, in your browser.">
+  <link rel="icon" href="/assets/img/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&display=swap">
+  <link rel="stylesheet" href="/assets/css/site.css">
   <style>
-        .menu-icon {
-          position: fixed;
-          bottom: 0.5rem;
-          left: 1.2rem;
-          z-index: 1002;
-          background: rgba(21,42,90,0.85);
-          border: 2px solid #2563eb;
-          border-radius: 50%;
-          width: 3.2rem;
-          height: 3.2rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          transition: background 0.15s, border-color 0.15s;
-          box-shadow: 0 2px 8px #000a;
-        }
-        .menu-icon:hover, .menu-icon:focus {
-          background: #0b3797;
-          border-color: #f3ec40;
-        }
-        .menu-overlay {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100vw;
-          height: 100vh;
-          background: rgba(10,10,10,0.7);
-          z-index: 1001;
-          display: none;
-          align-items: flex-end;
-          justify-content: flex-start;
-          animation: fadeIn 0.2s;
-        }
-        .menu-overlay.active {
-          display: flex;
-        }
-        .menu-content {
-          background: #152a5a;
-          border-radius: 20px 20px 20px 20px;
-          box-shadow: 0 4px 24px #000a;
-          /* remove left padding so the home button can sit flush with the page edge */
-          padding: 1.2rem 1.5rem 1.2rem 0;
-          margin-bottom: 2.5rem;
-          min-width: 0;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          margin-left: 0;
-        }
-        .menu-home-btn {
-          margin-bottom: 0;
-        }
-        .menu-home-btn {
-          background: #152a5a;
-          color: #fff;
-          border: 2px solid #2563eb;
-          border-radius: 12px;
-          padding: 1.2rem 2.5rem;
-          font-size: 1.5rem;
-          font-family: 'Segoe UI', sans-serif;
-          font-weight: 700;
-          text-align: center;
-          text-decoration: none;
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-          transition: all 0.15s ease;
-          margin-bottom: 1rem;
-          margin-left: 0; /* ensure flush alignment */
-          cursor: pointer;
-          display: block;
-        }
-        .menu-home-btn:hover, .menu-home-btn:focus {
-          box-shadow: 0 0 25px rgba(243, 236, 64, 1);
-          border-color: #f3ec40;
-          background: #0b3797;
-          color: #fff;
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-    /* Use viewport sizing but avoid fixed 100vh which can be obscured by mobile browser UI.
-       Reserve a small bottom bar (menu area) so the embedded iframe never gets
-       obscured by browser chrome; the menu icon sits inside that bar. */
-    :root {
-      /* base bottom buffer (used on desktop if JS adjusts it) */
-      --bottom-bar-height: calc(env(safe-area-inset-bottom, 0px) + 70px);
-      --menu-icon-size: 3.2rem;
-    }
-
-     /* Mobile-only: make the bottom bar exactly the height of the home/menu
-       button so the iframe never extends into that space. Give the bar a
-       visible lime green background for testing. */
-     @media (max-width: 899px) {
-      /* Make the reserved bar appear at the top on mobile (transparent in final state).
-        Keep the same measured height and center the menu icon inside it. */
-      :root { --menu-icon-size: 3.0rem; --bottom-bar-height: calc(var(--menu-icon-size) + 8px); }
-      .bottom-bar { background: transparent !important; align-items: center !important; padding-left: 0 !important; height: var(--bottom-bar-height) !important; top: 0 !important; bottom: auto !important; }
-      /* Ensure the menu icon sits visually centered inside the top bar. Use
-        fixed positioning so it's clickable above the iframe and doesn't
-        rely on parent stacking. Use 'top' instead of 'bottom' when the bar
-        is at the top. */
-      .menu-icon { box-sizing: border-box !important; position: fixed !important; left: 0.9rem !important; top: calc((var(--bottom-bar-height) - var(--menu-icon-size)) / 2) !important; width: var(--menu-icon-size) !important; height: var(--menu-icon-size) !important; margin: 0 !important; }
-      /* Make the svg smaller inside the nub so stroke/padding fit comfortably. */
-      .menu-icon svg { width: 60% !important; height: 60% !important; }
-      /* Mobile: show the overlay content near the top, next to the menu icon */
-      .menu-overlay { align-items: flex-start !important; justify-content: flex-start !important; padding-top: 0 !important; }
-      .menu-content { margin-top: calc(var(--menu-icon-size) + 10px) !important; margin-bottom: 0 !important; margin-left: 0.9rem !important; align-items: flex-start !important; }
-
-      /* Let the iframe extend to the top of the viewport on mobile so the
-        app visually covers the reserved area; the menu button remains
-        positioned above the iframe so it stays visible. */
-      .fullscreen-iframe { top: 0 !important; height: 100dvh !important; max-height: 100dvh !important; }
-     }
-    html, body {
-      background: #0a0a0a;
-      margin: 0;
-      padding: 0;
+    html, body { height: 100%; overflow: hidden; background: #000; }
+    body { min-height: 0; }
+    .app {
+      position: fixed;
+      inset: 0;
       width: 100%;
-      min-height: 100%;
-      -webkit-text-size-adjust: 100%;
-      box-sizing: border-box;
-      /* allow scrolling so mobile browser UI doesn't permanently hide content */
-      overflow: auto;
-      /* ensure content doesn't get hidden under the bottom bar */
-      padding-bottom: var(--bottom-bar-height);
-    }
-
-    /* bottom bar that sits below the iframe and holds controls (menu/home) */
-    .bottom-bar {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: var(--bottom-bar-height);
-      /* Transparent in final state */
-      background: transparent !important;
-      /* Keep the bar under the iframe so the iframe can sit above it visually. */
-      z-index: 10;
+      height: 100vh;
+      height: 100dvh; /* follows mobile browser toolbars where supported */
+      border: 0;
       display: block;
-      box-sizing: border-box;
-      pointer-events: auto;
-    }
-
-    /* Menu nub sits above the iframe so it remains clickable while the
-       iframe itself is visually higher than the bottom bar. We position it
-       fixed and compute its vertical position relative to the bottom bar. */
-    .menu-icon {
-      position: fixed;
-      left: 0.9rem;
-      bottom: calc((var(--bottom-bar-height) - var(--menu-icon-size)) / 2);
-      z-index: 1002;
-      background: rgba(21,42,90,0.95);
-      border: 2px solid #2563eb;
-      border-radius: 50%;
-      width: var(--menu-icon-size);
-      height: var(--menu-icon-size);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: background 0.15s, border-color 0.15s;
-      box-shadow: 0 2px 8px #000a;
-    }
-
-    .menu-overlay {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100vw;
-          height: 100vh;
-          background: rgba(10,10,10,0.7);
-          z-index: 1003;
-          display: none;
-          align-items: flex-end;
-          justify-content: flex-start;
-          animation: fadeIn 0.2s;
-        }
-
-    .menu-content {
-          background: #152a5a;
-          border-radius: 20px 20px 20px 20px;
-          box-shadow: 0 4px 24px #000a;
-          padding: 1.2rem 1.5rem;
-          /* lift the overlay content above the bottom bar */
-          margin-bottom: calc(var(--bottom-bar-height) + 0.5rem);
-          min-width: 0;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          margin-left: 0;
-        }
-
-    /* Fullscreen iframe but leave the reserved bottom bar so home/menu sits below it */
-    .fullscreen-iframe {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      /* Prefer the dynamic viewport height unit where supported (dvh) to
-         account for mobile browser chrome. Fall back to 100vh. Also enforce
-         a max-height and prevent overflow inside the iframe box. */
-      height: calc(100dvh - var(--bottom-bar-height));
-      max-height: calc(100dvh - var(--bottom-bar-height));
-      border: none;
-      margin: 0;
-      padding: 0;
-      /* Place iframe above the bottom bar but under the overlay/menu nub */
-      z-index: 1000;
       background: #000;
-      display: block;
-      box-sizing: border-box;
-      overflow: hidden;
-      -webkit-overflow-scrolling: touch;
     }
-
-    /* Desktop: remove the bottom bar buffer and position the menu icon fixed in the corner */
-    @media (min-width: 900px) {
-      :root { --bottom-bar-height: 0px; }
-      .bottom-bar { height: 0; background: transparent; padding-left: 0; }
-      html, body { padding-bottom: 0; }
-      .fullscreen-iframe { height: 100vh; }
-      .menu-icon { position: fixed; bottom: 0.5rem; left: 1.2rem; z-index:10012; }
-      .menu-content { margin-bottom: 0.5rem; align-items: center; }
+    /* Two-step home control so a stray tap mid-game doesn't leave the page. */
+    .home-toggle {
+      position: fixed;
+      z-index: 10;
+      left: 14px;
+      bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+      width: 48px; height: 48px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%;
+      background: rgba(14, 22, 49, 0.9);
+      border: 2px solid var(--blue);
+      color: var(--gold);
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
     }
-
-    /* Strong desktop rule to ensure the home button is visible above
-       the iframe even if other rules attempt to change positioning. */
-    @media (min-width: 900px) {
-      /* Force the home button above everything on desktop. Some browsers
-         render plugin/canvas content in their own layer; using a very high
-         z-index and a 3D transform helps ensure the button paints above.
-         Keep display/visibility set so it cannot be hidden by other rules. */
-      .menu-icon { position: fixed !important; bottom: 0.5rem !important; left: 1.2rem !important; z-index: 2147483647 !important; display: flex !important; visibility: visible !important; transform: translateZ(0) !important; }
+    .home-toggle:hover, .home-toggle[aria-expanded="true"] { border-color: var(--gold); }
+    .home-pop {
+      position: fixed;
+      z-index: 10;
+      left: 14px;
+      bottom: calc(68px + env(safe-area-inset-bottom, 0px));
+      display: flex; flex-direction: column; gap: 8px;
+      padding: 12px;
+      background: var(--panel);
+      border: 1px solid var(--line-2);
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    }
+    .home-pop[hidden] { display: none; }
+    /* On phones the bottom edge sits under browser toolbars, so use the top. */
+    @media (max-width: 899px) {
+      .home-toggle { top: calc(10px + env(safe-area-inset-top, 0px)); bottom: auto; }
+      .home-pop { top: calc(68px + env(safe-area-inset-top, 0px)); bottom: auto; }
     }
   </style>
 </head>
 <body>
-    <div class="bottom-bar"></div>
-    <div class="menu-overlay" id="menuOverlay">
-      <div class="menu-content">
-        <a href="../index.html" class="menu-home-btn">Home</a>
-      </div>
-    </div>
-  <iframe
-    src="https://itch.io/embed-upload/17917117?color=000000"
-    title="Universal Controller"
-    class="fullscreen-iframe"
-    allowfullscreen
-    loading="lazy"
-  ></iframe>
-  <div class="menu-icon" id="menuIcon" tabindex="0" title="Open menu" aria-label="Open menu" style="pointer-events:auto;">
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f3ec40" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:block;">
-      <path d="M3 11.5L12 5l9 6.5"/>
-      <path d="M5 10.5V19a1 1 0 0 0 1 1h3.5a1 1 0 0 0 1-1v-3.5a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1V19a1 1 0 0 0 1 1H18a1 1 0 0 0 1-1v-8.5"/>
-    </svg>
-  </div>
-</body>
-  <script>
-    const menuIcon = document.getElementById('menuIcon');
-    const menuOverlay = document.getElementById('menuOverlay');
-    // Open overlay
-    function openMenu() {
-      menuOverlay.classList.add('active');
-    }
-    // Close overlay
-    function closeMenu(e) {
-      if (e.target === menuOverlay) {
-        menuOverlay.classList.remove('active');
-      }
-    }
-    menuIcon.addEventListener('click', openMenu);
-    menuIcon.addEventListener('keypress', function(e) {
-      if (e.key === 'Enter' || e.key === ' ') openMenu();
-    });
-    menuOverlay.addEventListener('click', closeMenu);
-    // Optional: ESC to close
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') menuOverlay.classList.remove('active');
-    });
-    // Ensure bottom-bar buffer accounts for mobile browser chrome which can
-    // change the visual viewport (address bar, toolbars). We compute an extra
-    // offset from the difference between window.innerHeight and visualViewport.height
-    // and update the CSS variable `--bottom-bar-height` accordingly. This runs
-    // on load, resize and visualViewport changes so the iframe stays above UI.
-    function updateBottomBar() {
-      try {
-        const innerH = window.innerHeight || 0;
-        const vvH = (window.visualViewport && window.visualViewport.height) || innerH;
-        const extra = Math.max(0, innerH - vvH);
+  <iframe class="app" src="https://itch.io/embed-upload/17917117?color=000000" title="The Universal Controller" allowfullscreen></iframe>
 
-        // Compute a base buffer. On desktop we use a slightly larger base to
-        // leave space for the menu; on mobile the CSS variable already sets
-        // an appropriate --bottom-bar-height but we still account for visual
-        // viewport changes (address bar appearing/disappearing).
-        const isMobile = window.matchMedia && window.matchMedia('(max-width: 899px)').matches;
-        if (!isMobile) {
-          const base = 56;
-          const value = Math.round(base + extra);
-          // Do NOT set the CSS variable inline on desktop — allow the CSS
-          // media query to control --bottom-bar-height (it should be 0px).
-          // Remove any previously-set inline value so desktop CSS wins.
-          document.documentElement.style.removeProperty('--bottom-bar-height');
-          // Also remove any inline iframe sizing that mobile may have set so
-          // the iframe can return to CSS-controlled 100vh on desktop.
-          const iframe = document.querySelector('.fullscreen-iframe');
-          if (iframe) {
-            iframe.style.height = '';
-            iframe.style.maxHeight = '';
-          }
-        } else {
-          // For mobile, explicitly set the iframe height to the visual
-          // viewport height minus the bottom bar so the iframe can't overflow
-          // and visually overlap the bar on phones which compute 100vh oddly.
-          // Prefer the measured pixel height of the visible bottom bar element
-          // to avoid parsing units from the CSS variable which may be rem/calc.
-          const barElem = document.querySelector('.bottom-bar');
-          const bottomPx = barElem ? Math.round(barElem.getBoundingClientRect().height) : (parseInt(getComputedStyle(document.documentElement).getPropertyValue('--bottom-bar-height'), 10) || 0);
-          // Keep the CSS variable in sync with the measured value for layout calcs
-          document.documentElement.style.setProperty('--bottom-bar-height', bottomPx + 'px');
-          const iframe = document.querySelector('.fullscreen-iframe');
-          const targetH = Math.max(0, vvH - bottomPx);
-          if (iframe) {
-            // Allow the iframe to occupy the full visual viewport (covering
-            // the reserved top bar). Keep the menu button positioned above
-            // it so the button remains visible and clickable.
-            iframe.style.top = '0px';
-            iframe.style.height = vvH + 'px';
-            iframe.style.maxHeight = vvH + 'px';
-          }
-        }
-      } catch (e) {
-        // fail silently
-      }
-    }
-    updateBottomBar();
-    window.addEventListener('resize', updateBottomBar);
-    if (window.visualViewport) window.visualViewport.addEventListener('resize', updateBottomBar);
+  <button type="button" class="home-toggle" id="home-toggle" aria-expanded="false" aria-controls="home-pop" aria-label="Menu">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5L12 5l9 6.5"/><path d="M5 10.5V19a1 1 0 0 0 1 1h3.5a1 1 0 0 0 1-1v-3.5a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1V19a1 1 0 0 0 1 1H18a1 1 0 0 0 1-1v-8.5"/></svg>
+  </button>
+  <div class="home-pop" id="home-pop" hidden>
+    <a class="btn btn-primary" href="/">Back to Game Night</a>
+    <a class="btn btn-ghost" href="/PlayAGame/#unicon">Download for PC or Mac</a>
+  </div>
+
+  <script>
+    (function () {
+      const toggle = document.getElementById('home-toggle');
+      const pop = document.getElementById('home-pop');
+      const setOpen = (open) => {
+        pop.hidden = !open;
+        toggle.setAttribute('aria-expanded', String(open));
+      };
+      toggle.addEventListener('click', () => setOpen(pop.hidden));
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+      document.addEventListener('click', (e) => {
+        if (!pop.hidden && !pop.contains(e.target) && !toggle.contains(e.target)) setOpen(false);
+      });
+    })();
   </script>
+</body>
 </html>
