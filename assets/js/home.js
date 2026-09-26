@@ -51,7 +51,7 @@
         </a></li>`).join('');
     } catch (e) {
       console.error('Penny Bank failed to load', e);
-      list.innerHTML = '<li class="muted">The Penny Bank couldn\'t be loaded right now.</li>';
+      list.innerHTML = '<li class="muted">Penny Bank couldn\'t be loaded right now.</li>';
     } finally {
       list.removeAttribute('aria-busy');
     }

@@ -1,5 +1,5 @@
 /*
- * The Penny Bank: leaderboards, format medal cabinets, Hall of Fame and
+ * Penny Bank: leaderboards, format medal cabinets, Hall of Fame and
  * player medal cabinets. Every view has its own URL (?player=, ?view=formats&format=,
  * ?view=hof, ?mode=) so it can be linked to and the back button works.
  */
@@ -206,7 +206,7 @@
   // ---------- views ----------
 
   async function renderLeaderboard(route, token) {
-    setHead('The Penny Bank', { docTitle: 'The Penny Bank' });
+    setHead('Penny Bank');
     if (!players) skeleton();
     await ensurePlayers();
     if (token !== renderToken) return;
@@ -470,7 +470,7 @@
       if (token !== renderToken) return;
       console.error('Penny Bank failed to load', e);
       view.removeAttribute('aria-busy');
-      view.innerHTML = notice("The Penny Bank couldn't be loaded", 'Please try again in a moment.',
+      view.innerHTML = notice("Penny Bank couldn't be loaded", 'Please try again in a moment.',
         '<div><button type="button" class="btn btn-primary" id="retry">Try again</button></div>');
       document.getElementById('retry').addEventListener('click', render);
     }
