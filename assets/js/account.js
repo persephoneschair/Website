@@ -26,7 +26,7 @@ const FIREBASE_CONFIG = {
 // Where the Format Access app is hosted (it serves /api/delete-user). No
 // trailing slash, e.g. 'https://access.persephoneschair.com'. Leave null
 // until it's live: Delete account then explains it isn't available yet.
-const ACCOUNT_API_BASE = null;
+const ACCOUNT_API_BASE = 'https://admin.persephoneschair.com';
 
 // Username rules: copied from SIGNUP.md (and the rules / src/lib/username.ts
 // in persephones-chair-uac-manager). Keep all three in step.
