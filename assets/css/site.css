@@ -161,7 +161,8 @@ button, input, select { font: inherit; color: inherit; }
 .header-menu { flex: 1 1 auto; display: flex; align-items: center; gap: 24px; }
 
 .site-nav { margin: 0 auto; display: flex; gap: 36px; font-size: 15px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
-.site-nav a { color: #C8D3F5; padding: 6px 0; border-bottom: 2px solid transparent; }
+.site-nav a { color: #C8D3F5; padding: 6px 0; border-bottom: 2px solid transparent; white-space: nowrap; }
+@media (max-width: 1180px) { .site-nav { gap: 22px; letter-spacing: 0.06em; } }
 .site-nav a:hover { color: #fff; }
 .site-nav a[aria-current="page"] { color: var(--gold); border-bottom-color: var(--gold); }
 

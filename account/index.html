@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0A1024">
+  <title>Account – Game Night</title>
+  <meta name="description" content="Create a Game Night account to host Game Night formats in your browser, or manage the account you already have.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Game Night account">
+  <meta property="og:description" content="You need an account to host Game Night formats. Create one here.">
+  <meta property="og:image" content="https://persephoneschair.com/assets/img/og.jpg">
+  <link rel="icon" href="/assets/img/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Satisfy&display=swap">
+  <link rel="preload" href="/assets/fonts/GameOver.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script>try{if(new FontFace('t','url(#)',{sizeAdjust:'330%'}).sizeAdjust!=='330%')throw 0}catch(e){document.documentElement.classList.add('no-size-adjust')}</script>
+  <script src="/assets/js/site.js" defer></script>
+  <script src="/assets/js/account.js" type="module"></script>
+  <style>
+    :root { --ok: #8FD694; }
+    .account-grid { display: grid; grid-template-columns: minmax(0, 560px) minmax(0, 1fr); gap: 24px; align-items: start; }
+    .account-grid aside { display: flex; flex-direction: column; gap: 16px; }
+    .account-grid aside h2 { margin: 0 0 8px; font-size: 17px; font-weight: 700; color: #fff; }
+    .account-grid aside p { margin: 0; color: var(--text-2); font-size: 15px; }
+    .account-grid aside p + p { margin-top: 10px; }
+    .panel > h2 { margin: 0 0 6px; font-size: 22px; font-weight: 700; color: #fff; }
+    .panel > .intro { margin: 0 0 20px; color: var(--text-2); }
+
+    .tabs { display: flex; margin-bottom: 22px; }
+    .tabs button { flex: 1 1 0; }
+
+    .form { display: flex; flex-direction: column; gap: 16px; }
+    .form[hidden] { display: none; }
+    .form + .form { margin-top: 0; }
+    .form-row { display: flex; flex-direction: column; gap: 6px; }
+    .form-row label { font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-2); }
+    .form .field { width: 100%; }
+    .field:focus { border-color: var(--gold); }
+    .field::placeholder { color: var(--faint); font-weight: 500; }
+    .label-line { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+    .hint { margin: 0; font-size: 14px; color: var(--muted); }
+    .hint.ok { color: var(--ok); }
+    .hint.bad { color: var(--danger); }
+    .form-msg { margin: 0; font-size: 15px; font-weight: 600; }
+    .form-msg:empty { display: none; }
+    .form-msg.error { color: var(--danger); }
+    .form-msg.ok { color: var(--ok); }
+    .form-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    .link-btn { padding: 0; background: none; border: 0; color: var(--gold); font-size: 14px; font-weight: 600; cursor: pointer; }
+    .link-btn:hover { color: var(--gold-hover); }
+    .btn:disabled { opacity: 0.6; cursor: progress; }
+    .btn-danger { border-color: var(--danger); color: var(--danger); background: transparent; }
+    .btn-danger:hover { background: rgba(240, 122, 122, 0.12); color: #fff; }
+    .btn-danger-solid { background: #C23B4E; color: #fff; }
+    .btn-danger-solid:hover { background: #D64B5F; color: #fff; }
+    .check { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; color: var(--text-2); cursor: pointer; }
+    .check input { width: 20px; height: 20px; margin: 2px 0 0; flex-shrink: 0; accent-color: var(--danger); }
+    .warning { margin: 0; padding: 14px 16px; border: 1px solid var(--danger); border-radius: 10px; background: rgba(240, 122, 122, 0.08); color: var(--text); font-size: 15px; }
+
+    .facts { margin: 0 0 22px; display: grid; gap: 14px; }
+    .facts div { display: flex; flex-direction: column; gap: 2px; padding: 14px 16px; background: var(--panel-2); border-radius: var(--radius); }
+    .facts dt { font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    .facts dd { margin: 0; font-size: 18px; font-weight: 700; color: #fff; overflow-wrap: anywhere; }
+    .account-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .subform { margin-top: 22px; padding-top: 22px; border-top: 1px solid var(--line-soft); }
+    .subform h3 { margin: 0; font-size: 18px; color: #fff; }
+    #account-msg { margin-top: 16px; }
+
+    @media (max-width: 860px) {
+      .account-grid { grid-template-columns: minmax(0, 1fr); }
+    }
+    @media (max-width: 520px) {
+      .form-actions .btn, .account-actions .btn { flex: 1 1 auto; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Game Night home">
+        <img src="/assets/img/logo.png" alt="" width="44" height="44">
+        <span class="display d-brand" aria-hidden="true">Game Night</span>
+      </a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <div class="header-menu" id="site-menu">
+        <nav class="site-nav" aria-label="Main">
+          <a href="/OnDemand/">On Demand</a>
+          <a href="/PlayAGame/">Play</a>
+          <a href="/PennyBank/">Penny Bank</a>
+          <a href="/account/" aria-current="page">Account</a>
+        </nav>
+        <div class="header-actions">
+          <a class="btn btn-ghost" href="https://discord.gg/persephoneschair" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Discord</a>
+          <a class="btn btn-live" href="https://twitch.tv/royal_flush" target="_blank" rel="noopener"><span class="live-dot" aria-hidden="true"></span>Watch Live</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <div class="page-head">
+      <div>
+        <h1 class="display d-page" id="page-title">Account</h1>
+        <p class="lede" id="page-lede">You need an account to host Game Night formats. Create one here, then sign in with it in any of the games.</p>
+      </div>
+    </div>
+
+    <div class="account-grid">
+      <div>
+        <section class="panel" id="v-loading" aria-live="polite">
+          <p class="muted" id="loading-text" style="margin:0">Loading…</p>
+          <button class="btn btn-ghost" type="button" id="loading-retry" hidden style="margin-top:14px">Try again</button>
+        </section>
+
+        <!-- Signed out: create an account, sign in, or reset a password. -->
+        <section class="panel" id="v-signed-out" hidden>
+          <div class="segmented tabs" role="group" aria-label="Choose">
+            <button type="button" data-tab="signup" aria-pressed="true">Create account</button>
+            <button type="button" data-tab="signin" aria-pressed="false">Sign in</button>
+          </div>
+
+          <form class="form" id="f-signup" novalidate>
+            <div class="form-row">
+              <label for="su-email">Email</label>
+              <input class="field" id="su-email" type="email" autocomplete="email" required>
+            </div>
+            <div class="form-row">
+              <label for="su-username">Username</label>
+              <input class="field" id="su-username" type="text" autocomplete="username" autocapitalize="off" spellcheck="false" maxlength="20" required>
+              <p class="hint" id="su-username-hint">3–20 letters, numbers or underscores.</p>
+            </div>
+            <div class="form-row">
+              <label for="su-password">Password</label>
+              <input class="field" id="su-password" type="password" autocomplete="new-password" minlength="6" required>
+              <p class="hint">At least 6 characters.</p>
+            </div>
+            <p class="form-msg" role="status" aria-live="polite"></p>
+            <div class="form-actions">
+              <button class="btn btn-primary btn-lg" type="submit">Create account</button>
+            </div>
+          </form>
+
+          <form class="form" id="f-signin" novalidate hidden>
+            <div class="form-row">
+              <label for="si-id">Email or username</label>
+              <input class="field" id="si-id" type="text" autocomplete="username" autocapitalize="off" spellcheck="false" required>
+            </div>
+            <div class="form-row">
+              <div class="label-line">
+                <label for="si-password">Password</label>
+                <button class="link-btn" type="button" id="forgot-btn">Forgot password?</button>
+              </div>
+              <input class="field" id="si-password" type="password" autocomplete="current-password" required>
+            </div>
+            <p class="form-msg" role="status" aria-live="polite"></p>
+            <div class="form-actions">
+              <button class="btn btn-primary btn-lg" type="submit">Sign in</button>
+            </div>
+          </form>
+
+          <form class="form" id="f-reset" novalidate hidden>
+            <p class="hint" style="margin:0">Enter the email address you signed up with and we'll send you a link to set a new password.</p>
+            <div class="form-row">
+              <label for="rs-email">Email</label>
+              <input class="field" id="rs-email" type="email" autocomplete="email" required>
+            </div>
+            <p class="form-msg" role="status" aria-live="polite"></p>
+            <div class="form-actions">
+              <button class="btn btn-primary" type="submit">Send reset link</button>
+              <button class="btn btn-ghost" type="button" data-tab="signin">Back to sign in</button>
+            </div>
+          </form>
+        </section>
+
+        <!-- Signed in, but no username yet (older accounts, or sign-up stopped halfway). -->
+        <section class="panel" id="v-choose" hidden>
+          <h2>Choose a username</h2>
+          <p class="intro">Your account (<strong class="js-email"></strong>) needs a username before you can carry on. It's how you'll appear, and you can change it later.</p>
+          <form class="form" id="f-choose" novalidate>
+            <div class="form-row">
+              <label for="ch-username">Username</label>
+              <input class="field" id="ch-username" type="text" autocomplete="username" autocapitalize="off" spellcheck="false" maxlength="20" required>
+              <p class="hint" id="ch-username-hint">3–20 letters, numbers or underscores.</p>
+            </div>
+            <p class="form-msg" role="status" aria-live="polite"></p>
+            <div class="form-actions">
+              <button class="btn btn-primary" type="submit">Save username</button>
+              <button class="btn btn-ghost" type="button" data-action="signout">Sign out</button>
+            </div>
+          </form>
+        </section>
+
+        <!-- Signed in with a username. -->
+        <section class="panel" id="v-account" hidden>
+          <dl class="facts">
+            <div><dt>Username</dt><dd class="js-username"></dd></div>
+            <div><dt>Email</dt><dd class="js-email"></dd></div>
+          </dl>
+          <div class="account-actions">
+            <button class="btn btn-ghost" type="button" data-open="f-rename">Change username</button>
+            <button class="btn btn-ghost" type="button" data-open="f-password">Change password</button>
+            <button class="btn btn-ghost" type="button" data-action="signout">Sign out</button>
+            <button class="btn btn-danger" type="button" data-open="f-delete">Delete account</button>
+          </div>
+          <p class="form-msg" id="account-msg" role="status" aria-live="polite"></p>
+
+          <form class="form subform" id="f-rename" novalidate hidden>
+            <h3>Change username</h3>
+            <div class="form-row">
+              <label for="rn-username">New username</label>
+              <input class="field" id="rn-username" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="20" required>
+              <p class="hint" id="rn-username-hint">3–20 letters, numbers or underscores. Your old name is released for anyone to take.</p>
+            </div>
+            <p class="form-msg" role="status" aria-live="polite"></p>
+            <div class="form-actions">
+              <button class="btn btn-primary" type="submit">Save username</button>
+              <button class="btn btn-ghost" type="button" data-close>Cancel</button>
+            </div>
+          </form>
+
+          <form class="form subform" id="f-password" novalidate hidden>
+            <h3>Change password</h3>
+            <!-- Lets password managers pair the new password with this account. -->
+            <input class="visually-hidden js-email-value" type="email" autocomplete="username" tabindex="-1" aria-hidden="true" readonly>
+            <div class="form-row">
+              <label for="pw-current">Current password</label>
+              <input class="field" id="pw-current" type="password" autocomplete="current-password" required>
+            </div>
+            <div class="form-row">
+              <label for="pw-new">New password</label>
+              <input class="field" id="pw-new" type="password" autocomplete="new-password" minlength="6" required>
+              <p class="hint">At least 6 characters.</p>
+            </div>
+            <p class="form-msg" role="status" aria-live="polite"></p>
+            <div class="form-actions">
+              <button class="btn btn-primary" type="submit">Change password</button>
+              <button class="btn btn-ghost" type="button" data-close>Cancel</button>
+            </div>
+          </form>
+
+          <form class="form subform" id="f-delete" novalidate hidden>
+            <h3>Delete account</h3>
+            <p class="warning">This permanently deletes your login, your username (anyone can then take it), your hosting access and any Face/Off questions you've saved. It can't be undone.</p>
+            <input class="visually-hidden js-email-value" type="email" autocomplete="username" tabindex="-1" aria-hidden="true" readonly>
+            <div class="form-row">
+              <label for="del-password">Enter your password to confirm</label>
+              <input class="field" id="del-password" type="password" autocomplete="current-password" required>
+            </div>
+            <label class="check"><input type="checkbox" id="del-confirm"> I understand my account and everything in it will be deleted for good.</label>
+            <p class="form-msg" role="status" aria-live="polite"></p>
+            <div class="form-actions">
+              <button class="btn btn-danger-solid" type="submit">Delete my account</button>
+              <button class="btn btn-ghost" type="button" data-close>Cancel</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel" id="v-goodbye" hidden>
+          <h2>Account deleted</h2>
+          <p class="intro">Your account and everything in it have been deleted. Thanks for hosting Game Night.</p>
+          <div class="form-actions">
+            <button class="btn btn-ghost" type="button" id="goodbye-done">Create a new account</button>
+          </div>
+        </section>
+      </div>
+
+      <aside>
+        <section class="panel">
+          <h2>One account, every game</h2>
+          <p>Use the same email and password to sign in as host in any of the browser games on the <a href="/PlayAGame/">Play</a> page.</p>
+          <p>An account doesn't unlock hosting by itself: access to each format is switched on separately. Ask on the <a href="https://discord.gg/persephoneschair" target="_blank" rel="noopener">Discord</a>.</p>
+        </section>
+        <section class="panel">
+          <h2>Your privacy</h2>
+          <p>We store your email address and your username, and the date you signed up. Your email is only used for signing in and password resets, and isn't shown publicly. Your username can be seen by others.</p>
+          <p>Passwords are handled by Google's Firebase Authentication; we never see them. You can delete your account from this page at any time.</p>
+        </section>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>© 2026 Persephone's Chair</span>
+      <nav aria-label="Elsewhere">
+        <a href="https://twitch.tv/royal_flush" target="_blank" rel="noopener">Twitch</a>
+        <a href="https://discord.gg/persephoneschair" target="_blank" rel="noopener">Discord</a>
+        <a href="https://q-forge.persephoneschair.com" target="_blank" rel="noopener">Q-Forge</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

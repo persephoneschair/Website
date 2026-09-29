@@ -30,9 +30,16 @@
     .game .note { font-size: 14px; color: var(--muted); }
     .game-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; }
     .game.wide { grid-column: 1 / -1; }
+    .host-callout { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+    .host-callout .row-icon { width: 48px; height: 48px; }
+    .host-callout-text { flex: 1 1 auto; min-width: 0; }
+    .host-callout-text strong { display: block; font-size: 17px; color: #fff; }
+    .host-callout-text span { color: var(--text-2); font-size: 15px; }
     @media (max-width: 800px) {
       .cards { grid-template-columns: minmax(0, 1fr); gap: 12px; margin-bottom: 32px; }
       .game-actions .btn { flex: 1 1 auto; justify-content: center; }
+      .host-callout { flex-wrap: wrap; margin-bottom: 12px; }
+      .host-callout .game-actions { width: 100%; }
     }
   </style>
 </head>
@@ -52,6 +59,7 @@
           <a href="/OnDemand/">On Demand</a>
           <a href="/PlayAGame/" aria-current="page">Play</a>
           <a href="/PennyBank/">Penny Bank</a>
+          <a href="/account/">Account</a>
         </nav>
         <div class="header-actions">
           <a class="btn btn-ghost" href="https://discord.gg/persephoneschair" target="_blank" rel="noopener">
@@ -87,6 +95,19 @@
     </div>
 
     <h2 class="section-label">Standalone games</h2>
+    <section class="panel host-callout" aria-label="Host accounts">
+      <span class="row-icon" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+      </span>
+      <p class="host-callout-text" style="margin:0">
+        <strong>Want to host?</strong>
+        <span>You need a Game Night account to host the browser games. One account works for all of them.</span>
+      </p>
+      <div class="game-actions">
+        <a class="btn btn-primary" href="/account/">Create an account</a>
+        <a class="btn btn-ghost" href="/account/#signin">Sign in</a>
+      </div>
+    </section>
     <div class="cards">
       <section class="panel game">
         <div class="game-top">
