@@ -124,7 +124,8 @@ const SIGN_IN_ERRORS = {
 // checks the password server-side, so emails are never exposed, then returns
 // a one-off token (SIGNUP.md, "Sign in and forgotten passwords").
 async function signInWithUsername(username, password) {
-  if (usernameProblem(username)) throw new Error('Wrong username or password.');
+  // Shape only: reserved names (handed out by admins) sign in like any other.
+  if (!USERNAME_PATTERN.test(username)) throw new Error('Wrong username or password.');
   if (!ACCOUNT_API_BASE) {
     throw new Error("Signing in with a username isn't available yet. Use the email address you signed up with.");
   }
