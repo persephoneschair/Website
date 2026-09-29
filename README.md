@@ -8,7 +8,7 @@ persephoneschair.com – static site on GitHub Pages. No build step.
 - `OnDemand/`, `PennyBank/`, `PlayAGame/`, `UniCon/` – pages
 - `account/` + `assets/js/account.js` – sign up, sign in and manage host accounts (Firebase
   project `persephone-s-chair-games`). Every write follows `persephones-chair-uac-manager/docs/SIGNUP.md`;
-  the Firestore rules refuse anything else. `/signup`, `/sign-up`, `/signin` redirect here via `404.html`.
+  the Firestore rules refuse anything else. `/accounts`, `/signup`, `/sign-up`, `/signin` redirect here via `404.html`.
 - `Downloads/` – redirects to `/PlayAGame/` (kept so old links work)
 - `404.html` – also handles case-insensitive and vanity redirects (`/ondemand`, `/qforge`, …)
 - `assets/css/site.css` – shared styles and colour tokens
