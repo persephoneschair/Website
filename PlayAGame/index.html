@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0A1024">
   <title>Play – Game Night</title>
-  <meta name="description" content="Play along with live Game Night streams using the Universal Controller, play standalone games in your browser, or get Face/Off and Q-Forge.">
+  <meta name="description" content="Play along with live Game Night streams using the Universal Controller, or play our standalone games in your browser.">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Play Game Night">
-  <meta property="og:description" content="Play along with the live show, jump into a standalone game, or pick up our other tools.">
+  <meta property="og:description" content="Play along with the live show, or jump into a standalone game.">
   <meta property="og:image" content="https://persephoneschair.com/assets/img/og.jpg">
   <link rel="icon" href="/assets/img/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
@@ -30,16 +30,11 @@
     .game .note { font-size: 14px; color: var(--muted); }
     .game-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; }
     .game.wide { grid-column: 1 / -1; }
-    .host-callout { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
-    .host-callout .row-icon { width: 48px; height: 48px; }
-    .host-callout-text { flex: 1 1 auto; min-width: 0; }
-    .host-callout-text strong { display: block; font-size: 17px; color: #fff; }
-    .host-callout-text span { color: var(--text-2); font-size: 15px; }
+    .section-note { margin: -4px 0 18px; color: var(--text-2); }
+    .section-note a { font-weight: 700; }
     @media (max-width: 800px) {
       .cards { grid-template-columns: minmax(0, 1fr); gap: 12px; margin-bottom: 32px; }
       .game-actions .btn { flex: 1 1 auto; justify-content: center; }
-      .host-callout { flex-wrap: wrap; margin-bottom: 12px; }
-      .host-callout .game-actions { width: 100%; }
     }
   </style>
 </head>
@@ -57,8 +52,8 @@
       <div class="header-menu" id="site-menu">
         <nav class="site-nav" aria-label="Main">
           <a href="/OnDemand/">On Demand</a>
-          <a href="/PlayAGame/" aria-current="page">Play</a>
           <a href="/PennyBank/">Penny Bank</a>
+          <a href="/PlayAGame/" aria-current="page">Play</a>
           <a href="/account/">Account</a>
         </nav>
         <div class="header-actions">
@@ -74,7 +69,7 @@
     <div class="page-head">
       <div>
         <h1 class="display d-page">Play</h1>
-        <p class="lede">Play along with the live show, jump into a standalone game, or pick up our other tools.</p>
+        <p class="lede">Play along with the live show, or jump into a standalone game.</p>
       </div>
     </div>
 
@@ -95,19 +90,7 @@
     </div>
 
     <h2 class="section-label">Standalone games</h2>
-    <section class="panel host-callout" aria-label="Host accounts">
-      <span class="row-icon" aria-hidden="true">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
-      </span>
-      <p class="host-callout-text" style="margin:0">
-        <strong>Want to host?</strong>
-        <span>You need a Game Night account to host the browser games. One account works for all of them.</span>
-      </p>
-      <div class="game-actions">
-        <a class="btn btn-primary" href="/account/">Create an account</a>
-        <a class="btn btn-ghost" href="/account/#signin">Sign in</a>
-      </div>
-    </section>
+    <p class="section-note">To host a game you'll need a Game Night account. One account works for all of them: <a href="/account/">create an account</a> or <a href="/account/#signin">sign in</a>.</p>
     <div class="cards">
       <section class="panel game">
         <div class="game-top">
@@ -125,12 +108,18 @@
           <img src="/assets/img/faceoff.png" alt="" width="64" height="64">
           <h2>Face/Off</h2>
         </div>
+        <p>Coming soon to your browser.</p>
+        <div class="game-actions">
+          <span class="btn btn-disabled" aria-disabled="true">Coming soon</span>
+        </div>
+        <!-- Face/Off PC download, retired while the web version is on its way.
         <p>A high-speed, high-stakes game of trivia for two to six players. Each player starts with a fixed amount of time and must answer questions to stop their clock and start their opponent's. The first player to run out of time is eliminated from the game.</p>
         <p class="note">A licence is required to run this game. Contact royal_flush on the Discord to get one; you'll need a valid Twitch account to validate it.</p>
         <div class="game-actions">
           <a class="btn btn-primary" href="https://github.com/persephoneschair/Website/releases/download/v1.0.1/FaceOff.zip" rel="noopener">Download (PC)</a>
           <a class="btn btn-ghost" href="https://discord.gg/persephoneschair" target="_blank" rel="noopener">Get a licence on Discord</a>
         </div>
+        -->
       </section>
 
       <section class="panel game">
@@ -152,20 +141,6 @@
         <p>Play in your browser on any device.</p>
         <div class="game-actions">
           <a class="btn btn-primary" href="https://wonderwall.persephoneschair.com" target="_blank" rel="noopener">Play Wonderwall</a>
-        </div>
-      </section>
-    </div>
-
-    <h2 class="section-label">Software</h2>
-    <div class="cards">
-      <section class="panel game" id="qforge">
-        <div class="game-top">
-          <img src="/assets/img/qforge.png" alt="" width="64" height="64">
-          <h2>Q-Forge</h2>
-        </div>
-        <p>Opens the question editing tool Q-Forge.</p>
-        <div class="game-actions">
-          <a class="btn btn-primary" href="https://q-forge.persephoneschair.com" target="_blank" rel="noopener">Open Q-Forge</a>
         </div>
       </section>
     </div>

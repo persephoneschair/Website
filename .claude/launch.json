@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "static-site",
+      "runtimeExecutable": "C:\\Python314\\python.exe",
+      "runtimeArgs": [".claude/devserver.py", "8834"],
+      "port": 8834
+    }
+  ]
+}

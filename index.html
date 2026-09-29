@@ -34,7 +34,7 @@
     .latest-skeleton > .skeleton { aspect-ratio: 16 / 9; border-radius: 0; }
     .latest-skeleton .lines { padding: 22px 26px 26px; display: flex; flex-direction: column; gap: 10px; }
 
-    .home-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; align-items: start; }
+    .home-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: start; }
 
     .mini-board { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
     .mini-board a { display: flex; align-items: center; gap: 14px; min-height: 48px; padding: 0 14px; border-radius: 10px; color: var(--text); border: 1px solid transparent; }
@@ -49,20 +49,17 @@
     .mini-board .skeleton { height: 48px; }
     .panel-links { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 18px; font-weight: 700; }
 
-    .discord-strip { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: 24px; }
-    .discord-strip p { margin: 6px 0 0; color: var(--muted); }
+    .strip { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: 24px; }
+    .strip p { margin: 6px 0 0; color: var(--muted); }
+    .strip-text { display: flex; align-items: center; gap: 18px; min-width: 0; }
 
     @media (max-width: 959px) {
       .hero { grid-template-columns: minmax(0, 1fr); gap: 28px; padding-top: 36px; padding-bottom: 28px; }
       .home-grid { grid-template-columns: minmax(0, 1fr); }
     }
-    @media (min-width: 960px) and (max-width: 1199px) {
-      .home-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .home-grid > :last-child { grid-column: 1 / -1; }
-    }
     @media (max-width: 600px) {
       .hero-actions .btn { flex: 1 1 100%; justify-content: center; }
-      .discord-strip .btn { flex: 1 1 100%; justify-content: center; }
+      .strip .btn { flex: 1 1 100%; justify-content: center; }
     }
   </style>
 </head>
@@ -80,8 +77,8 @@
       <div class="header-menu" id="site-menu">
         <nav class="site-nav" aria-label="Main">
           <a href="/OnDemand/">On Demand</a>
-          <a href="/PlayAGame/">Play</a>
           <a href="/PennyBank/">Penny Bank</a>
+          <a href="/PlayAGame/">Play</a>
           <a href="/account/">Account</a>
         </nav>
         <div class="header-actions">
@@ -122,40 +119,6 @@
     </section>
 
     <section class="wrap home-grid">
-      <div class="panel" id="play">
-        <div class="panel-head">
-          <h2 class="display d-section">Play</h2>
-          <p>Standalone games you can play any time.</p>
-        </div>
-        <a class="row-link" href="https://theescapeartist.persephoneschair.com" target="_blank" rel="noopener">
-          <img class="row-icon" src="/assets/img/escapeartist.png" alt="" width="52" height="52">
-          <span class="row-text"><span class="row-title">The Escape Artist</span><span class="row-sub">Play in your browser</span></span>
-        </a>
-        <a class="row-link" href="/PlayAGame/#faceoff">
-          <img class="row-icon" src="/assets/img/faceoff.png" alt="" width="52" height="52">
-          <span class="row-text"><span class="row-title">Face/Off</span><span class="row-sub">Download for PC · licence required</span></span>
-        </a>
-        <a class="row-link" href="https://riskybusiness.persephoneschair.com" target="_blank" rel="noopener">
-          <img class="row-icon" src="/assets/img/riskybusiness.png" alt="" width="52" height="52">
-          <span class="row-text"><span class="row-title">Risky Business</span><span class="row-sub">Play in your browser</span></span>
-        </a>
-        <a class="row-link" href="https://wonderwall.persephoneschair.com" target="_blank" rel="noopener">
-          <img class="row-icon" src="/assets/img/wonderwall.png" alt="" width="52" height="52">
-          <span class="row-text"><span class="row-title">Wonderwall</span><span class="row-sub">Play in your browser</span></span>
-        </a>
-      </div>
-
-      <div class="panel" id="software">
-        <div class="panel-head">
-          <h2 class="display d-section">Software</h2>
-          <p>Our other apps and tools.</p>
-        </div>
-        <a class="row-link" href="https://q-forge.persephoneschair.com" target="_blank" rel="noopener">
-          <img class="row-icon" src="/assets/img/qforge.png" alt="" width="52" height="52">
-          <span class="row-text"><span class="row-title">Q-Forge</span><span class="row-sub">Create or edit questions</span></span>
-        </a>
-      </div>
-
       <div class="panel">
         <div class="panel-head">
           <h2 class="display d-section">Penny Bank</h2>
@@ -169,10 +132,44 @@
           <a href="/PennyBank/?view=hof">Hall of Fame →</a>
         </div>
       </div>
+      <div class="panel" id="play">
+        <div class="panel-head">
+          <h2 class="display d-section">Play</h2>
+          <p>Standalone games you can play any time.</p>
+        </div>
+        <a class="row-link" href="https://theescapeartist.persephoneschair.com" target="_blank" rel="noopener">
+          <img class="row-icon" src="/assets/img/escapeartist.png" alt="" width="52" height="52">
+          <span class="row-text"><span class="row-title">The Escape Artist</span><span class="row-sub">Play in your browser</span></span>
+        </a>
+        <div class="row-link">
+          <img class="row-icon" src="/assets/img/faceoff.png" alt="" width="52" height="52">
+          <span class="row-text"><span class="row-title">Face/Off</span><span class="row-sub">Coming soon</span></span>
+        </div>
+        <a class="row-link" href="https://riskybusiness.persephoneschair.com" target="_blank" rel="noopener">
+          <img class="row-icon" src="/assets/img/riskybusiness.png" alt="" width="52" height="52">
+          <span class="row-text"><span class="row-title">Risky Business</span><span class="row-sub">Play in your browser</span></span>
+        </a>
+        <a class="row-link" href="https://wonderwall.persephoneschair.com" target="_blank" rel="noopener">
+          <img class="row-icon" src="/assets/img/wonderwall.png" alt="" width="52" height="52">
+          <span class="row-text"><span class="row-title">Wonderwall</span><span class="row-sub">Play in your browser</span></span>
+        </a>
+      </div>
+
     </section>
 
     <section class="wrap">
-      <div class="panel discord-strip">
+      <div class="panel strip" id="qforge">
+        <div class="strip-text">
+          <img class="row-icon" src="/assets/img/qforge.png" alt="" width="52" height="52">
+          <div>
+            <h2 class="display d-section">Q-Forge</h2>
+            <p>Our question-writing tool. Create and edit questions in your browser.</p>
+          </div>
+        </div>
+        <a class="btn btn-ghost btn-lg" href="https://q-forge.persephoneschair.com" target="_blank" rel="noopener">Open Q-Forge</a>
+      </div>
+
+      <div class="panel strip">
         <div>
           <h2 class="display d-section">Join the community</h2>
           <p>Come and hang out with us on the Persephone's Chair Discord.</p>
