@@ -6,9 +6,16 @@ persephoneschair.com – static site on GitHub Pages. No build step.
 
 - `index.html` – homepage
 - `OnDemand/`, `PennyBank/`, `PlayAGame/`, `UniCon/` – pages
-- `account/` + `assets/js/account.js` – sign up, sign in and manage host accounts (Firebase
-  project `persephone-s-chair-games`). Every write follows `persephones-chair-uac-manager/docs/SIGNUP.md`;
-  the Firestore rules refuse anything else. `/accounts`, `/signup`, `/sign-up`, `/signin` redirect here via `404.html`.
+- Accounts: signing in, sign-up and the account page are the login app at
+  https://login.persephoneschair.com (built in `persephones-chair-uac-manager/login/`). The website
+  has no sign-in and no Firebase of its own. The header's Account link goes to
+  https://login.persephoneschair.com/account (which shows sign-in when signed out).
+  `account/` is only a redirect page there (meta refresh plus a link; `/account/#signin` goes
+  to sign-in), and `404.html` sends `/accounts` to the account page, `/signup` and `/sign-up`
+  to `/create`, and `/signin` and `/sign-in` to sign-in.
+- `privacy/` – the privacy page for Persephone's Chair accounts (linked in every footer, and
+  from the login app and Google's sign-in consent screen). Keep it in step with what the
+  accounts store, and change its "Last updated" date with it.
 - `Downloads/` – redirects to `/PlayAGame/` (kept so old links work)
 - `404.html` – also handles case-insensitive and vanity redirects (`/ondemand`, `/qforge`, …)
 - `assets/css/site.css` – shared styles and colour tokens

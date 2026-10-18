@@ -32,12 +32,13 @@
         'faceoff': 'https://faceoff.persephoneschair.com',
         'face-off': 'https://faceoff.persephoneschair.com',
         'face_off': 'https://faceoff.persephoneschair.com',
-        'account': '/account/',
-        'accounts': '/account/',
-        'signup': '/account/',
-        'sign-up': '/account/',
-        'signin': '/account/#signin',
-        'sign-in': '/account/#signin'
+        // Signing in, sign-up and the account page live in the login app.
+        'account': 'https://login.persephoneschair.com/account',
+        'accounts': 'https://login.persephoneschair.com/account',
+        'signup': 'https://login.persephoneschair.com/create',
+        'sign-up': 'https://login.persephoneschair.com/create',
+        'signin': 'https://login.persephoneschair.com/',
+        'sign-in': 'https://login.persephoneschair.com/'
       };
       var path = window.location.pathname
         .toLowerCase()
@@ -79,7 +80,7 @@
           <a href="/OnDemand/">On Demand</a>
           <a href="/PennyBank/">Penny Bank</a>
           <a href="/PlayAGame/">Play</a>
-          <a href="/account/">Account</a>
+          <a href="https://login.persephoneschair.com/account">Account</a>
         </nav>
         <div class="header-actions">
           <a class="btn btn-ghost" href="https://discord.gg/persephoneschair" target="_blank" rel="noopener">
