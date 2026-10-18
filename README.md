@@ -8,8 +8,14 @@ persephoneschair.com – static site on GitHub Pages. No build step.
 - `OnDemand/`, `PennyBank/`, `PlayAGame/`, `UniCon/` – pages
 - Accounts: signing in, sign-up and the account page are the login app at
   https://login.persephoneschair.com (built in `persephones-chair-uac-manager/login/`). The website
-  has no sign-in and no Firebase of its own. The header's Account link goes to
-  https://login.persephoneschair.com/account (which shows sign-in when signed out).
+  has no sign-in and no Firebase of its own. The header's account slot (`.nav-account`) asks the
+  accounts service's `peek` once per page load (`site.js`, contract in
+  `persephones-chair-uac-manager/docs/ACCOUNTS-SERVICE.md`). Signed in: picture (or first letter)
+  and username, linking to https://login.persephoneschair.com/account (picture only between 960 and
+  1100px wide). Signed out, failed or over 3 seconds: "Sign in", linking to the login app with
+  `?return=` this page. The slot has a fixed width so nothing moves when the answer arrives.
+  Locally the real call fails (localhost is not an allowed origin), so it shows "Sign in"; to try
+  other states, replace `window.fetch` in the console and run `GN.refreshAccount()`.
   `account/` is only a redirect page there (meta refresh plus a link; `/account/#signin` goes
   to sign-in), and `404.html` sends `/accounts` to the account page, `/signup` and `/sign-up`
   to `/create`, and `/signin` and `/sign-in` to sign-in.

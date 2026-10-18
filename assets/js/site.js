@@ -78,9 +78,93 @@
     });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initMenu);
-  } else {
+  // Top bar: who is signed in. Asks the accounts service's `peek` once per page
+  // load (persephones-chair-uac-manager, docs/ACCOUNTS-SERVICE.md). Signed in:
+  // picture (or first letter) and username, linking to the account page.
+  // Signed out, failed or slower than 3 seconds: "Sign in", coming back here.
+  const LOGIN = 'https://login.persephoneschair.com';
+  const PEEK = 'https://admin.persephoneschair.com/api/session';
+  const PERSON_ICON = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4.5"/><path d="M3.5 21a8.5 8.5 0 0 1 17 0z"/></svg>';
+
+  async function peek() {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 3000);
+    try {
+      const res = await fetch(PEEK, {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'peek' }),
+        signal: ctrl.signal,
+      });
+      return res.ok ? await res.json() : null;
+    } catch (e) {
+      return null;
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
+  function showAccount(who) {
+    document.querySelectorAll('.nav-account').forEach((a) => {
+      a.textContent = '';
+      if (who && who.signedIn) {
+        a.href = LOGIN + '/account';
+        a.dataset.state = 'in';
+        const name = typeof who.username === 'string' && who.username ? who.username : '';
+        const pic = document.createElement('span');
+        pic.className = 'nav-account-pic';
+        pic.setAttribute('aria-hidden', 'true');
+        if (typeof who.picture === 'string' && /^https:\/\//.test(who.picture)) {
+          const img = document.createElement('img');
+          img.src = who.picture;
+          img.alt = '';
+          img.width = 26;
+          img.height = 26;
+          img.referrerPolicy = 'no-referrer';
+          // A broken picture falls back to the letter.
+          img.addEventListener('error', () => {
+            if (name) pic.textContent = name.charAt(0).toUpperCase();
+            else pic.innerHTML = PERSON_ICON;
+          });
+          pic.appendChild(img);
+        } else if (name) {
+          pic.textContent = name.charAt(0).toUpperCase();
+        } else {
+          pic.innerHTML = PERSON_ICON;
+        }
+        const label = document.createElement('span');
+        label.className = 'nav-account-name';
+        // No username yet: the account page asks them to choose one.
+        label.textContent = name || 'Account';
+        a.append(pic, label);
+        a.setAttribute('aria-label', name ? 'Your account: ' + name : 'Your account');
+        a.title = name ? 'Signed in as ' + name : 'Your account';
+      } else {
+        a.href = LOGIN + '/?return=' + encodeURIComponent(location.href);
+        a.dataset.state = 'out';
+        a.removeAttribute('aria-label');
+        a.removeAttribute('title');
+        a.textContent = 'Sign in';
+      }
+    });
+  }
+
+  GN.refreshAccount = function () {
+    if (!document.querySelector('.nav-account')) return Promise.resolve();
+    return peek().then(showAccount);
+  };
+
+  function init() {
     initMenu();
+    GN.refreshAccount();
+    // Back from the login app (page kept in the back/forward cache): ask again.
+    window.addEventListener('pageshow', (e) => { if (e.persisted) GN.refreshAccount(); });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
   }
 })();
