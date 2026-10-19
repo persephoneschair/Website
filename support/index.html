@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0A1024">
+  <title>Support – Game Night</title>
+  <meta name="description" content="Host Persephone's Chair games free, or support them to host more games with no &quot;Powered by&quot; tag.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Support Persephone's Chair">
+  <meta property="og:description" content="What support gives, and how to host for free.">
+  <meta property="og:image" content="https://persephoneschair.com/assets/img/og.jpg">
+  <link rel="icon" href="/assets/img/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Satisfy&display=swap">
+  <link rel="preload" href="/assets/fonts/GameOver.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script>try{if(new FontFace('t','url(#)',{sizeAdjust:'330%'}).sizeAdjust!=='330%')throw 0}catch(e){document.documentElement.classList.add('no-size-adjust')}</script>
+  <script src="/assets/js/site.js" defer></script>
+  <style>
+    .section-label { margin: 0 0 14px; font-size: 14px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+    .section-note { margin: -4px 0 18px; color: var(--text-2); max-width: 760px; }
+    main > .panel, .support-cards, .support-go { margin-bottom: 44px; }
+
+    .tag-note { display: flex; gap: 18px; align-items: center; }
+    .tag-note img { width: 48px; height: 48px; border-radius: 50%; background: #fff; padding: 3px; flex-shrink: 0; }
+    .tag-note h2 { margin: 0 0 4px; font-size: 20px; color: #fff; }
+    .tag-note p { margin: 0; color: var(--text-2); }
+
+    .ticks { list-style: none; margin: 0 0 20px; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+    .ticks li { display: flex; gap: 10px; align-items: flex-start; color: var(--text); }
+    .ticks svg { flex-shrink: 0; margin-top: 4px; color: var(--gold); }
+    .game-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+    .support-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+    .s-card { display: flex; flex-direction: column; gap: 4px; }
+    .s-price { font-size: 34px; font-weight: 700; color: var(--gold); line-height: 1.1; }
+    .s-what { font-size: 18px; font-weight: 700; color: #fff; }
+    .s-sub { font-size: 14px; color: var(--muted); }
+    a.s-card:hover { border-color: var(--gold); }
+    .support-cards:not(.help) { margin-bottom: 20px; }
+    .support-go { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+    .support-go p { margin: 0; max-width: 460px; font-size: 15px; color: var(--muted); }
+    .support-go .support-soon { margin-top: 6px; color: var(--gold); }
+
+    .goes p { margin: 0; color: var(--text); max-width: 760px; }
+    .qas { display: flex; flex-direction: column; gap: 18px; }
+    .qa h3 { margin: 0 0 4px; font-size: 17px; color: #fff; }
+    .qa p { margin: 0; color: var(--text-2); }
+    .site-footer nav a[aria-current="page"] { color: var(--gold); }
+
+    @media (max-width: 800px) {
+      .support-cards { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+      .s-card { flex-direction: row; flex-wrap: wrap; align-items: baseline; column-gap: 14px; }
+      .help .s-card { flex-direction: column; }
+      .support-go .btn { width: 100%; justify-content: center; }
+      .game-actions .btn { flex: 1 1 auto; justify-content: center; }
+      main > .panel, .support-cards, .support-go { margin-bottom: 32px; }
+      .tag-note { align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Game Night home">
+        <img src="/assets/img/logo.png" alt="" width="44" height="44">
+        <span class="display d-brand" aria-hidden="true">Game Night</span>
+      </a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <div class="header-menu" id="site-menu">
+        <nav class="site-nav" aria-label="Main">
+          <a href="/OnDemand/">On Demand</a>
+          <a href="/PennyBank/">Penny Bank</a>
+          <a href="/PlayAGame/">Play</a>
+          <a class="nav-admin" href="https://admin.persephoneschair.com" hidden>Admin</a>
+          <a href="https://login.persephoneschair.com/account">Account</a>
+        </nav>
+        <div class="header-actions">
+          <a class="btn btn-ghost btn-discord" href="https://discord.gg/persephoneschair" aria-label="Discord" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg><span class="btn-label">Discord</span></a>
+          <a class="btn btn-live" href="https://twitch.tv/royal_flush" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/></svg>Watch live</a>
+        </div>
+      </div>
+      <a class="account-slot" href="https://login.persephoneschair.com/">Sign in</a>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <div class="page-head">
+      <div>
+        <h1 class="display d-page">Support</h1>
+        <p class="lede">Persephone's Chair makes free quiz games for streams and game nights. It runs on support from the people who host them.</p>
+      </div>
+    </div>
+
+    <section class="panel tag-note">
+      <img src="/assets/img/logo.png" alt="" width="48" height="48">
+      <div>
+        <h2>Saw "Powered by Persephone's Chair" on a stream?</h2>
+        <p>That host is using the free version of our games. Anyone with a Game Night account can host one too.</p>
+      </div>
+    </section>
+
+    <h2 class="section-label">Hosting for free</h2>
+    <section class="panel free">
+      <ul class="ticks">
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Host one game free for 14 days. When it ends, choose again straight away.</span></li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Switch to a different game once a day if you change your mind.</span></li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Write questions in Q-Forge, always free.</span></li>
+      </ul>
+      <div class="game-actions">
+        <a class="btn btn-primary" href="https://login.persephoneschair.com/account">Choose a game on your account</a>
+        <a class="btn btn-ghost" href="https://login.persephoneschair.com/create">Create an account</a>
+      </div>
+    </section>
+
+    <h2 class="section-label">Become a supporter</h2>
+    <p class="section-note">Supporters host extra games, with no "Powered by" tag and no reminders while their support runs. Each is a one-off payment through PayPal that starts the day you pay, and nothing renews.</p>
+    <div class="support-cards">
+      <div class="panel s-card"><span class="s-price">£5</span><span class="s-what">1 extra game for 1 month</span></div>
+      <div class="panel s-card"><span class="s-price">£10</span><span class="s-what">1 extra game for 3 months</span></div>
+      <div class="panel s-card"><span class="s-price">£10</span><span class="s-what">2 extra games for 1 month</span></div>
+    </div>
+    <div class="support-go">
+      <a class="btn btn-primary btn-lg" href="https://login.persephoneschair.com/account">Support on your account</a>
+      <div>
+        <p>You pay on your account page, so your extra games go to the right account. You pick the games there.</p>
+        <!-- Remove this line when PayPal payments go live (supporters step S10). -->
+        <p class="support-soon">Payments are not open yet. Until they are, message royal_flush on Discord if you would like to support.</p>
+      </div>
+    </div>
+
+    <h2 class="section-label">Where your support goes</h2>
+    <section class="panel goes">
+      <p>It pays for the game servers, the hosting costs and the time it takes to make and run the games, and generally supports the developer. Thank you!</p>
+    </section>
+
+    <h2 class="section-label">Questions</h2>
+    <section class="panel qas">
+      <div class="qa"><h3>Which games can I pick?</h3><p>Any game you can host free: Face/Off, Only Connect and Wonderwall.</p></div>
+      <div class="qa"><h3>Do I need PayPal?</h3><p>You pay through PayPal's checkout, with a PayPal account, or by card where PayPal offers it.</p></div>
+      <div class="qa"><h3>Does it renew?</h3><p>No. Each payment is one-off. When it ends you go back to the free version, and you can support again any time.</p></div>
+      <div class="qa"><h3>Can I give a different amount?</h3><p>Yes, message royal_flush on Discord and we will sort it out by hand.</p></div>
+      <div class="qa"><h3>What if my support ends in the middle of a show?</h3><p>A game that is running carries on until the room closes. Nothing is ever cut off mid-show.</p></div>
+    </section>
+
+    <h2 class="section-label">Other ways to help</h2>
+    <div class="support-cards help">
+      <a class="panel s-card" href="https://twitch.tv/royal_flush" target="_blank" rel="noopener"><span class="s-what">Watch live on Twitch</span><span class="s-sub">Game Night streams with royal_flush</span></a>
+      <a class="panel s-card" href="https://discord.gg/persephoneschair" target="_blank" rel="noopener"><span class="s-what">Join the Discord</span><span class="s-sub">Chat, feedback and game night news</span></a>
+      <a class="panel s-card" href="https://q-forge.persephoneschair.com" target="_blank" rel="noopener"><span class="s-what">Write questions in Q-Forge</span><span class="s-sub">Get credited when they are used on stream</span></a>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>© 2026 Persephone's Chair</span>
+      <nav aria-label="Elsewhere">
+        <a href="https://twitch.tv/royal_flush" target="_blank" rel="noopener">Twitch</a>
+        <a href="https://discord.gg/persephoneschair" target="_blank" rel="noopener">Discord</a>
+        <a href="https://q-forge.persephoneschair.com" target="_blank" rel="noopener">Q-Forge</a>
+        <a href="/support/" aria-current="page">Support</a>
+        <a href="/privacy/">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

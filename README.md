@@ -26,6 +26,9 @@ persephoneschair.com – static site on GitHub Pages. No build step.
 - `privacy/` – the privacy page for Persephone's Chair accounts (linked in every footer, and
   from the login app and Google's sign-in consent screen). Keep it in step with what the
   accounts store, and change its "Last updated" date with it.
+- `support/` – what supporting Persephone's Chair gives, and free hosting. The "Powered by
+  Persephone's Chair" tag on free hosts' Broadcast screens shows this address. Linked from every
+  footer, not the top bar. Its "Payments are not open yet" line comes out when PayPal goes live.
 - `Downloads/` – redirects to `/PlayAGame/` (kept so old links work)
 - `404.html` – also handles case-insensitive and vanity redirects (`/ondemand`, `/qforge`, …)
 - `assets/css/site.css` – shared styles and colour tokens
