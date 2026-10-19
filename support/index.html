@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0A1024">
   <title>Support – Game Night</title>
-  <meta name="description" content="Host Persephone's Chair games free, or support them to host more games with no &quot;Powered by&quot; tag.">
+  <meta name="description" content="Host Persephone's Chair games free for 14 days, or pay for a game to host it with no &quot;Powered by&quot; tag.">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Support Persephone's Chair">
   <meta property="og:description" content="What support gives, and how to host for free.">
@@ -35,6 +35,7 @@
     .game-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 
     .support-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+    .support-cards.prices { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 760px; }
     .s-card { display: flex; flex-direction: column; gap: 4px; }
     .s-price { font-size: 34px; font-weight: 700; color: var(--gold); line-height: 1.1; }
     .s-what { font-size: 18px; font-weight: 700; color: #fff; }
@@ -52,7 +53,7 @@
     .site-footer nav a[aria-current="page"] { color: var(--gold); }
 
     @media (max-width: 800px) {
-      .support-cards { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+      .support-cards, .support-cards.prices { grid-template-columns: minmax(0, 1fr); gap: 12px; }
       .s-card { flex-direction: row; flex-wrap: wrap; align-items: baseline; column-gap: 14px; }
       .help .s-card { flex-direction: column; }
       .support-go .btn { width: 100%; justify-content: center; }
@@ -120,17 +121,16 @@
       </div>
     </section>
 
-    <h2 class="section-label">Become a supporter</h2>
-    <p class="section-note">Supporters host extra games, with no "Powered by" tag and no reminders while their support runs. Each is a one-off payment through PayPal that starts the day you pay, and nothing renews.</p>
-    <div class="support-cards">
-      <div class="panel s-card"><span class="s-price">£5</span><span class="s-what">1 extra game for 1 month</span></div>
-      <div class="panel s-card"><span class="s-price">£10</span><span class="s-what">1 extra game for 3 months</span></div>
-      <div class="panel s-card"><span class="s-price">£10</span><span class="s-what">2 extra games for 1 month</span></div>
+    <h2 class="section-label">Pay for a game</h2>
+    <p class="section-note">A game you have paid for has no "Powered by" tag, and you see no reminders to support while it runs. The free 14-day game always shows the tag. Each payment is one-off through PayPal and nothing renews by itself.</p>
+    <div class="support-cards prices">
+      <div class="panel s-card"><span class="s-price">£7</span><span class="s-what">per game for 1 month</span></div>
+      <div class="panel s-card"><span class="s-price">£15</span><span class="s-what">per game for 3 months</span></div>
     </div>
     <div class="support-go">
       <a class="btn btn-primary btn-lg" href="https://login.persephoneschair.com/account">Support on your account</a>
       <div>
-        <p>You pay on your account page, so your extra games go to the right account. You pick the games there.</p>
+        <p>You pay on your account page, so the games go to the right account. Tick the games you want (up to 10 in one payment), choose 1 or 3 months, and see the total before you pay.</p>
         <!-- Remove this line when PayPal payments go live (supporters step S10). -->
         <p class="support-soon">Payments are not open yet. Until they are, message royal_flush on Discord if you would like to support.</p>
       </div>
@@ -143,11 +143,12 @@
 
     <h2 class="section-label">Questions</h2>
     <section class="panel qas">
-      <div class="qa"><h3>Which games can I pick?</h3><p>Any game you can host free: Face/Off, Only Connect and Wonderwall.</p></div>
+      <div class="qa"><h3>Which games can I pay for?</h3><p>Any game you can host free: Face/Off, Only Connect and Wonderwall. You choose them when you pay.</p></div>
       <div class="qa"><h3>Do I need PayPal?</h3><p>You pay through PayPal's checkout, with a PayPal account, or by card where PayPal offers it.</p></div>
-      <div class="qa"><h3>Does it renew?</h3><p>No. Each payment is one-off. When it ends you go back to the free version, and you can support again any time.</p></div>
+      <div class="qa"><h3>When does it start?</h3><p>On the day you pay. If you pay again for a game you already have paid time on, the new time starts when the current time ends, so you lose no days.</p></div>
+      <div class="qa"><h3>Does it renew?</h3><p>No. Each payment is one-off. When a game's paid time ends, you go back to the free version, and you can pay for it again any time.</p></div>
       <div class="qa"><h3>Can I give a different amount?</h3><p>Yes, message royal_flush on Discord and we will sort it out by hand.</p></div>
-      <div class="qa"><h3>What if my support ends in the middle of a show?</h3><p>A game that is running carries on until the room closes. Nothing is ever cut off mid-show.</p></div>
+      <div class="qa"><h3>What if my paid time ends in the middle of a show?</h3><p>A game that is running carries on until the room closes. Nothing is ever cut off mid-show.</p></div>
     </section>
 
     <h2 class="section-label">Other ways to help</h2>
