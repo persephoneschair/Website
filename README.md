@@ -14,6 +14,8 @@ persephoneschair.com – static site on GitHub Pages. No build step.
   and username, linking to https://login.persephoneschair.com/account (picture only between 960 and
   1100px wide). Signed out, failed or over 3 seconds: "Sign in", linking to the login app with
   `?return=` this page. The slot has a fixed width so nothing moves when the answer arrives.
+  The nav's Admin link (`.nav-admin`, to https://admin.persephoneschair.com) is hidden unless
+  `peek` answers `admin: true`.
   Locally the real call fails (localhost is not an allowed origin), so it shows "Sign in"; to try
   other states, replace `window.fetch` in the console and run `GN.refreshAccount()`.
   `account/` is only a redirect page there (meta refresh plus a link; `/account/#signin` goes

@@ -82,6 +82,8 @@
   // load (persephones-chair-uac-manager, docs/ACCOUNTS-SERVICE.md). Signed in:
   // picture (or first letter) and username, linking to the account page.
   // Signed out, failed or slower than 3 seconds: "Sign in", coming back here.
+  // The Admin link shows only when peek says `admin: true`; a missing field
+  // means hidden. It is a shortcut only: the Admin Console checks for itself.
   const LOGIN = 'https://login.persephoneschair.com';
   const PEEK = 'https://admin.persephoneschair.com/api/session';
   const PERSON_ICON = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4.5"/><path d="M3.5 21a8.5 8.5 0 0 1 17 0z"/></svg>';
@@ -106,6 +108,8 @@
   }
 
   function showAccount(who) {
+    const admin = !!(who && who.signedIn && who.admin === true);
+    document.querySelectorAll('.nav-admin').forEach((a) => { a.hidden = !admin; });
     document.querySelectorAll('.nav-account').forEach((a) => {
       a.textContent = '';
       if (who && who.signedIn) {
