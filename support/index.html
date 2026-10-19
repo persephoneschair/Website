@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0A1024">
   <title>Support – Game Night</title>
-  <meta name="description" content="Host Persephone's Chair games free for 14 days, or pay for a game to host it with no &quot;Powered by&quot; tag.">
+  <meta name="description" content="Host Persephone's Chair games free for 7 days, or pay for a game to host it with no &quot;Powered by&quot; tag.">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Support Persephone's Chair">
   <meta property="og:description" content="What support gives, and how to host for free.">
@@ -35,7 +35,8 @@
     .game-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 
     .support-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
-    .support-cards.prices { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 760px; }
+    .support-cards.prices { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .prices .s-card { align-items: center; text-align: center; }
     .s-card { display: flex; flex-direction: column; gap: 4px; }
     .s-price { font-size: 34px; font-weight: 700; color: var(--gold); line-height: 1.1; }
     .s-what { font-size: 18px; font-weight: 700; color: #fff; }
@@ -53,7 +54,9 @@
     .site-footer nav a[aria-current="page"] { color: var(--gold); }
 
     @media (max-width: 800px) {
-      .support-cards, .support-cards.prices { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+      .support-cards { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+      .support-cards.prices { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .prices .s-card { flex-direction: column; }
       .s-card { flex-direction: row; flex-wrap: wrap; align-items: baseline; column-gap: 14px; }
       .help .s-card { flex-direction: column; }
       .support-go .btn { width: 100%; justify-content: center; }
@@ -111,8 +114,7 @@
     <h2 class="section-label">Hosting for free</h2>
     <section class="panel free">
       <ul class="ticks">
-        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Host one game free for 14 days. When it ends, choose again straight away.</span></li>
-        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Switch to a different game once a day if you change your mind.</span></li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Host one game free for 7 days. When it ends, claim again straight away: the same game or a different one.</span></li>
         <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Write questions in Q-Forge, always free.</span></li>
       </ul>
       <div class="game-actions">
@@ -122,15 +124,17 @@
     </section>
 
     <h2 class="section-label">Pay for a game</h2>
-    <p class="section-note">A game you have paid for has no "Powered by" tag, and you see no reminders to support while it runs. The free 14-day game always shows the tag. Each payment is one-off through PayPal and nothing renews by itself.</p>
+    <p class="section-note">A game you have paid for has no "Powered by" tag, and you see no reminders to support while it runs. The free 7-day game always shows the tag. Prices are per game. Each payment is one-off through PayPal and nothing renews by itself.</p>
     <div class="support-cards prices">
-      <div class="panel s-card"><span class="s-price">£7</span><span class="s-what">per game for 1 month</span></div>
-      <div class="panel s-card"><span class="s-price">£15</span><span class="s-what">per game for 3 months</span></div>
+      <div class="panel s-card"><span class="s-price">£7</span><span class="s-what">1 month</span></div>
+      <div class="panel s-card"><span class="s-price">£19</span><span class="s-what">3 months</span></div>
+      <div class="panel s-card"><span class="s-price">£35</span><span class="s-what">6 months</span></div>
+      <div class="panel s-card"><span class="s-price">£60</span><span class="s-what">12 months</span><span class="s-sub">£5 a month</span></div>
     </div>
     <div class="support-go">
       <a class="btn btn-primary btn-lg" href="https://login.persephoneschair.com/account">Support on your account</a>
       <div>
-        <p>You pay on your account page, so the games go to the right account. Tick the games you want (up to 10 in one payment), choose 1 or 3 months, and see the total before you pay.</p>
+        <p>You pay on your account page, so the games go to the right account. Tick the games you want (up to 10 in one payment), choose how long, and see the total before you pay.</p>
         <!-- Remove this line when PayPal payments go live (supporters step S10). -->
         <p class="support-soon">Payments are not open yet. Until they are, message royal_flush on Discord if you would like to support.</p>
       </div>
