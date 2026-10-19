@@ -78,10 +78,11 @@
     });
   }
 
-  // Top bar: who is signed in. Asks the accounts service's `peek` once per page
-  // load (persephones-chair-uac-manager, docs/ACCOUNTS-SERVICE.md). Signed in:
-  // picture (or first letter) and username, linking to the account page.
-  // Signed out, failed or slower than 3 seconds: "Sign in", coming back here.
+  // Top bar: who is signed in, in the slot at its far right. Asks the accounts
+  // service's `peek` once per page load (persephones-chair-uac-manager,
+  // docs/ACCOUNTS-SERVICE.md). Signed in: picture (or first letter) and
+  // username, linking to the account page. Signed out, failed or slower than
+  // 3 seconds: "Sign in", coming back here. The nav's Account link never changes.
   // The Admin link shows only when peek says `admin: true`; a missing field
   // means hidden. It is a shortcut only: the Admin Console checks for itself.
   const LOGIN = 'https://login.persephoneschair.com';
@@ -110,14 +111,14 @@
   function showAccount(who) {
     const admin = !!(who && who.signedIn && who.admin === true);
     document.querySelectorAll('.nav-admin').forEach((a) => { a.hidden = !admin; });
-    document.querySelectorAll('.nav-account').forEach((a) => {
+    document.querySelectorAll('.account-slot').forEach((a) => {
       a.textContent = '';
       if (who && who.signedIn) {
         a.href = LOGIN + '/account';
         a.dataset.state = 'in';
         const name = typeof who.username === 'string' && who.username ? who.username : '';
         const pic = document.createElement('span');
-        pic.className = 'nav-account-pic';
+        pic.className = 'account-pic';
         pic.setAttribute('aria-hidden', 'true');
         if (typeof who.picture === 'string' && /^https:\/\//.test(who.picture)) {
           const img = document.createElement('img');
@@ -138,7 +139,7 @@
           pic.innerHTML = PERSON_ICON;
         }
         const label = document.createElement('span');
-        label.className = 'nav-account-name';
+        label.className = 'account-name';
         // No username yet: the account page asks them to choose one.
         label.textContent = name || 'Account';
         a.append(pic, label);
@@ -155,7 +156,7 @@
   }
 
   GN.refreshAccount = function () {
-    if (!document.querySelector('.nav-account')) return Promise.resolve();
+    if (!document.querySelector('.account-slot')) return Promise.resolve();
     return peek().then(showAccount);
   };
 

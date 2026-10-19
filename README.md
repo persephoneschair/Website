@@ -8,12 +8,14 @@ persephoneschair.com – static site on GitHub Pages. No build step.
 - `OnDemand/`, `PennyBank/`, `PlayAGame/`, `UniCon/` – pages
 - Accounts: signing in, sign-up and the account page are the login app at
   https://login.persephoneschair.com (built in `persephones-chair-uac-manager/login/`). The website
-  has no sign-in and no Firebase of its own. The header's account slot (`.nav-account`) asks the
+  has no sign-in and no Firebase of its own. The nav always has a plain Account link. The header's
+  account slot (`.account-slot`, at the far right after Watch live) asks the
   accounts service's `peek` once per page load (`site.js`, contract in
   `persephones-chair-uac-manager/docs/ACCOUNTS-SERVICE.md`). Signed in: picture (or first letter)
   and username, linking to https://login.persephoneschair.com/account (picture only between 960 and
-  1100px wide). Signed out, failed or over 3 seconds: "Sign in", linking to the login app with
-  `?return=` this page. The slot has a fixed width so nothing moves when the answer arrives.
+  1100px wide, and on phones beside the menu button). Signed out, failed or over 3 seconds: "Sign
+  in", linking to the login app with `?return=` this page (not shown on phones). The slot has a
+  fixed width so nothing moves when the answer arrives.
   The nav's Admin link (`.nav-admin`, to https://admin.persephoneschair.com) is hidden unless
   `peek` answers `admin: true`.
   Locally the real call fails (localhost is not an allowed origin), so it shows "Sign in"; to try
