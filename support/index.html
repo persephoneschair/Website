@@ -37,6 +37,8 @@
     .support-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
     .support-cards.prices { grid-template-columns: repeat(4, minmax(0, 1fr)); }
     .prices .s-card { align-items: center; text-align: center; }
+    /* Savings are against paying for single months at the 1-month price. */
+    .s-save { margin-top: 6px; padding: 2px 10px; border-radius: 999px; background: var(--chip); border: 1px solid var(--line-2); font-size: 13px; font-weight: 700; color: var(--gold); }
     .s-card { display: flex; flex-direction: column; gap: 4px; }
     .s-price { font-size: 34px; font-weight: 700; color: var(--gold); line-height: 1.1; }
     .s-what { font-size: 18px; font-weight: 700; color: #fff; }
@@ -126,10 +128,10 @@
     <h2 class="section-label">Pay for a game</h2>
     <p class="section-note">A game you have paid for has no "Powered by" tag, and you see no reminders to support while it runs. The free 7-day game always shows the tag. Prices are per game. Each payment is one-off through PayPal and nothing renews by itself.</p>
     <div class="support-cards prices">
-      <div class="panel s-card"><span class="s-price">£7</span><span class="s-what">1 month</span></div>
-      <div class="panel s-card"><span class="s-price">£19</span><span class="s-what">3 months</span></div>
-      <div class="panel s-card"><span class="s-price">£35</span><span class="s-what">6 months</span></div>
-      <div class="panel s-card"><span class="s-price">£60</span><span class="s-what">12 months</span><span class="s-sub">£5 a month</span></div>
+      <div class="panel s-card"><span class="s-price">£7</span><span class="s-what">1 month</span><span class="s-sub">£7 a month</span></div>
+      <div class="panel s-card"><span class="s-price">£20</span><span class="s-what">3 months</span><span class="s-sub">£6.67 a month</span><span class="s-save">Save 5%</span></div>
+      <div class="panel s-card"><span class="s-price">£35</span><span class="s-what">6 months</span><span class="s-sub">£5.83 a month</span><span class="s-save">Save 17%</span></div>
+      <div class="panel s-card"><span class="s-price">£60</span><span class="s-what">12 months</span><span class="s-sub">£5 a month</span><span class="s-save">Save 29%</span></div>
     </div>
     <div class="support-go">
       <a class="btn btn-primary btn-lg" href="https://login.persephoneschair.com/account">Support on your account</a>
