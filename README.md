@@ -28,7 +28,7 @@ persephoneschair.com – static site on GitHub Pages. No build step.
   accounts store, and change its "Last updated" date with it.
 - `support/` – what supporting Persephone's Chair gives, and free hosting. The "Powered by
   Persephone's Chair" tag on free hosts' Broadcast screens shows this address. Linked from every
-  footer, not the top bar. Its "Payments are not open yet" line comes out when PayPal goes live.
+  footer, not the top bar.
 - `Downloads/` – redirects to `/PlayAGame/` (kept so old links work)
 - `404.html` – also handles case-insensitive and vanity redirects (`/ondemand`, `/qforge`, …)
 - `assets/css/site.css` – shared styles and colour tokens
