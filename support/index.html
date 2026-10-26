@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0A1024">
   <title>Support – Game Night</title>
-  <meta name="description" content="Host Persephone's Chair games free for 7 days, or pay for a game to host it with no &quot;Powered by&quot; tag.">
+  <meta name="description" content="Host Persephone's Chair games on a free trial, or pay for a game to host it with no &quot;Powered by&quot; tag.">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Support Persephone's Chair">
   <meta property="og:description" content="What support gives, and how to host for free.">
@@ -33,6 +33,11 @@
     .ticks li { display: flex; gap: 10px; align-items: flex-start; color: var(--text); }
     .ticks svg { flex-shrink: 0; margin-top: 4px; color: var(--gold); }
     .game-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .trial-rules strong { color: #fff; }
+    /* The live numbers (site.js) land in boxes the size of today's, so the line doesn't move. */
+    .rule-n { display: inline-block; text-align: right; font-variant-numeric: tabular-nums; }
+    .rule-days { min-width: 2ch; }
+    .rule-hours { min-width: 1ch; }
 
     .support-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
     .support-cards.prices { grid-template-columns: repeat(4, minmax(0, 1fr)); }
@@ -115,7 +120,7 @@
     <h2 class="section-label">Hosting for free</h2>
     <section class="panel free">
       <ul class="ticks">
-        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Host one game free for 7 days. When it ends, claim again straight away: the same game or a different one.</span></li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="trial-rules" data-trial-rules>A free trial lasts <strong><span class="rule-n rule-days" data-rule="periodDays">28</span> <span data-rule-unit="days">days</span></strong> and includes <strong><span class="rule-n rule-hours" data-rule="playHours">4</span> <span data-rule-unit="hours">hours</span> of play</strong>. Time counts while one of your rooms is open and anyone is connected; preparing outside a room is free. A game running when your hours run out may finish within 15 minutes. One free trial at a time; when it ends you can choose another game.</span></li>
         <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Write questions in Q-Forge, always free.</span></li>
       </ul>
       <div class="game-actions">
@@ -125,7 +130,7 @@
     </section>
 
     <h2 class="section-label">Pay for a game</h2>
-    <p class="section-note">A game you have paid for has no "Powered by" tag, and you see no reminders to support while it runs. The free 7-day game always shows the tag. Prices are per game. Each payment is one-off through PayPal and nothing renews by itself.</p>
+    <p class="section-note">A game you have paid for has no "Powered by" tag, and you see no reminders to support while it runs. A free trial always shows the tag. Prices are per game. Each payment is one-off through PayPal and nothing renews by itself.</p>
     <div class="support-cards prices">
       <div class="panel s-card"><span class="s-price">£8</span><span class="s-what">1 month</span><span class="s-sub">£8 a month</span></div>
       <div class="panel s-card"><span class="s-price">£20</span><span class="s-what">3 months</span><span class="s-sub">£6.67 a month</span><span class="s-save">Save 17%</span></div>

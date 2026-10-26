@@ -28,7 +28,11 @@ persephoneschair.com – static site on GitHub Pages. No build step.
   accounts store, and change its "Last updated" date with it.
 - `support/` – what supporting Persephone's Chair gives, and free hosting. The "Powered by
   Persephone's Chair" tag on free hosts' Broadcast screens shows this address. Linked from every
-  footer, not the top bar.
+  footer, not the top bar. Its free trial paragraph (`[data-trial-rules]`) holds today's numbers
+  (28 days, 4 hours) and `site.js` replaces them from the accounts service's public lookup
+  `GET /api/hosting?rules` on load, so they follow the Admin Console; if the numbers change, update
+  the HTML's too so the page reads right with scripts off. Its wording matches the account page's
+  (`login/src/lib/hosting.ts`, `rulesWords`).
 - `Downloads/` – redirects to `/PlayAGame/` (kept so old links work)
 - `404.html` – also handles case-insensitive and vanity redirects (`/ondemand`, `/qforge`, …)
 - `assets/css/site.css` – shared styles and colour tokens

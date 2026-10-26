@@ -160,9 +160,53 @@
     return peek().then(showAccount);
   };
 
+  // Support page: the free trial's numbers in force, from the accounts
+  // service's public lookup (no sign-in), so they never disagree with the
+  // Admin Console. The HTML holds today's numbers, which stay if the lookup
+  // fails, is slower than 3 seconds, or answers something unexpected.
+  const RULES = 'https://admin.persephoneschair.com/api/hosting?rules';
+
+  async function trialRules() {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 3000);
+    try {
+      const res = await fetch(RULES, { signal: ctrl.signal });
+      return res.ok ? await res.json() : null;
+    } catch (e) {
+      return null;
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
+  function showTrialRules(r) {
+    const days = r && r.periodDays;
+    if (!Number.isInteger(days) || days < 1) return;
+    const hours = r.playHours;
+    document.querySelectorAll('[data-trial-rules]').forEach((el) => {
+      // No hours (the settings never saved): the account page's one line.
+      if (hours === null) {
+        el.textContent = 'Choose one game to host free for ' + days + ' days. When it ends you can choose again.';
+        return;
+      }
+      if (typeof hours !== 'number' || !(hours > 0)) return;
+      const set = (sel, text) => el.querySelectorAll(sel).forEach((n) => { n.textContent = text; });
+      set('[data-rule="periodDays"]', String(days));
+      set('[data-rule-unit="days"]', days === 1 ? 'day' : 'days');
+      set('[data-rule="playHours"]', String(Math.round(hours * 100) / 100));
+      set('[data-rule-unit="hours"]', hours === 1 ? 'hour' : 'hours');
+    });
+  }
+
+  GN.refreshTrialRules = function () {
+    if (!document.querySelector('[data-trial-rules]')) return Promise.resolve();
+    return trialRules().then(showTrialRules);
+  };
+
   function init() {
     initMenu();
     GN.refreshAccount();
+    GN.refreshTrialRules();
     // Back from the login app (page kept in the back/forward cache): ask again.
     window.addEventListener('pageshow', (e) => { if (e.persisted) GN.refreshAccount(); });
   }
