@@ -57,7 +57,9 @@
 
     /* Quiz formats: one grid, alphabetical, one card shape and height. */
     .fmts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
-    .fmt { display: grid; grid-template-columns: 56px minmax(0, 1fr); grid-template-rows: 56px 48px 28px 44px; column-gap: 16px; row-gap: 12px; height: 236px; padding: 20px; }
+    /* height = the four rows + three gaps + padding + border (56+48+28+44 + 3x12 + 2x20 + 2x1),
+       so the space under the buttons matches the space above the icon. */
+    .fmt { display: grid; grid-template-columns: 56px minmax(0, 1fr); grid-template-rows: 56px 48px 28px 44px; column-gap: 16px; row-gap: 12px; height: 254px; padding: 20px; }
     .fmt img { width: 56px; height: 56px; border-radius: 13px; object-fit: cover; background: var(--chip); }
     .fmt h4 { margin: 0; align-self: center; font-size: 20px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     /* Two lines, always: a shorter line keeps the space, a longer one is cut. */
@@ -82,7 +84,7 @@
     }
     @media (max-width: 640px) {
       .fmts { grid-template-columns: minmax(0, 1fr); gap: 12px; }
-      .fmt { grid-template-columns: 48px minmax(0, 1fr); grid-template-rows: 48px 48px 28px 44px; column-gap: 14px; row-gap: 10px; height: 214px; padding: 16px; }
+      .fmt { grid-template-columns: 48px minmax(0, 1fr); grid-template-rows: 48px 48px 28px 44px; column-gap: 14px; row-gap: 10px; height: 232px; padding: 16px; }
       .fmt img { width: 48px; height: 48px; border-radius: 11px; }
       .fmt h4 { font-size: 18px; }
       .who .btn-row { flex-direction: column; }
