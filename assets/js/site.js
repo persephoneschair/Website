@@ -153,6 +153,34 @@
         a.textContent = 'Sign in';
       }
     });
+    showWho(who);
+  }
+
+  // Play page: the free trial panel's box. Signed out keeps the HTML's own
+  // lines (Sign in and Create account come back to this page). Signed in: who,
+  // one line, and the account page and Support. Same three rows either way.
+  function showWho(who) {
+    document.querySelectorAll('[data-who]').forEach((box) => {
+      if (who && who.signedIn) {
+        const name = typeof who.username === 'string' && who.username ? who.username : 'Your account';
+        const line = box.querySelector('.who-name');
+        // The top bar's picture (or letter), just made above.
+        const pic = document.querySelector('.account-slot .account-pic').cloneNode(true);
+        const text = document.createElement('span');
+        text.className = 'who-text';
+        text.textContent = name;
+        line.replaceChildren(pic, text);
+        box.querySelector('p').textContent = 'Choose a free trial, or see your formats and time left.';
+        const [primary, ghost] = box.querySelectorAll('.btn');
+        primary.href = LOGIN + '/account';
+        primary.textContent = 'Your account';
+        ghost.href = '/support/#pay';
+        ghost.textContent = 'Pay for a format';
+        box.dataset.state = 'in';
+      } else {
+        box.dataset.state = 'out';
+      }
+    });
   }
 
   GN.refreshAccount = function () {
@@ -160,10 +188,12 @@
     return peek().then(showAccount);
   };
 
-  // Support page: the free trial's numbers in force, from the accounts
+  // Support and Play: the free trial's numbers in force, from the accounts
   // service's public lookup (no sign-in), so they never disagree with the
   // Admin Console. The HTML holds today's numbers, which stay if the lookup
-  // fails, is slower than 3 seconds, or answers something unexpected.
+  // fails, is slower than 3 seconds, or answers something unexpected. Play's
+  // Free trial chips show for the formats the lookup lists in trialFormats;
+  // they stay hidden (their space kept) if it doesn't answer.
   const RULES = 'https://admin.persephoneschair.com/api/hosting?rules';
 
   async function trialRules() {
@@ -180,13 +210,17 @@
   }
 
   function showTrialRules(r) {
+    const listed = r && Array.isArray(r.trialFormats) ? r.trialFormats : [];
+    document.querySelectorAll('[data-trial-format]').forEach((chip) => {
+      chip.toggleAttribute('data-on', listed.includes(chip.dataset.trialFormat));
+    });
     const days = r && r.periodDays;
     if (!Number.isInteger(days) || days < 1) return;
     const hours = r.playHours;
     document.querySelectorAll('[data-trial-rules]').forEach((el) => {
       // No hours (the settings never saved): the account page's one line.
       if (hours === null) {
-        el.textContent = 'Choose one game to host free for ' + days + ' days. When it ends you can choose again.';
+        el.textContent = 'Choose one format to host free for ' + days + ' days. When it ends you can choose again.';
         return;
       }
       if (typeof hours !== 'number' || !(hours > 0)) return;
@@ -199,7 +233,7 @@
   }
 
   GN.refreshTrialRules = function () {
-    if (!document.querySelector('[data-trial-rules]')) return Promise.resolve();
+    if (!document.querySelector('[data-trial-rules], [data-trial-format]')) return Promise.resolve();
     return trialRules().then(showTrialRules);
   };
 

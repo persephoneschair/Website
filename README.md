@@ -30,13 +30,27 @@ persephoneschair.com – static site on GitHub Pages. No build step.
   Persephone's Chair" tag on free hosts' Broadcast screens shows this address. Linked from every
   footer, not the top bar. Its free trial paragraph (`[data-trial-rules]`) holds today's numbers
   (28 days, 4 hours) and `site.js` replaces them from the accounts service's public lookup
-  `GET /api/hosting?rules` on load, so they follow the Admin Console; if the numbers change, update
+  `GET /api/hosting?rules` on load (`{ periodDays, playHours, trialFormats }`), so they follow the
+  Admin Console; if the numbers change, update
   the HTML's too so the page reads right with scripts off. Its wording matches the account page's
   (`login/src/lib/hosting.ts`, `rulesWords`).
+- `PlayAGame/` – the Play page (design: `docs/design/play-page-redesign.md`): the Universal
+  Controller, then hosting: the free trial panel (the same `[data-trial-rules]` numbers as
+  Support) beside a sign-in box (`[data-who]`, filled from the same `peek` as the top bar, one
+  height signed in or out), then one alphabetical grid of quiz formats. Each card's Free trial
+  chip (`[data-trial-format]`, the format's key in the accounts service) is always there but shows
+  only when the rules lookup lists that key in `trialFormats`, so it follows the Admin Console.
+  The word is "format", not "game", for what is hosted and paid for (here, on Support and on the
+  account page). A Kore format joins the grid when it can be hosted.
 - `Downloads/` – redirects to `/PlayAGame/` (kept so old links work)
-- `404.html` – also handles case-insensitive and vanity redirects (`/ondemand`, `/qforge`, …)
-- `assets/css/site.css` – shared styles and colour tokens
-- `assets/js/site.js` – shared helpers (mobile menu, escaping, ranking)
+- `play/`, `watch/`, `qforge/` – short links as real redirect pages, so a pasted link previews
+  properly rather than as the 404 page. Only names that can't clash by case with a real folder
+  (Windows checkouts are case-insensitive); everything else stays in `404.html`.
+- `404.html` – also handles case-insensitive and vanity redirects (`/ondemand`, `/unicon`, …)
+- `assets/css/site.css` – shared styles and colour tokens, including the section labels, button
+  rows and status chips the Play and Support pages share
+- `assets/js/site.js` – shared helpers (mobile menu, escaping, ranking, the account slot, the
+  trial numbers and chips)
 - `assets/js/data.js` – **every external data read goes through here**
 - `assets/fonts/GameOver.woff2` – repaired copy of Game Over (see below)
 

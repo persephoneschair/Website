@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0A1024">
   <title>Support – Game Night</title>
-  <meta name="description" content="Host Persephone's Chair games on a free trial, or pay for a game to host it with no &quot;Powered by&quot; tag.">
+  <meta name="description" content="Host Persephone's Chair quiz formats on a free trial, or pay for a format to host it with no &quot;Powered by&quot; tag.">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Support Persephone's Chair">
   <meta property="og:description" content="What support gives, and how to host for free.">
@@ -20,8 +20,6 @@
   <script>try{if(new FontFace('t','url(#)',{sizeAdjust:'330%'}).sizeAdjust!=='330%')throw 0}catch(e){document.documentElement.classList.add('no-size-adjust')}</script>
   <script src="/assets/js/site.js" defer></script>
   <style>
-    .section-label { margin: 0 0 14px; font-size: 14px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
-    .section-note { margin: -4px 0 18px; color: var(--text-2); }
     main > .panel, .support-cards, .support-go { margin-bottom: 44px; }
 
     .tag-note { display: flex; gap: 18px; align-items: center; }
@@ -32,7 +30,6 @@
     .ticks { list-style: none; margin: 0 0 20px; padding: 0; display: flex; flex-direction: column; gap: 10px; }
     .ticks li { display: flex; gap: 10px; align-items: flex-start; color: var(--text); }
     .ticks svg { flex-shrink: 0; margin-top: 4px; color: var(--gold); }
-    .game-actions { display: flex; flex-wrap: wrap; gap: 10px; }
     .trial-rules strong { color: #fff; }
     /* The live numbers (site.js) land in boxes the size of today's, so the line doesn't move. */
     .rule-n { display: inline-block; text-align: right; font-variant-numeric: tabular-nums; }
@@ -66,7 +63,7 @@
       .s-card { flex-direction: row; flex-wrap: wrap; align-items: baseline; column-gap: 14px; }
       .help .s-card { flex-direction: column; }
       .support-go .btn { width: 100%; justify-content: center; }
-      .game-actions .btn { flex: 1 1 auto; justify-content: center; }
+      .btn-row .btn { flex: 1 1 auto; justify-content: center; }
       main > .panel, .support-cards, .support-go { margin-bottom: 32px; }
       .tag-note { align-items: flex-start; }
     }
@@ -113,24 +110,24 @@
       <img src="/assets/img/logo.png" alt="" width="48" height="48">
       <div>
         <h2>Saw "Powered by Persephone's Chair" on a stream?</h2>
-        <p>That host is using the free version of our games. Anyone with a Game Night account can host one too.</p>
+        <p>That host is using the free version of our formats. Anyone with a Persephone's Chair account can host one too.</p>
       </div>
     </section>
 
-    <h2 class="section-label">Hosting for free</h2>
+    <h2 class="section-label" id="free">Hosting for free</h2>
     <section class="panel free">
       <ul class="ticks">
-        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="trial-rules" data-trial-rules>A free trial lasts <strong><span class="rule-n rule-days" data-rule="periodDays">28</span> <span data-rule-unit="days">days</span></strong> and includes <strong><span class="rule-n rule-hours" data-rule="playHours">4</span> <span data-rule-unit="hours">hours</span> of play</strong>. Time counts while one of your rooms is open and anyone is connected; preparing outside a room is free. A game running when your hours run out may finish within 15 minutes. One free trial at a time; when it ends you can choose another game.</span></li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="trial-rules" data-trial-rules>A free trial lasts <strong><span class="rule-n rule-days" data-rule="periodDays">28</span> <span data-rule-unit="days">days</span></strong> and includes <strong><span class="rule-n rule-hours" data-rule="playHours">4</span> <span data-rule-unit="hours">hours</span> of play</strong>. Time counts while one of your rooms is open and anyone is connected; preparing outside a room is free. A game running when your hours run out may finish within 15 minutes. One free trial at a time; when it ends you can choose another format.</span></li>
         <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Write questions in Q-Forge, always free.</span></li>
       </ul>
-      <div class="game-actions">
-        <a class="btn btn-primary" href="https://login.persephoneschair.com/account">Choose a game on your account</a>
+      <div class="btn-row">
+        <a class="btn btn-primary" href="https://login.persephoneschair.com/account">Choose a format on your account</a>
         <a class="btn btn-ghost" href="https://login.persephoneschair.com/create">Create an account</a>
       </div>
     </section>
 
-    <h2 class="section-label">Pay for a game</h2>
-    <p class="section-note">A game you have paid for has no "Powered by" tag, and you see no reminders to support while it runs. A free trial always shows the tag. Prices are per game. Each payment is one-off through PayPal and nothing renews by itself.</p>
+    <h2 class="section-label" id="pay">Pay for a format</h2>
+    <p class="section-note">A format you have paid for has no "Powered by" tag, and you see no reminders to support while it runs. A free trial always shows the tag. Prices are per format. Each payment is one-off through PayPal and nothing renews by itself.</p>
     <div class="support-cards prices">
       <div class="panel s-card"><span class="s-price">£8</span><span class="s-what">1 month</span><span class="s-sub">£8 a month</span></div>
       <div class="panel s-card"><span class="s-price">£20</span><span class="s-what">3 months</span><span class="s-sub">£6.67 a month</span><span class="s-save">Save 17%</span></div>
@@ -140,7 +137,7 @@
     <div class="support-go">
       <a class="btn btn-primary btn-lg" href="https://login.persephoneschair.com/account">Support on your account</a>
       <div>
-        <p>You pay on your account page, so the games go to the right account. Tick the games you want (up to 10 in one payment), choose how long, and see the total before you pay.</p>
+        <p>You pay on your account page, so the formats go to the right account. Tick the formats you want (up to 10 in one payment), choose how long, and see the total before you pay.</p>
       </div>
     </div>
 
@@ -151,10 +148,10 @@
 
     <h2 class="section-label">Questions</h2>
     <section class="panel qas">
-      <div class="qa"><h3>Which games can I pay for?</h3><p>Any game offered as a free game on your account. You choose them when you pay.</p></div>
+      <div class="qa"><h3>Which formats can I pay for?</h3><p>Any format offered as a free trial on your account. You choose them when you pay.</p></div>
       <div class="qa"><h3>Do I need PayPal?</h3><p>You pay through PayPal's checkout, with a PayPal account, or by card where PayPal offers it.</p></div>
-      <div class="qa"><h3>When does it start?</h3><p>On the day you pay. If you pay again for a game you already have paid time on, the new time starts when the current time ends, so you lose no days.</p></div>
-      <div class="qa"><h3>Does it renew?</h3><p>No. Each payment is one-off. When a game's paid time ends, you go back to the free version, and you can pay for it again any time.</p></div>
+      <div class="qa"><h3>When does it start?</h3><p>On the day you pay. If you pay again for a format you already have paid time on, the new time starts when the current time ends, so you lose no days.</p></div>
+      <div class="qa"><h3>Does it renew?</h3><p>No. Each payment is one-off. When a format's paid time ends, you go back to the free version, and you can pay for it again any time.</p></div>
       <div class="qa"><h3>Can I give a different amount?</h3><p>Yes, message royal_flush on Discord and we will sort it out by hand.</p></div>
       <div class="qa"><h3>What if my paid time ends in the middle of a show?</h3><p>A game that is running carries on until the room closes. Nothing is ever cut off mid-show.</p></div>
     </section>
