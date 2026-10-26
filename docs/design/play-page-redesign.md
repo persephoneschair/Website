@@ -99,11 +99,11 @@ In order of value; each is small.
 
 ## 4. Decisions for Ben
 
-1. **The new player app's name.** Open. Some directions, none recommended yet: keep the family name and number it ("UniCon 2"), clear to regulars but exactly the confusion to avoid while both run this season; a plain name that matches the address ("Game Night Play"); or a fresh short name from the Persephone myth that Kore already draws on. The mock-up says "Player app (name to choose)".
+1. **The new player app's name.** Ben's suggestion, 26 October 2026: **Kore Player** (provisional; the fullest mock-up now uses it). Recommended: take it. It names the engine that players already see on Broadcast (the opening card, "Powered by: Kore Engine" in the credits), it is plainly different from "Universal Controller" while both are in use, and it works for hosts' own shows, not just Game Night. Alternative that keeps UniCon's ring: "KoreCon".
 2. **Which formats show the Free trial chip.** Recommended: the accounts service's public `GET /api/hosting?rules` also returns the ids of the formats that can be chosen as a free trial, so each card's chip follows the Admin Console. Alternative: no per-format chips, only the panel's general sentence.
 3. **Personal trial time on the Play page.** Recommended: no; the page shows only who is signed in, and the time left stays on the account page (one place, already built). Alternative: show "Only Connect: 2 h 10 min left" in the sign-in box, which needs a new signed-in read from the website.
 4. **Font.** Recommended: keep Chakra Petch. Alternatives: Plex for running text only; Plex everywhere except the logotype.
-5. **Which site-wide fixes to do with the Play page.** Recommended: 1 to 8 together (4 in the login app's repo too); 9 needs Ben's word on the survey report; 10 can wait.
+5. **Which site-wide fixes to do with the Play page.** **Answered, 26 October 2026: all ten**, fix 4 in the login app's account page as well, and fix 9 removes both unused files.
 
 Format names in the fullest mock-up other than The Escape Artist and Risky Business (Battlefront, DangerZone, Picture This!, Red Herrings!), their letter icons and "One line about the format." are placeholders to fill the grid, not a release plan.
 
@@ -112,4 +112,5 @@ Format names in the fullest mock-up other than The Escape Artist and Risky Busin
 - **Web Games and Kore Games**: dropped for one alphabetical "Quiz formats" grid, since every format ends up on Kore. Original and Remakes was considered and not used (only two remakes, unlikely to grow).
 - **"Format", not "game"**, on the page and, as fix 4, on Support and the account page.
 - **The Escape Artist and Risky Business**: not listed now, and no Retiring strip; the one host who needs the old Escape Artist reaches it by its address.
+- **Second look**: "Mockup much better." All ten site-wide fixes approved (decision 5). Name: Kore Player suggested (decision 1).
 - **"The Game Night player"**: not the name. The Universal Controller stays in use for at least another season, so the new app is shown beside it, not in place of it, and its name is open (decision 1).
